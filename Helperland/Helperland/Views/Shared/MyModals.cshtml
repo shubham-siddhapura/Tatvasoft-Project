@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<!-- login modal strats -->
+<div class="modal popupsLogin" tabindex="-1" id="loginModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Login to your account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="">
+
+                    <input type="text" name="loginEmail" id="loginEmail" placeholder="Email"><span><img src="" alt=""></span>
+                    <input type="text" name="loginPwd" id="loginPwd" placeholder="Password"><span><img src="" alt=""></span>
+
+                    <input type="checkbox" name="loginCheck" id="loginCheck" placeholder="Remember me"> <label for="loginCheck">Remember me</label>
+
+                    <button type="submit" id="loginButton" data-bs-dismiss="modal">Login</button>
+
+                </form>
+
+                <!-- forget pwd and create account -->
+                <div id="forgetPwdDiv">
+                    <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#forgetPwdModal">Forgot Password?</a>
+                    <p>Don't have an account? <a href="" role="button" data-bs-dismiss="modal">Create an account</a></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- login modal ends -->
+<!-- forget pwd modal starts -->
+<div class="modal popupsLogin" tabindex="-1" id="forgetPwdModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Forgot Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="">
+
+                    <input type="text" name="loginEmail" id="loginEmail" placeholder="Email Address"><span><img src="" alt=""></span>
+                    <button type="submit" id="forgetPwdSend" data-bs-dismiss="modal">Send</button>
+
+                </form>
+
+                <div>
+                    <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login now</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- forget pwd modal ends -->

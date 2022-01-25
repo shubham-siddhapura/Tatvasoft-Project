@@ -1,0 +1,356 @@
+﻿
+@{
+    ViewData["Title"] = "Prices";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helperland | Prices</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/5602f8a8c9.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <!-- nav starts -->
+    @await Html.PartialAsync("FaqNav")
+    <!-- nav ends -->
+    <!-- header starts -->
+    <header>
+        <!-- banner -->
+        <img src="/img/price/price-banner.png" id="banner" alt="">
+
+        <!-- title -->
+        <div class="text-center">
+            <h1 class="title">Prices</h1>
+        </div>
+        <div class="d-flex align-items-center justify-content-center">
+            <hr>
+            <div class="text-center separator" style="display: inline;">
+                <img src="/img/faq/separator.png" alt="">
+            </div>
+            <hr>
+        </div>
+        <!-- title ends -->
+
+    </header>
+    <!-- header ends -->
+    <!-- main starts -->
+    <main>
+        <!-- one time starts -->
+        <div id="one-time">
+            <div id="one-time-title">
+                <h2>One Time</h2>
+            </div>
+            <div id="hr-price">
+                <!-- <span style="font-size: 48px;" id="euro">&#8364;</span> -->
+                <svg version="1.1" fill="#646464" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     width="31px" height="36px" viewBox="0 0 432.763 432.762" style="enable-background:new 0 0 432.763 432.762; vertical-align: inherit;"
+                     xml:space="preserve">
+                <g>
+                <path d="M374.363,342.635c-25.563,26.889-58.292,41.7-92.16,41.7c-55.509,0-103.572-38.981-126.192-95.329h154.186
+                   c13.37,0,24.21-10.84,24.21-24.21s-10.84-24.21-24.21-24.21H143.708c-0.952-7.915-1.472-15.989-1.472-24.211
+                   c0-9.274,0.653-18.365,1.871-27.237h166.09c13.37,0,24.21-10.84,24.21-24.21s-10.84-24.211-24.21-24.211H157.299
+                   c23.105-54.698,70.4-92.302,124.904-92.302c33.868,0,66.597,14.812,92.16,41.698c9.203,9.685,24.518,10.083,34.224,0.872
+                   c9.693-9.215,10.077-24.539,0.875-34.229C374.671,20.156,329.478,0,282.209,0c-80.712,0-149.705,58.62-176.478,140.724H40.854
+                   c-13.37,0-24.21,10.84-24.21,24.21s10.84,24.21,24.21,24.21h54.503c-0.981,8.934-1.542,18.007-1.542,27.237
+                   c0,8.192,0.428,16.255,1.211,24.211H40.854c-13.37,0-24.21,10.84-24.21,24.21s10.84,24.21,24.21,24.21h63.916
+                   c26.043,83.691,95.733,143.75,177.433,143.75c47.274,0,92.456-20.161,127.247-56.755c9.208-9.693,8.83-25.015-0.869-34.229
+                   C398.894,332.563,383.566,332.948,374.363,342.635z" />
+               </g>
+               
+               </svg>
+                <span style="font-size: 48px; font-weight: 500;"> 20</span>
+                <span style="font-size:30px;">/hr</span>
+            </div>
+            <div>
+                <p><img src="/img/price/forma-1_5.png" alt=""><span class="onetime-desc">Lower prices</span></p>
+                <p><img src="/img/price/forma-1_5.png" alt=""><span class="onetime-desc">Easy online & secure payment</span></p>
+                <p><img src="/img/price/forma-1_5.png" alt=""><span class="onetime-desc">Easy amendment</span></p>
+            </div>
+        </div>
+        <!-- one time ends -->
+        <!-- extra services starts -->
+        <div id="extra">
+            <!-- title -->
+            <div class="text-center">
+                <h1 class="title">Extra Services</h1>
+            </div>
+            <div class="d-flex align-items-center justify-content-center">
+                <hr>
+                <div class="text-center separator" style="display: inline;">
+                    <img src="/img/faq/separator.png" alt="">
+                </div>
+                <hr>
+            </div>
+            <!-- title ends -->
+            <!-- services starts -->
+            <div id="extra-services">
+                <div class="extra-box">
+                    <div class="extra-img">
+                        <img src="/img/price/3.png" alt="">
+                    </div>
+
+                    <p>Inside cabinets</p>
+                    <h5>30 minutes</h5>
+
+                </div>
+                <div class="extra-box">
+                    <div class="extra-img">
+                        <img src="/img/price/5.png" alt="">
+                    </div>
+
+                    <p>Inside fridge</p>
+                    <h5>30 minutes</h5>
+
+                </div>
+                <div class="extra-box">
+                    <div class="extra-img">
+                        <img src="/img/price/4.png" alt="">
+                    </div>
+
+                    <p>Inside oven</p>
+                    <h5>30 minutes</h5>
+
+                </div>
+                <div class="extra-box">
+                    <div class="extra-img">
+                        <img src="/img/price/2.png" alt="">
+                    </div>
+
+                    <p>Laundry wash and dry</p>
+                    <h5>30 minutes</h5>
+
+                </div>
+                <div class="extra-box">
+                    <div class="extra-img">
+                        <img src="/img/price/1.png" alt="">
+                    </div>
+
+                    <p>Interior windows</p>
+                    <h5>30 minutes</h5>
+
+                </div>
+            </div>
+            <!-- services ends -->
+        </div>
+        <!-- extra services ends -->
+        <!-- what include starts -->
+        <div id="what-include">
+            <!-- title -->
+            <div class="text-center">
+                <h1 class="title">What we include in cleaning</h1>
+            </div>
+            <div class="d-flex align-items-center justify-content-center">
+                <hr>
+                <div class="text-center separator" style="display: inline;">
+                    <img src="/img/faq/separator.png" alt="">
+                </div>
+                <hr>
+            </div>
+            <!-- title ends -->
+            <!-- what include box starts -->
+            <div id="what-include-box">
+                <!-- box starts -->
+                <div id="box1" class="what-boxes">
+                    <img src="/img/price/bedroom.png" alt="">
+                    <h3>Bedroom and Living Room</h3>
+                    <div class="box-desc">
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Dust all accessible surfaces</span>
+                        </div>
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Wipe down all mirrors and glass fixtures </span>
+                        </div>
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Clean all floor surfaces</span>
+                        </div>
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Take out garbage and recycling</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- box ends -->
+                <!-- box starts -->
+                <div id="box2" class="what-boxes">
+                    <img src="/img/price/bathroom.png" alt="">
+                    <h3>Bathrooms</h3>
+                    <div class="box-desc">
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Wash and sanitize the toilet, shower, tub, sink</span>
+                        </div>
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Dust all accessible surfaces</span>
+                        </div>
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Wipe down all mirrors and glass fixtures</span>
+                        </div>
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Clean all floor surfaces</span>
+                        </div>
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Take out garbage and recycling</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- box ends -->
+                <!-- box starts -->
+                <div id="box3" class="what-boxes">
+                    <img src="/img/price/kitchen.png" alt="">
+                    <h3>Kitchen</h3>
+                    <div class="box-desc">
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Dust all accessible surfaces </span>
+                        </div>
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Empty sink and load up dishwasher</span>
+                        </div>
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Wipe down exterior of stove, oven and fridge </span>
+                        </div>
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Clean all floor surfaces</span>
+                        </div>
+                        <div>
+                            <img src="/img/faq/right-arrow.png" alt="">
+                            <span>Take out garbage and recycling</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- box ends -->
+
+
+            </div>
+            <!-- what include box ends -->
+        </div>
+        <!-- what include ends -->
+        <!-- why helperland starts -->
+        <div>
+
+            <!-- title -->
+            <div class="text-center">
+                <h1 class="title">Extra Services</h1>
+            </div>
+            <div class="d-flex align-items-center justify-content-center">
+                <hr>
+                <div class="text-center separator" style="display: inline;">
+                    <img src="/img/faq/separator.png" alt="">
+                </div>
+                <hr>
+            </div>
+            <!-- title ends -->
+            <!-- why main starts -->
+            <div class="d-flex justify-content-center" id="why-hl-main">
+                <div class="d-flex justify-content-center flex-wrap">
+                    <div id="left-side">
+                        <div>
+                            <h3>Experienced and vetted professionals</h3>
+                            <p>dominate the industry in scale and scope with an adaptable, extensive network that consistently delivers exceptional results.</p>
+                        </div>
+                        <div>
+                            <h3>Dedicated customer service</h3>
+                            <p>to our customers and are guided in all we do by their needs. The team is always happy to support you and offer all the information. you need.</p>
+                        </div>
+                    </div>
+                    <div id="why-img">
+                        <img src="/img/price/the-best-img-1.png" alt="">
+                    </div>
+                    <div id="right-side">
+                        <div>
+                            <h3>Every cleaning is insured</h3>
+                            <p>and seek to provide exceptional service and engage in proactive behavior. We‘d be happy to clean your homes.</p>
+                        </div>
+                        <div>
+                            <h3>Secure online payment</h3>
+                            <p>Payment is processed securely online. Customers pay safely online and manage the booking.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- why main ends -->
+        </div>
+
+        <!-- why helperland ends -->
+        <!-- newsletter starts -->
+        <div class="text-center" id="news">
+            <h4 class="">GET OUR NEWSLETTER</h4>
+            <form action="">
+                <input type="text" name="email" placeholder="YOUR EMAIL" class="rounded-pill email">
+                <input type="submit" name="submit" class="rounded-pill submit-btn">
+            </form>
+
+        </div>
+        <!-- newsletter ends -->
+
+
+
+    </main>
+    <!-- main ends -->
+
+    <button type="button" class="btn btn-floating" id="btn-back-to-top" style="z-index: 100;"><i class="fas fa-chevron-circle-up"></i></button>
+
+    <button type="button" class="btn btn-floating" id="timer" style="z-index: 100;"><img src="/img/timer.png" alt=""></button>
+
+    <!-- footer starts -->
+    @await Html.PartialAsync("Footer")
+    <!-- footer ends -->
+
+    @await Html.PartialAsync("MyModals")
+
+    <!-- scripts -->
+    <script>
+
+        let mybutton = document.getElementById("btn-back-to-top");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            if (
+                document.body.scrollTop > 20 ||
+                document.documentElement.scrollTop > 20
+            ) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+        // When the user clicks on the button, scroll to the top of the document
+        mybutton.addEventListener("click", backToTop);
+
+        function backToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+</html>

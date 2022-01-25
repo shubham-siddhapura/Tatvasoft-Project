@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helperland | User Management</title>
+
+    <script src="https://kit.fontawesome.com/5602f8a8c9.js" crossorigin="anonymous"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"
+  />
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- nav starts -->
+    <nav id="admin-nav"> 
+        <a href="#" id="admin-logo">helperland</a>
+        <div >
+            <ul>
+                <li><img src="img/upcomingService/user.png" alt=""> <span>James Smith</span></li>
+                <li><img src="img/customer-serviceHistory/logout.png" alt=""></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- nav ends -->
+
+    <!-- main starts -->
+    <main>
+        <!-- main section starts -->
+        <section id="admin-um-main-section">
+            <div id="admin-um-main-div">
+                <!-- admin-um menu starts -->
+                <div id="admin-um-main-menu">
+                    <ul>
+                        <li>
+                            Service Management                              
+                        </li>
+                        <li>
+                            Role Management                              
+                        </li>
+                        <li>
+                            Coupon Code Management                              
+                        </li>
+                        <li>
+                            Escalation Management                              
+                        </li>
+                        <li>
+                            <a href="admin-serviceRequests.html">Service Requests</a>
+                                                        
+                        </li>
+                        <li>
+                            Service Providers                              
+                        </li>
+                        <li class="active">
+                            User Management                             
+                        </li>
+                        <li>
+                            Finance Module                             
+                        </li>
+                        <li>
+                            Zip Code Management                              
+                        </li>
+                        <li>
+                            Rating Management                              
+                        </li>
+                        <li>
+                            Inquiry Management                              
+                        </li>
+                        <li>
+                            Newsletter Management                              
+                        </li>
+                        <li>
+                            Content Management                              
+                        </li>
+                    </ul>
+                </div>
+                <!-- admin-um menu ends -->
+                <!-- admin-um div starts -->
+                <div id="admin-um-div">
+
+                    <!-- admin title starts -->
+                    <div id="admin-title-outer"> 
+                        <div id="admin-title">
+                           <h1>User Management</h1>
+                        </div>
+                        <div id="admin-um-addbtn">
+                            <button type="button">
+                                <img src="img/add.png" alt="">
+                                <span>Add New User</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- admin title ends -->
+
+                     <!-- admin um search starts  -->
+                    <div id="admin-um-search">
+                        <form action="" id="admin-um-form">
+                            <select name="username" id="admin-um-form-username">
+                                <option value="#">User name</option>
+                                <option value="shubham">Shubham</option>
+                                <option value="kripal">Kripal</option>
+                                <option value="naimish">Naimish</option>
+                            </select>
+                            <select name="userrole" id="admin-um-form-userrole" placeholder="User role">
+                                <option value="#">User role</option>
+                                <option value="shubham">Inquiry Manager</option>
+                                <option value="kripal">Content Manager</option>
+                                <option value="naimish">Finance Manager</option>
+                            </select>
+                            <span id="admin-um-ctrcode">+49</span><span><input type="text" name="mobile" placeholder="Phone number" id="admin-um-form-mobile"></span>
+                            <input type="text"name="zipcode" id="admin-um-form-zipcode" placeholder="Zipcode">
+                            <button type="submit" id="admin-um-form-searchbtn">Search</button>
+                            <button type="reset" id="admin-um-form-clearbtn">Clear</button>
+                        </form>
+                    </div>
+                    <!-- admin um search ends -->
+
+                    <div id="admin-um-exportdiv">
+                        <button type="button" id="export">Export</button>
+                    </div>
+
+                    <!-- admin um table div starts -->
+                    <div id="admin-um-tablediv">
+
+                        <table id="admin-um-table">
+                            <thead>
+                                <tr>
+                                    <th>User Name </th>
+                                    <th>Role</th>
+                                    <th>Date of Registration</th>
+                                    <th>User Type</th>
+                                    <th>Phone</th>
+                                    <th>Postal Code </th>
+                                    <th>Status </th>
+                                    <th id="admin-table-hAction">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Shubham Sid
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        <span><img src="img/upcomingService/calendar2.png" alt=""></span> 
+                                        <span>19/04/2020</span>
+                                    </td>
+                                    <td>
+                                        Customer
+                                    </td>
+                                    <td>
+                                        9876543210
+                                    </td>
+                                    <td>
+                                        364002
+                                    </td>
+                                    <td>
+                                        <span class="admin-table-status">Active</span> 
+                                    </td>
+                                    <td class="admin-table-action"> 
+                                        <button type="button" class="admin-table-actionbtn" id="row1btn" onclick="admin_action();">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                                        </button>
+                                        <div class="admin-table-action-menu" id="adminrow">
+                                            <ul>
+                                                <li><a href="">Edit</a> </li>
+                                                <li><a href="">Deactivate</a></li>
+                                                <li><a href="">Service History</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Kirpal
+                                    </td>
+                                    <td>
+                                        Inquiry manager                                      
+                                    </td>
+                                    <td>
+                                        <span><img src="img/upcomingService/calendar2.png" alt=""></span> 
+                                        <span>19/04/2020</span>
+                                    </td>
+                                    <td>
+                                        Call Center
+                                    </td>
+                                    <td>
+                                        9876543210
+                                    </td>
+                                    <td>
+                                        364002
+                                    </td>
+                                    <td>
+                                        <span class="admin-table-status">Active</span> 
+                                    </td>
+                                    <td class="admin-table-action"> 
+                                        <button type="button" class="admin-table-actionbtn">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                                        </button>
+                                        <div class="admin-table-action-menu">
+                                            <ul>
+                                                <li><a href="">Edit</a> </li>
+                                                <li><a href="">Deactivate</a></li>
+                                                <li><a href="">Service History</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Yagnik Ghori
+                                    </td>
+                                    <td>
+                                        Finance Manager
+                                    </td>
+                                    <td>
+                                        <span><img src="img/upcomingService/calendar2.png" alt=""></span> 
+                                        <span>19/04/2020</span>
+                                    </td>
+                                    <td>
+                                        Call Center                                        
+                                    </td>
+                                    <td>
+                                        9876543210
+                                    </td>
+                                    <td>
+                                        364002
+                                    </td>
+                                    <td>
+                                        <span class="admin-table-status">Active</span> 
+                                    </td>
+                                    <td class="admin-table-action"> 
+                                        <button type="button" class="admin-table-actionbtn">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                                        </button>
+                                        <div class="admin-table-action-menu">
+                                            <ul>
+                                                <li><a href="">Edit</a> </li>
+                                                <li><a href="">Deactivate</a></li>
+                                                <li><a href="">Service History</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Smit Dabhi
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        <span><img src="img/upcomingService/calendar2.png" alt=""></span> 
+                                        <span>19/04/2020</span>
+                                    </td>
+                                    <td>
+                                        Service Provider
+                                    </td>
+                                    <td>
+                                        9876543210
+                                    </td>
+                                    <td>
+                                        364002
+                                    </td>
+                                    <td>
+                                        <span class="admin-table-status">Active</span> 
+                                    </td>
+                                    <td class="admin-table-action"> 
+                                        <button type="button" class="admin-table-actionbtn">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                                        </button>
+                                        <div class="admin-table-action-menu">
+                                            <ul>
+                                                <li><a href="">Edit</a> </li>
+                                                <li><a href="">Deactivate</a></li>
+                                                <li><a href="">Service History</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Shubham Sid
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        <span><img src="img/upcomingService/calendar2.png" alt=""></span> 
+                                        <span>19/04/2020</span>
+                                    </td>
+                                    <td>
+                                        Customer
+                                    </td>
+                                    <td>
+                                        9876543210
+                                    </td>
+                                    <td>
+                                        364002
+                                    </td>
+                                    <td>
+                                        <span class="admin-table-status" style="background-color:#FF6B6B;">Inactive</span> 
+                                    </td>
+                                    <td class="admin-table-action"> 
+                                        <button type="button" class="admin-table-actionbtn">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                                        </button>
+                                        <div class="admin-table-action-menu">
+                                            <ul>
+                                                <li><a href="">Edit</a> </li>
+                                                <li><a href="">Deactivate</a></li>
+                                                <li><a href="">Service History</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Kirpal
+                                    </td>
+                                    <td>
+                                        Inquiry manager                                      
+                                    </td>
+                                    <td>
+                                        <span><img src="img/upcomingService/calendar2.png" alt=""></span> 
+                                        <span>19/04/2020</span>
+                                    </td>
+                                    <td>
+                                        Call Center
+                                    </td>
+                                    <td>
+                                        9876543210
+                                    </td>
+                                    <td>
+                                        364002
+                                    </td>
+                                    <td>
+                                        <span class="admin-table-status">Active</span> 
+                                    </td>
+                                    <td class="admin-table-action"> 
+                                        <button type="button" class="admin-table-actionbtn">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                                        </button>
+                                        <div class="admin-table-action-menu">
+                                            <ul>
+                                                <li><a href="">Edit</a> </li>
+                                                <li><a href="">Deactivate</a></li>
+                                                <li><a href="">Service History</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Yagnik Ghori
+                                    </td>
+                                    <td>
+                                        Finance Manager
+                                    </td>
+                                    <td>
+                                        <span><img src="img/upcomingService/calendar2.png" alt=""></span> 
+                                        <span>19/04/2020</span>
+                                    </td>
+                                    <td>
+                                        Call Center                                        
+                                    </td>
+                                    <td>
+                                        9876543210
+                                    </td>
+                                    <td>
+                                        364002
+                                    </td>
+                                    <td>
+                                        <span class="admin-table-status">Active</span> 
+                                    </td>
+                                    <td class="admin-table-action"> 
+                                        <button type="button" class="admin-table-actionbtn">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                                        </button>
+                                        <div class="admin-table-action-menu">
+                                            <ul>
+                                                <li><a href="">Edit</a> </li>
+                                                <li><a href="">Deactivate</a></li>
+                                                <li><a href="">Service History</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>
+                                        Shubham Sid
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        <span><img src="img/upcomingService/calendar2.png" alt=""></span> 
+                                        <span>19/04/2020</span>
+                                    </td>
+                                    <td>
+                                        Customer
+                                    </td>
+                                    <td>
+                                        9876543210
+                                    </td>
+                                    <td>
+                                        364002
+                                    </td>
+                                    <td>
+                                        <span class="admin-table-status" style="background-color:#FF6B6B;">Inactive</span> 
+                                    </td>
+                                    <td class="admin-table-action"> 
+                                        <button type="button" class="admin-table-actionbtn">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                                        </button>
+                                        <div class="admin-table-action-menu">
+                                            <ul>
+                                                <li><a href="">Edit</a> </li>
+                                                <li><a href="">Deactivate</a></li>
+                                                <li><a href="">Service History</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                
+                                <tr>
+                                    <td>
+                                        Shubham Sid
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        <span><img src="img/upcomingService/calendar2.png" alt=""></span> 
+                                        <span>19/04/2020</span>
+                                    </td>
+                                    <td>
+                                        Customer
+                                    </td>
+                                    <td>
+                                        9876543210
+                                    </td>
+                                    <td>
+                                        364002
+                                    </td>
+                                    <td>
+                                        <span class="admin-table-status" style="background-color:#FF6B6B;">Inactive</span> 
+                                    </td>
+                                    <td class="admin-table-action"> 
+                                        <button type="button" class="admin-table-actionbtn">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                                        </button>
+                                        <div class="admin-table-action-menu">
+                                            <ul>
+                                                <li><a href="">Edit</a> </li>
+                                                <li><a href="">Deactivate</a></li>
+                                                <li><a href="">Service History</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>
+                                        Shubham Sid
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        <span><img src="img/upcomingService/calendar2.png" alt=""></span> 
+                                        <span>19/04/2020</span>
+                                    </td>
+                                    <td>
+                                        Customer
+                                    </td>
+                                    <td>
+                                        9876543210
+                                    </td>
+                                    <td>
+                                        364002
+                                    </td>
+                                    <td>
+                                        <span class="admin-table-status" style="background-color:#FF6B6B;">Inactive</span> 
+                                    </td>
+                                    <td class="admin-table-action"> 
+                                        <button type="button" class="admin-table-actionbtn">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                                        </button>
+                                        <div class="admin-table-action-menu">
+                                            <ul>
+                                                <li><a href="">Edit</a> </li>
+                                                <li><a href="">Deactivate</a></li>
+                                                <li><a href="">Service History</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Shubham Sid
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        <span><img src="img/upcomingService/calendar2.png" alt=""></span> 
+                                        <span>19/04/2020</span>
+                                    </td>
+                                    <td>
+                                        Customer
+                                    </td>
+                                    <td>
+                                        9876543210
+                                    </td>
+                                    <td>
+                                        364002
+                                    </td>
+                                    <td>
+                                        <span class="admin-table-status" style="background-color:#FF6B6B;">Inactive</span> 
+                                    </td>
+                                    <td class="admin-table-action"> 
+                                        <button type="button" class="admin-table-actionbtn">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                                        </button>
+                                        <div class="admin-table-action-menu">
+                                            <ul>
+                                                <li><a href="">Edit</a> </li>
+                                                <li><a href="">Deactivate</a></li>
+                                                <li><a href="">Service History</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- admin um table div ends -->
+                
+                    <div id="admin-um-footer">
+                        <p>&copy;2018 Helperland. All rights reserved.</p>
+                    </div>
+                </div>
+                <!-- admin-um div -->
+            </div>
+
+            
+        </section>
+        <!-- main section ends -->
+    </main>
+    <!-- main ends -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/v/dt/dt-1.11.3/r-2.2.9/rg-1.1.4/datatables.min.js"
+    ></script>
+
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#admin-um-table").DataTable();
+      });
+
+      const dt = new DataTable("#admin-um-table", {
+        dom: 't<"table-bottom paging d-flex justify-content-between"<"table-bottom-inner d-flex"li>p>',
+        responsive: true,
+        pagingType: "full_numbers",
+        language: {
+          paginate: {
+            
+            previous: '<img  src="img/pagination-left.png" alt="previous" />',
+            next: '<img src="img/pagination-left.png" alt="next" style="transform: rotate(180deg)" />',
+          },
+          info: "Total Record: _MAX_",
+          lengthMenu: "Show_MENU_Entries",
+        },
+        buttons: ["excel"],
+        columnDefs: [{ orderable: false, targets: 7 }],
+      });
+      </script>
+
+      <script>
+          function admin_action(){
+              if(document.getElementById("adminrow").classList.contains("showmenu")){
+                document.getElementById("adminrow").classList.remove("showmenu");
+              }
+              else{
+                document.getElementById("adminrow").classList.add("showmenu");
+              }
+          }
+      </script>
+
+      
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+
+    <script>
+        function html_table_to_excel(type)
+        {
+            var data = document.getElementById('admin-um-table');
+
+            var file = XLSX.utils.table_to_book(data, {sheet: "sheet1"});
+
+            XLSX.write(file, { bookType: type, bookSST: true, type: 'base64' });
+
+            XLSX.writeFile(file, 'file.' + type);
+        }
+
+        const export_button = document.getElementById('export');
+
+        export_button.addEventListener('click', () =>  {
+            html_table_to_excel('xlsx');
+        });
+    </script>
+
+</body>
+</html>
