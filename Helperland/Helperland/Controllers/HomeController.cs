@@ -1,4 +1,4 @@
-﻿using Helperland.Models;
+using Helperland.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Helperland.Data;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace Helperland.Controllers
 {
@@ -13,9 +16,19 @@ namespace Helperland.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly HelperlandContext _db;
+
+        private readonly IWebHostEnvironment _webHostEnv;
+
+        /*   public HomeController(ILogger<HomeController> logger)
+           {
+               _logger = logger;
+           }
+   */
+        public HomeController(HelperlandContext db, IWebHostEnvironment webHostEnv)
         {
-            _logger = logger;
+            _db = db;
+            _webHostEnv = webHostEnv;
         }
 
         public IActionResult Index()
@@ -30,6 +43,23 @@ namespace Helperland.Controllers
 
         public IActionResult Contact()
         {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public IActionResult Contact(ContactU contactu)
+        {
+            if(contactu.Attach != null)
+            {
+                string folder = "contactFiles/";
+                folder += Guid.NewGuid().ToString() + "_" + contactu.Attach.FileName;
+                string serverFolder=Path.Combine(_webHostEnv.WebRootPath, folder);
+                contactu.Attach.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                contactu.FileName = folder;
+            }
+            contactu.CreatedOn = DateTime.Now;
+            _db.ContactUs.Add(contactu);
+            _db.SaveChanges();
             return PartialView();
         }
 
