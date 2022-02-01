@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using Helperland.Data;
 using Helperland.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -79,3 +80,21 @@ namespace Helperland.Controllers
         }
     }
 }
+=======
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Helperland.Controllers
+{
+    public class SignupController : Controller
+    {
+        public IActionResult Signup()
+        {
+            return PartialView();
+        }
+    }
+}
+>>>>>>> aab785f991e2ba3854a1a43396796343ad0bd874
