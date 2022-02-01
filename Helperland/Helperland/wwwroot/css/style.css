@@ -1106,7 +1106,7 @@ footer {
 #form-elements {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /*align-items: center;*/
 }
 
 input {
@@ -1114,13 +1114,36 @@ input {
     margin: 0;
 }
 
-#fname, #lname {
+#alreadyRegistered {
+    margin: 30px auto 0;
+}
+
+#fname, #lname, #password, #confirmPwd {
     width: 300px;
     padding: 0 15px;
     line-height: 46px;
     margin: 23px 7.5px 7.5px;
     font-size: 16px;
 }
+
+#password, #confirmPwd {
+    margin: 7.5px;
+}
+
+.checkboxes {
+    display: flex;
+    width: 620px;
+    margin: 7.5px 0;
+    align-items:flex-start;
+}
+
+    .checkboxes input {
+        margin: 5px 5px 0 0;
+    }
+
+    .checkboxes label a {
+        color: #1d7a8c;
+    }
 
 #email {
     width: 300px;
@@ -1153,6 +1176,10 @@ input {
     padding: 14px 15px;
     line-height: 46px;
     border: 1px solid #c8c8c8;
+}
+
+#contactbtn-div{
+    text-align:center;
 }
 
 #contact-btn {
@@ -1192,6 +1219,36 @@ input {
     margin-top: 43px;
     z-index: 100;
 }
+
+#upload-div {
+    margin-left: 5px;
+}
+
+    #upload-div p {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+#attachment {
+    display: none;
+}
+
+#labelattach {
+    border: 2px solid #1d7a8c;
+    padding: 0 15px;
+    line-height: 46px;
+    color: #1d7a8c;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+
+    #labelattach:hover {
+        border: 2px solid #1d7a8c;
+        color: white;
+        background-color: #1d7a8c;
+    }
 
 @media screen and (max-width:650px) {
     #form-elements div {

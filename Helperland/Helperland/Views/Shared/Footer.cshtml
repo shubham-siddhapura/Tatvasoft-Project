@@ -13,16 +13,16 @@
         <!-- logo ends -->
         <!-- links starts -->
         <div class="d-flex flex-column flex-md-row flex-nowrap flex-md-wrap text-center justify-content-center" style="color: white;" id="faq-footer-links">
-            <a asp-action="Index">HOME</a>
-            <a asp-action="About">ABOUT</a>
+            <a asp-controller="Home" asp-action="Index">HOME</a>
+            <a asp-controller="Home" asp-action="About">ABOUT</a>
             <a href="#">TESTIMONIALS</a>
-            <a asp-action="Faq">FAQS</a>
+            <a asp-controller="Home" asp-action="Faq">FAQS</a>
             <a href="#">INSURRANCE POLICY</a>
             <a href="#">IMPRESSUM</a>
         </div>
         <!-- links ends -->
         <!-- fb insta starts -->
-        <div>
+        <div> 
             <a class="px-2" href="#"><i style="color: white;" class="fab fa-facebook-f"></i></a>
 
             <a class="px-2" href="#"><i style="color: white;" class="fab fa-instagram"></i></a>

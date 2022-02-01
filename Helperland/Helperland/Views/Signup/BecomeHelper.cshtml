@@ -1,6 +1,6 @@
-﻿
+﻿@model Helperland.Models.User
 @{
-    ViewData["Title"] = "Becomehelper";
+    ViewData["Title"] = "BecomeHelper";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +27,7 @@
     <!-- nav starts -->
     <nav id="homenav" class="navbar navbar-expand-lg">
 
-        <a class="navbar-brand ms-3" asp-action="Index"><img src="/img/white-logo-transparent-background.png" id="mylogo" alt=""></a>
+        <a class="navbar-brand ms-3" asp-controller="Home" asp-action="Index"><img src="/img/white-logo-transparent-background.png" id="mylogo" alt=""></a>
         <button style="color:white; margin-right: 15px;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" onclick="changeColor()" id="nav-btn">
             <i class="fas fa-bars"></i>
         </button>
@@ -37,7 +37,7 @@
                     <a class="nav-link active rounded-pill nav-padding" aria-current="page" href="#">Book a Cleaner</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-action="Prices">Prices</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Prices">Prices</a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="#">Our Guarantee</a>
@@ -74,22 +74,27 @@
             <div id="becomeProviderForm">
                 <div id="becomeProviderRegister">
                     <h2>Register Now!</h2>
-                    <form action="">
-                        <input type="text" name="fname" placeholder="First name">
-                        <input type="text" name="lname" placeholder="Last name">
-                        <input type="text" name="email" placeholder="Email Address">
+                    <form action="BecomeHelper" method="post">
+                        <input type="text" asp-for="FirstName" placeholder="First name">
+                        <span asp-validation-for="FirstName" class="text-danger text-left"></span>
+                        <input type="text" asp-for="LastName" placeholder="Last name">
+                        <span asp-validation-for="LastName" class="text-danger text-left"></span>
+                        <input type="text" asp-for="Email" placeholder="Email Address">
+                        <span asp-validation-for="Email" class="text-danger text-left"></span>
                         <div>
-                            <span id="ctrcode">+49</span><input type="text" name="mobile" id="providerRegistrationMobile" placeholder="Mobile number">
+                            <span id="ctrcode">+49</span><input type="text" asp-for="Mobile" id="providerRegistrationMobile" placeholder="Mobile number">
+                                                         <span asp-validation-for="Mobile" class="text-danger text-left"></span>
                         </div>
-                        <input type="text" name="email" id="email" placeholder="Email address">
-                        <input type="password" name="password" placeholder="Password">
+
+                        <input type="password" asp-for="Password" placeholder="Password">
+                        <span asp-validation-for="Password" class="text-danger text-left"></span>
                         <input type="password" name="cpassword" placeholder="Confirm Password">
                         <div class="providerRegistrationCheckbox">
                             <input type="checkbox" name="newsletter" id="providerRegistrationnews">
                             <label for="newsletter">Send me newsletter from Helperland</label>
                         </div>
                         <div class="providerRegistrationCheckbox">
-                            <input type="checkbox" name="t&c" id="providerRegistrationtandc">
+                            <input type="checkbox" name="t&c" id="providerRegistrationtandc" required>
                             <label for="t&c">I accept <a href="">Terms and conditions</a> & <a href="">privacy policy</a></label>
                         </div>
 
@@ -203,7 +208,30 @@
         }
     </script>
 
+    <script>
+        var pwd = document.getElementById("password");
+        var conf = document.getElementById("cpassword");
+        var submit = document.getElementById("providerRegistration-btn");
+
+        conf.addEventListener("change", function () {
+            if (pwd.value != conf.value) {
+                submit.disabled = true;
+                window.alert("password and confirmpassword are not same");
+            }
+            else {
+                submit.disabled = false;
+            }
+        });
+
+    </script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </body>
 </html>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
