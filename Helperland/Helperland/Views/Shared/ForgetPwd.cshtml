@@ -1,0 +1,33 @@
+﻿@model Helperland.Models.ForgetPassword
+@{
+    ViewData["Title"] = "ForgetPwd";
+}
+
+
+<!-- forget pwd modal starts -->
+<div class="modal popupsLogin" tabindex="-1" id="forgetPwdModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Forgot Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form asp-controller="Signup" asp-action="Forget">
+
+                    <input type="text" asp-for="Email" id="loginEmail" placeholder="Email Address"><span><img src="" alt=""></span>
+                    <span asp-validation-for="Email"></span>
+                    <button type="submit" id="forgetPwdSend" @* data-bs-dismiss="modal"*@>Send</button>
+
+                </form>
+
+                <div>
+                    <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login now</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- forget pwd modal ends -->

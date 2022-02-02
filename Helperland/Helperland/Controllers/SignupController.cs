@@ -1,11 +1,13 @@
-<<<<<<< HEAD
 ﻿using Helperland.Data;
 using Helperland.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace Helperland.Controllers
 {
@@ -78,23 +80,47 @@ namespace Helperland.Controllers
             return PartialView();
 
         }
-    }
-}
-=======
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Helperland.Controllers
-{
-    public class SignupController : Controller
-    {
-        public IActionResult Signup()
+
+        [HttpPost]
+        public IActionResult Login(LoginUser loginUser)
         {
+            if (ModelState.IsValid)
+            {
+                if (_db.Users.Where(x => x.Email == loginUser.Email && x.Password == loginUser.Password).Count() > 0)
+                {
+                    var user = _db.Users.FirstOrDefault(x => x.Email == loginUser.Email);
+            
+ 
+                    HttpContext.Session.SetInt32("userId", user.UserId);
+                    return RedirectToAction("CustServiceHistory", "CustomerPage");
+                }
+                else
+                {
+                    TempData["showAlert"] = "show alert";
+                    TempData["loginFail"] = "Username and Password are invalid.";
+                    return RedirectToAction("Index", "Home", new { loginFail = "true" });
+                }
+            }
+            
+
             return PartialView();
         }
+
+        /*[HttpPost]*/
+        /*public  IActionResult Forget(ForgetPassword email)
+        {
+            if (ModelState.IsValid)
+            {
+                var token = await userManager.GeneratePasswordResetTockenAsync(email);
+            }
+            *//*else
+            {
+                return View(Model);
+            }*//*
+            return RedirectToAction("Index", "Home");
+        }*/
     }
+
+    
 }
->>>>>>> aab785f991e2ba3854a1a43396796343ad0bd874
