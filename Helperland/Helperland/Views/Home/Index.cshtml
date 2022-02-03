@@ -337,6 +337,7 @@
 
     @await Html.PartialAsync("MyModals")
     @await Html.PartialAsync("ForgetPwd")
+
     <!-- permission starts -->
     <div id="home-permission">
         <p>
@@ -400,6 +401,9 @@
             document.getElementById("home-login").click();
         }
 
+        if (url == "mailSended=true") {
+            document.getElementById("mailSendedbtn").click();
+        }
     </script>
 
 </body>

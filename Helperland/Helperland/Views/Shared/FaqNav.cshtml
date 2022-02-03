@@ -8,7 +8,41 @@
         <i class="fas fa-bars"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
         <ul class="navbar-nav ms-auto" id="faq-nav">
+            @if (TempData["name"] != null)
+            { 
+                <div id="upcoming-menu-collapse">
+                    <li id="welcomeName">
+                        Welcome,
+                        <span id="SPname">Shubham</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Dashbord</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" asp-controller="CustomerPage" asp-action="CustServiceHistory">Service History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Service Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Favourite Pros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Invoices</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Notification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">My Setting</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Logout</a>
+                    </li>
+                </div>
+             }
             <li class="nav-item">
                 <a class="nav-link rounded-pill nav-padding greenlink" aria-current="page" href="#">Book a Cleaner</a>
             </li>
@@ -24,14 +58,47 @@
             <li class="nav-item">
                 <a class="nav-link nav-padding" asp-controller="Home" asp-action="Contact">Contact</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link rounded-pill nav-padding greenlink" role="button" asp-controller="Home" asp-action="Index" asp-route-loginModal="true">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link border-1 rounded-pill nav-padding greenlink" asp-controller="Signup" asp-action="Becomehelper">Become a Helper</a>
-            </li>
+            @if (TempData["name"] == null)
+            {
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill nav-padding greenlink" role="button" asp-controller="Home" asp-action="Index" asp-route-loginModal="true">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border-1 rounded-pill nav-padding greenlink" asp-controller="Signup" asp-action="Becomehelper">Become a Helper</a>
+                </li>
 
-        </ul>
+            }
+            else
+            {
+                <li class="nav-item" id="upcom-notify">
+                    <div id="upcoming-notification">
+                        <a class="nav-link nav-padding upcoming-notify" href="#">
+                            <img src="/img/upcomingService/icon-notification.png" alt="">
+                            <span id="notification-dot">3</span>
+                        </a>
 
-    </div>
-</nav>
+                    </div>
+
+                </li>
+                <li class="nav-item dropdown nav-padding" id="upcomingUser">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/img/upcomingService/user.png" alt="">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li id="userWelcomeName">
+                            Welcome,
+                            <br />
+                            <span id="UsernameNav">Shubham</span>
+                        </li>
+                        <li><a class="dropdown-item" href="#">My Dashbord</a></li>
+                        <li><a class="dropdown-item" href="#">My Setting</a></li>
+                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                    </ul>
+                </li>
+
+            }
+
+            </ul>
+
+            </div>
+        </nav>

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Helperland.Data;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace Helperland.Controllers
 {
@@ -19,6 +20,8 @@ namespace Helperland.Controllers
         private readonly HelperlandContext _db;
 
         private readonly IWebHostEnvironment _webHostEnv;
+
+        
 
         /*   public HomeController(ILogger<HomeController> logger)
            {
@@ -33,22 +36,38 @@ namespace Helperland.Controllers
 
         public IActionResult Index()
         {
+            var id = HttpContext.Session.GetInt32("userId");
+            if (id != null)
+            {
+                TempData["name"] = "shubham";
+            }
             return PartialView();
         }
 
         public IActionResult About()
         {
+            var id = HttpContext.Session.GetInt32("userId");
+            if (id != null)
+            {
+                TempData["name"] = "shubham";
+            }
             return PartialView();
         }
 
         public IActionResult Contact()
         {
+            var id = HttpContext.Session.GetInt32("userId");
+            if (id != null)
+            {
+                TempData["name"] = "shubham";
+            }
             return PartialView();
         }
 
         [HttpPost]
         public IActionResult Contact(ContactU contactu)
         {
+
             if(contactu.Attach != null)
             {
                 string folder = "contactFiles/";
@@ -65,11 +84,21 @@ namespace Helperland.Controllers
 
         public IActionResult Prices()
         {
+            var id = HttpContext.Session.GetInt32("userId");
+            if (id != null)
+            {
+                TempData["name"] = "shubham";
+            }
             return PartialView();
         }
 
         public IActionResult Faq()
         {
+            var id = HttpContext.Session.GetInt32("userId");
+            if (id != null)
+            {
+                TempData["name"] = "shubham";
+            }
             return PartialView();
         }
 

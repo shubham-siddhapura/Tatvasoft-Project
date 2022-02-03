@@ -590,7 +590,10 @@ hr {
     z-index: -1;
 }
 
-
+#userWelcomeName{
+    padding:0.25rem 1rem;
+    border-bottom:1px solid #c8c8c8;
+}
 
 .separator {
     margin: 0 9px;
@@ -735,6 +738,10 @@ footer {
 
     #faq-nav .nav-item {
         margin: 10px;
+    }
+
+    #faqnav .nav-link {
+        margin: 0 12px;
     }
 
     #faq-footer {
@@ -1259,6 +1266,11 @@ input {
         flex-wrap: wrap;
     }
 
+    #form-elements #upload-div{
+        display:block;
+        margin:0 15px;
+    }
+
     #fname, #lname, #email {
         width: 90%;
         margin: 7.5px auto;
@@ -1777,6 +1789,10 @@ input {
     display: none;
 }
 
+#upcomingUser ul a {
+    color: black !important;
+}
+
 #notification-user {
     display: none;
     list-style-type: none;
@@ -1806,10 +1822,11 @@ input {
         }
 }
 
-@media screen and (max-width:991px) {
+@media screen and (max-width:992px) {
 
     #faqnav .nav-item .rounded-pill {
         line-height: 18px;
+        margin:0 12px;
     }
 
     .upcomingService #faq-nav {
@@ -1861,6 +1878,7 @@ input {
     #upcoming-menu-collapse {
         display: block;
         border-bottom: 1px solid #ffffff55;
+        width:100%;
     }
 
     #upcoming-notification {
@@ -2697,9 +2715,9 @@ input::-webkit-datetime-edit-fields-wrapper {
     }
 
     .flex-column div {
-        display: flex;
+        /*display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: center;*/
         margin: 2px;
     }
 
