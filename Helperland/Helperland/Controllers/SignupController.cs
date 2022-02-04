@@ -159,7 +159,7 @@ namespace Helperland.Controllers
 
                 SmtpClient client = new SmtpClient();
                 client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("siddshubham123456789@gmail.com", "Shubham123");
+                client.Authenticate("id", "pwd");
                 client.Send(message);
                 client.Disconnect(true);
                 client.Dispose();
