@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "zUyfFb3rFQ8FHb1C2gNayFujw3BUCKdE5tGEfyjtAvzKHjAXl5ocLm9G3GQCQSoxPuv61mjbFSmCxzGmDUePkQ==",
+  "dgSpecHash": "Co//eacSpJ1H2xaVmpyMmbdN/Vb8g0hrVHt2RJeJSFUPKo+CqwcBHxe92Xl0L4Pu6E1EBOL+21kWgCaaw5RaVA==",
   "success": true,
   "projectFilePath": "D:\\Tatvasoft\\Tatvasoft Project\\Helperland\\Helperland\\Helperland.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\shubh\\.nuget\\packages\\bcrypt.net-next\\4.0.2\\bcrypt.net-next.4.0.2.nupkg.sha512",
     "C:\\Users\\shubh\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\shubh\\.nuget\\packages\\mailkit\\2.6.0\\mailkit.2.6.0.nupkg.sha512",
     "C:\\Users\\shubh\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

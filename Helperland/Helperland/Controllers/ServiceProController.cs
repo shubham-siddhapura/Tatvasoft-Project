@@ -1,5 +1,4 @@
-﻿
-using Helperland.Data;
+﻿using Helperland.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,19 +8,20 @@ using System.Threading.Tasks;
 
 namespace Helperland.Controllers
 {
-    public class CustomerPageController : Controller
+    public class ServiceProController : Controller
     {
+
         private readonly HelperlandContext _db;
 
-        public CustomerPageController(HelperlandContext db)
+        public ServiceProController(HelperlandContext db)
         {
             _db = db;
         }
 
-        public IActionResult CustServiceHistory()
+        public IActionResult SPUpcomingService()
         {
             int typeid = 0;
-            if (HttpContext.Session.GetInt32("userId")!=null)
+            if (HttpContext.Session.GetInt32("userId") != null)
             {
                 var id = HttpContext.Session.GetInt32("userId");
                 Models.User user = _db.Users.Find(id);
@@ -36,12 +36,11 @@ namespace Helperland.Controllers
                 TempData["userType"] = user.UserTypeId.ToString();
                 typeid = user.UserTypeId;
             }
-
-            if (typeid == 1)
+            
+            if (typeid == 2)
             {
                 return PartialView();
             }
-
             return RedirectToAction("Index", "Home", new { loginModal = "true" });
             
         }

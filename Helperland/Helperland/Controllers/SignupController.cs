@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MimeKit;
-
+using Org.BouncyCastle.Crypto.Generators;
 
 namespace Helperland.Controllers
 {
@@ -38,6 +38,7 @@ namespace Helperland.Controllers
                     user.UserTypeId = 1;
                     user.CreatedDate = DateTime.Now;
                     user.ModifiedDate = DateTime.Now;
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
                     _db.Users.Add(user);
                     _db.SaveChanges();
                     return RedirectToAction("Index", "Home");
@@ -68,6 +69,7 @@ namespace Helperland.Controllers
                     user.UserTypeId = 2;
                     user.CreatedDate = DateTime.Now;
                     user.ModifiedDate = DateTime.Now;
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
                     _db.Users.Add(user);
                     _db.SaveChanges();
                     return RedirectToAction("Index", "Home");
@@ -89,13 +91,34 @@ namespace Helperland.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_db.Users.Where(x => x.Email == loginUser.Email && x.Password == loginUser.Password).Count() > 0)
+                string password = _db.Users.FirstOrDefault(x => x.Email == loginUser.Email).Password;
+                
+                bool pass = BCrypt.Net.BCrypt.Verify(loginUser.Password, password);
+                if (_db.Users.Where(x => x.Email == loginUser.Email && pass).Count() > 0)
                 {
                     var user = _db.Users.FirstOrDefault(x => x.Email == loginUser.Email);
-            
- 
+
+                    if(loginUser.Remember == true)
+                    {
+                        CookieOptions cookieRemember = new CookieOptions();
+                        cookieRemember.Expires = DateTime.Now.AddSeconds(60);
+                        Response.Cookies.Append("userId", Convert.ToString(user.UserId), cookieRemember);
+                    }
+
                     HttpContext.Session.SetInt32("userId", user.UserId);
-                    return RedirectToAction("CustServiceHistory", "CustomerPage");
+
+                    if (user.UserTypeId == 1) {
+                        return RedirectToAction("CustServiceHistory", "CustomerPage");
+                    }
+                    else if(user.UserTypeId == 2)
+                    {
+                        return RedirectToAction("SPUpcomingService", "ServicePro");
+                    }
+                    else if(user.UserTypeId == 3)
+                    {
+                        return RedirectToAction("ServiceRequest", "Admin");
+                    }
+                   
                 }
                 else
                 {
@@ -105,24 +128,10 @@ namespace Helperland.Controllers
                 }
             }
             
-
             return PartialView();
         }
 
-        /*[HttpPost]*/
-        /*public  IActionResult Forget(ForgetPassword email)
-        {
-            if (ModelState.IsValid)
-            {
-                var token = await userManager.GeneratePasswordResetTockenAsync(email);
-            }
-            *//*else
-            {
-                return View(Model);
-            }*//*
-            return RedirectToAction("Index", "Home");
-        }*/
-
+        
         [HttpPost]
         public IActionResult SendMail(string email)
         {
@@ -130,7 +139,6 @@ namespace Helperland.Controllers
             if (email != null)
             {
                 var user = _db.Users.FirstOrDefault(x => x.Email == email);
-
 
                 MimeMessage message = new MimeMessage();
 
@@ -145,9 +153,8 @@ namespace Helperland.Controllers
 
                 BodyBuilder bodyBuilder = new BodyBuilder();
                 bodyBuilder.HtmlBody = "<h1>Reset your password by click below link</h1>" +
-                    "<a href='" + Url.Action("ResetPassword", "Signup", new { userId = user.UserId }, "https") + "'>Reset Password</a>";
+                    "<a href='" + Url.Action("ResetPassword", "Signup", new { userId = user.UserId, token=user.Password }, "https") + "'>Reset Password</a>";
                 
-
                 message.Body = bodyBuilder.ToMessageBody();
 
                 SmtpClient client = new SmtpClient();
@@ -156,36 +163,45 @@ namespace Helperland.Controllers
                 client.Send(message);
                 client.Disconnect(true);
                 client.Dispose();
+                TempData["mailSended"] = "true";
                 return RedirectToAction("Index", "Home", new { mailSended="true" });
+
             }
             return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
-        public IActionResult ResetPassword(int userId)
+        public IActionResult ResetPassword(int userId, string token)
         {
             TempData["id"] = userId;
-            return PartialView();
+            User user = _db.Users.FirstOrDefault(x => x.UserId == userId);
+            if(token == user.Password)
+            {
+                return PartialView();
+            }
+            return RedirectToAction("Index", "Home");
         }
       
         [HttpPost]
         public IActionResult ResetPassword(ResetPassword rp)
         {
-            var user = new User() { UserId = rp.userId, Password = rp.password, ModifiedDate = DateTime.Now };
+            String HashPwd = BCrypt.Net.BCrypt.HashPassword(rp.password);
+            var user = new User() { UserId = rp.userId, Password = HashPwd, ModifiedDate = DateTime.Now };
             _db.Users.Attach(user);
             _db.Entry(user).Property(x => x.Password).IsModified = true;
-            _db.Entry(user).Property(x => x.Password).IsModified = true;
+            _db.Entry(user).Property(x => x.ModifiedDate).IsModified = true;
             _db.SaveChanges();
 
 
             return RedirectToAction("Index", "Home", new { loginModal = "true" });
         }
 
-        /*public void Logout()
+        public IActionResult Logout()
         {
             HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
-*/
+
     }
 
 

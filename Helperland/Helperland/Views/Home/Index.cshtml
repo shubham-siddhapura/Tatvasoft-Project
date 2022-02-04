@@ -24,14 +24,48 @@
 <body>
 
     <!-- nav starts -->
+
     <nav id="homenav" class="navbar navbar-expand-lg">
 
-        <a class="navbar-brand ms-3" href="home.html"><img src="img/white-logo-transparent-background.png" id="mylogo" alt=""></a>
+        <a class="navbar-brand ms-3" asp-controller="Home" asp-action="Index"><img src="/img/white-logo-transparent-background.png" id="mylogo" alt=""></a>
         <button style="color:white; margin-right: 15px;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto me-2">
+                @if (TempData["name"] != null)
+                {
+                    <div id="upcoming-menu-collapse">
+                    <li id="welcomeName">
+                        Welcome,
+                        <span id="SPname">@TempData["name"]</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Dashbord</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" asp-controller="CustomerPage" asp-action="CustServiceHistory">Service History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Service Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Favourite Pros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Invoices</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Notification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">My Setting</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" asp-controller="Signup" asp-action="Logout">Logout</a>
+                    </li>
+            </div>
+        }
                 <li class="nav-item">
                     <a class="nav-link active rounded-pill nav-padding" aria-current="page" href="#">Book a Cleaner</a>
                 </li>
@@ -47,366 +81,402 @@
                 <li class="nav-item ">
                     <a class="nav-link" asp-action="Contact">Contact Us</a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link rounded-pill " role="button" data-bs-toggle="modal" id="home-login" data-bs-target="#loginModal">Login</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link rounded-pill" asp-controller="Signup" asp-action="Becomehelper">Become a Helper</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img style="vertical-align: baseline;" src="img/ic-flag.png" alt="">
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#"><img src="img/ic-flag.png" alt=""> <span>India</span> </a></li>
-                        <li><a class="dropdown-item" href="#"><img src="img/ic-flag.png" alt=""> <span>U.K.</span> </a></li>
-                        <li><a class="dropdown-item" href="#"><img src="img/ic-flag.png" alt=""> <span>U.S.A.</span> </a></li>
-                    </ul>
-                </li>
-            </ul>
-
-        </div>
-    </nav>
-    <!-- nav ends -->
-    <!-- header strarts -->
-    <header class="header">
 
 
-        <!-- Heading -->
-        <div class="text-center text-lg-start col-lg-5 heading">
-            <h1>Lorem, ipsum dolor.</h1>
-            <div>
-                <img class="me-2 mb-0" src="img/yes-tick.svg" alt=""><p class="d-inline mb-0">  Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
-            </div>
-            <div>
-                <img class="me-2 my-0" src="img/yes-tick.svg" alt=""><p class="d-inline my-0">Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
-            </div>
-            <div>
-                <img class="me-2" src="img/yes-tick.svg" alt=""><p class="d-inline">Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
-            </div>
+                @if (TempData["name"] == null)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill nav-padding " role="button" id="homelogin-btn" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link border-1 rounded-pill nav-padding " asp-controller="Signup" asp-action="Becomehelper">Become a Helper</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img style="vertical-align: baseline;" src="/img/ic-flag.png" alt="">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#"><img src="/img/ic-flag.png" alt=""> <span>India</span> </a></li>
+                            <li><a class="dropdown-item" href="#"><img src="/img/ic-flag.png" alt=""> <span>U.K.</span> </a></li>
+                            <li><a class="dropdown-item" href="#"><img src="/img/ic-flag.png" alt=""> <span>U.S.A.</span> </a></li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item" id="upcom-notify">
+                        <div id="upcoming-notification">
+                            <a class="nav-link nav-padding upcoming-notify" href="#">
+                                <img src="/img/upcomingService/icon-notification.png" alt="">
+                                <span id="notification-dot">3</span>
+                            </a>
 
-        </div>
-        <!-- Heading -->
-
-        <div class="text-center mt-5">
-            <a class="rounded-pill center-btn" href="#">Let's Book a Cleaner</a>
-        </div>
-
-        <!-- steps starts-->
-        <div id="steps">
-            <div class="text-center home-step">
-                <div>
-                    <img src="img/postcode.svg" alt="">
-                </div>
-                <p>Enter your postcode</p>
-            </div>
-            <div class="step-arrow">
-                <img src="img/step-arrow-1.png" alt="">
-            </div>
-            <div class="text-center home-step">
-                <div>
-                    <img class="" src="img/selectPlan.png" alt="">
-                </div>
-                <p>Select your plan</p>
-            </div>
-            <div class="step-arrow">
-                <img src="img/step-arrow-2.png" alt="">
-            </div>
-            <div class="text-center home-step">
-                <div>
-                    <img class="" src="img/payOnline.svg" alt="">
-                </div>
-                <p>Pay securely online</p>
-            </div>
-            <div class="step-arrow">
-                <img src="img/step-arrow-1.png" alt="">
-            </div>
-            <div class="text-center home-step">
-                <div>
-                    <img class="" src="img/amazingservises.svg" alt="">
-                </div>
-                <p>Enjoy amazing services</p>
-            </div>
-        </div>
-        <!-- steps ends -->
-
-        <div class="text-center mt-lg-3">
-            <a href=""><i class="fas fa-arrow-down border border-1 rounded-circle p-2 text-center" style="color: #ffffff; margin:42px 0 33px;"></i></a>
-        </div>
-    </header>
-    <!-- header ends -->
-    <!-- main starts -->
-    <main>
-
-        <!-- why helperland starts -->
-        <section class="home-why-hl">
-            <h1 class="text-center home-section-title">Why Helperland</h1>
-            <div class="" id="home-why-hl-main">
-
-                <!-- reason 1 starts -->
-                <div class="text-center home-why-hl-card">
-                    <img class="" src="img/professionals.jpg" alt="" width="275px" height="275px">
-                    <h2 class="">Experience & Vetted Professionals</h2>
-                    <p>dominate the industry in scale and scope with an adaptable, extensive network that consistently delivers exceptional results.</p>
-                </div>
-                <!-- reason 1 ends -->
-                <!-- reason 2 starts -->
-                <div class="text-center home-why-hl-card">
-                    <img class="" src="img/secureOnlinePayment.jpg" alt="" width="275px" height="275px">
-                    <h2 class="">Secure Online Payment</h2>
-                    <p>Payment is processed securely online. Customers pay safely online and manage the booking.</p>
-                </div>
-                <!-- reason 2 ends -->
-                <!-- reason 3 starts -->
-                <div class="text-center home-why-hl-card">
-                    <img class="" src="img/dedicatedCustomerService.jpg" alt="" width="275px" height="275px">
-                    <h2 class="">Dedicated Customer Service</h2>
-                    <p>to our customers and are guided in all we do by their needs. The team is always happy to support you and offer all the information.</p>
-                </div>
-                <!-- reason 3 ends -->
-
-            </div>
-        </section>
-        <!-- why helperland ends -->
-
-        <div class="home-blog-bg">
-            <div class="home-bg">
-                <img src="img/blog-left-bg.png" alt="">
-            </div>
-            <!-- section starts -->
-
-            <section>
-
-                <div class="" id="home-upper-blog">
-                    <div id="home-upper-blogdiv">
-                        <div id="grppara">
-                            <h2>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing.
-                            </h2>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab minima omnis quod? Quaerat, repellat sit?
-                            </p>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, deserunt consectetur, aperiam harum est delectus ipsa excepturi sunt, quod dolorem id! Enim illo ipsa magni.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         </div>
+
+                    </li>
+                    <li class="nav-item dropdown nav-padding" id="upcomingUser">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="/img/upcomingService/user.png" alt="">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li id="userWelcomeName">
+                                Welcome,
+                                <br />
+                                <span id="UsernameNav">@TempData["name"]</span>
+                            </li>
+                            <li><a class="dropdown-item" href="#">My Dashbord</a></li>
+                            <li><a class="dropdown-item" href="#">My Setting</a></li>
+                            <li><a class="dropdown-item" asp-controller="Signup" asp-action="Logout">Logout</a></li>
+                        </ul>
+                    </li>
+
+                }
+
+                </ul>
+
+                </div>
+            </nav>
+
+            <!-- nav ends -->
+            <!-- header strarts -->
+            <header class="header">
+
+
+                <!-- Heading -->
+                <div class="text-center text-lg-start col-lg-5 heading">
+                    <h1>Lorem, ipsum dolor.</h1>
+                    <div>
+                        <img class="me-2 mb-0" src="img/yes-tick.svg" alt=""><p class="d-inline mb-0">  Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
+                    </div>
+                    <div>
+                        <img class="me-2 my-0" src="img/yes-tick.svg" alt=""><p class="d-inline my-0">Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
+                    </div>
+                    <div>
+                        <img class="me-2" src="img/yes-tick.svg" alt=""><p class="d-inline">Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
+                    </div>
+
+                </div>
+                <!-- Heading -->
+
+                <div class="text-center mt-5">
+                    <a class="rounded-pill center-btn" href="#">Let's Book a Cleaner</a>
+                </div>
+
+                <!-- steps starts-->
+                <div id="steps">
+                    <div class="text-center home-step">
                         <div>
-                            <img src="img/grouped.jpg" id="grouped" alt="">
+                            <img src="img/postcode.svg" alt="">
                         </div>
+                        <p>Enter your postcode</p>
+                    </div>
+                    <div class="step-arrow">
+                        <img src="img/step-arrow-1.png" alt="">
+                    </div>
+                    <div class="text-center home-step">
+                        <div>
+                            <img class="" src="img/selectPlan.png" alt="">
+                        </div>
+                        <p>Select your plan</p>
+                    </div>
+                    <div class="step-arrow">
+                        <img src="img/step-arrow-2.png" alt="">
+                    </div>
+                    <div class="text-center home-step">
+                        <div>
+                            <img class="" src="img/payOnline.svg" alt="">
+                        </div>
+                        <p>Pay securely online</p>
+                    </div>
+                    <div class="step-arrow">
+                        <img src="img/step-arrow-1.png" alt="">
+                    </div>
+                    <div class="text-center home-step">
+                        <div>
+                            <img class="" src="img/amazingservises.svg" alt="">
+                        </div>
+                        <p>Enjoy amazing services</p>
                     </div>
                 </div>
+                <!-- steps ends -->
 
-            </section>
-            <!-- section ends -->
-            <!-- Blog starts  -->
-            <section class="" id="home-our-blog">
-                <h1 class="text-center">Our Blog</h1>
-                <div id="home-our-blog-main">
-                    <div id="home-our-blog-div">
+                <div class="text-center mt-lg-3">
+                    <a href=""><i class="fas fa-arrow-down border border-1 rounded-circle p-2 text-center" style="color: #ffffff; margin:42px 0 33px;"></i></a>
+                </div>
+            </header>
+            <!-- header ends -->
+            <!-- main starts -->
+            <main>
 
-                        <div class="card border shadow-lg home-our-blog-card">
-                            <div class="our-blog-cardimg">
-                                <img src="img/card-img1.png" class="card-img-top" alt="...">
-                            </div>
+                <!-- why helperland starts -->
+                <section class="home-why-hl">
+                    <h1 class="text-center home-section-title">Why Helperland</h1>
+                    <div class="" id="home-why-hl-main">
 
-                            <div class="card-body">
-                                <h5 class="card-title">Lorem ipsum dolor sit.</h5>
-                                <h6 class="date">April 19, 2021</h6>
-                                <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. deserunt sequi excepturi, autem veniam.</p>
-                                <a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a>
-                            </div>
+                        <!-- reason 1 starts -->
+                        <div class="text-center home-why-hl-card">
+                            <img class="" src="img/professionals.jpg" alt="" width="275px" height="275px">
+                            <h2 class="">Experience & Vetted Professionals</h2>
+                            <p>dominate the industry in scale and scope with an adaptable, extensive network that consistently delivers exceptional results.</p>
                         </div>
-
-                        <div class="card shadow-lg home-our-blog-card">
-                            <img src="img/card-img2.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
-                                <h6 class="date">April 19, 2021</h6>
-                                <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. deserunt sequi excepturi, autem veniam.</p>
-                                <a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a>
-                            </div>
+                        <!-- reason 1 ends -->
+                        <!-- reason 2 starts -->
+                        <div class="text-center home-why-hl-card">
+                            <img class="" src="img/secureOnlinePayment.jpg" alt="" width="275px" height="275px">
+                            <h2 class="">Secure Online Payment</h2>
+                            <p>Payment is processed securely online. Customers pay safely online and manage the booking.</p>
                         </div>
-
-                        <div class="card shadow-lg home-our-blog-card">
-                            <img src="img/card-img3.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
-                                <h6 class="date">April 19, 2021</h6>
-                                <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. deserunt sequi excepturi, autem veniam.</p>
-                                <a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a>
-                            </div>
+                        <!-- reason 2 ends -->
+                        <!-- reason 3 starts -->
+                        <div class="text-center home-why-hl-card">
+                            <img class="" src="img/dedicatedCustomerService.jpg" alt="" width="275px" height="275px">
+                            <h2 class="">Dedicated Customer Service</h2>
+                            <p>to our customers and are guided in all we do by their needs. The team is always happy to support you and offer all the information.</p>
                         </div>
+                        <!-- reason 3 ends -->
 
                     </div>
-                </div>
-            </section>
-            <!-- Blog ends -->
+                </section>
+                <!-- why helperland ends -->
 
-            <div class="home-bg-right">
-                <img src="img/blog-right-bg.png" alt="">
+                <div class="home-blog-bg">
+                    <div class="home-bg">
+                        <img src="img/blog-left-bg.png" alt="">
+                    </div>
+                    <!-- section starts -->
+
+                    <section>
+
+                        <div class="" id="home-upper-blog">
+                            <div id="home-upper-blogdiv">
+                                <div id="grppara">
+                                    <h2>
+                                        Lorem ipsum, dolor sit amet consectetur adipisicing.
+                                    </h2>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab minima omnis quod? Quaerat, repellat sit?
+                                    </p>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, deserunt consectetur, aperiam harum est delectus ipsa excepturi sunt, quod dolorem id! Enim illo ipsa magni.</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                </div>
+                                <div>
+                                    <img src="img/grouped.jpg" id="grouped" alt="">
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                    <!-- section ends -->
+                    <!-- Blog starts  -->
+                    <section class="" id="home-our-blog">
+                        <h1 class="text-center">Our Blog</h1>
+                        <div id="home-our-blog-main">
+                            <div id="home-our-blog-div">
+
+                                <div class="card border shadow-lg home-our-blog-card">
+                                    <div class="our-blog-cardimg">
+                                        <img src="img/card-img1.png" class="card-img-top" alt="...">
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">Lorem ipsum dolor sit.</h5>
+                                        <h6 class="date">April 19, 2021</h6>
+                                        <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. deserunt sequi excepturi, autem veniam.</p>
+                                        <a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow-lg home-our-blog-card">
+                                    <img src="img/card-img2.png" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
+                                        <h6 class="date">April 19, 2021</h6>
+                                        <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. deserunt sequi excepturi, autem veniam.</p>
+                                        <a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow-lg home-our-blog-card">
+                                    <img src="img/card-img3.png" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
+                                        <h6 class="date">April 19, 2021</h6>
+                                        <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. deserunt sequi excepturi, autem veniam.</p>
+                                        <a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Blog ends -->
+
+                    <div class="home-bg-right">
+                        <img src="img/blog-right-bg.png" alt="">
+                    </div>
+
+                </div>
+
+
+                <!-- testimonial starts -->
+                <section id="home-customer-say">
+                    <h1 class="text-center home-what-say">What Our Customers Say</h1>
+                    <div id="home-customer-say-main">
+                        <!-- testimonial 1 starts -->
+                        <div class="home-customer-say-card">
+                            <div class="home-customer-card-bg"><img src="img/customercardsticker.jpg" alt=""></div>
+                            <div class="card customer-say-card-flex">
+
+                                <div class="card-profile">
+                                    <img src="img/customer1.png" alt="" class="rounded-circle">
+                                    <div class="card-profile-details">
+                                        <div class="name"><h5 class="mb-0 pb-0">Lary Watson</h5></div>
+                                        <p class=" designation">Manchester</p>
+                                    </div>
+                                </div>
+                                <div class="testimonial mb-1">
+                                    <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni dolores molestias veniam inventore itaque eius iure omnis. </p>
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet.</p>
+                                </div>
+                                <div class="readmore-link"><a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a></div>
+                            </div>
+                        </div>
+                        <!-- testimonial 1 ends -->
+                        <!-- testimonial 2 starts -->
+                        <div class="home-customer-say-card">
+                            <div class="home-customer-card-bg"><img src="img/customercardsticker.jpg" alt=""></div>
+                            <div class="card customer-say-card-flex">
+
+                                <div class="card-profile">
+                                    <img src="img/customer2.png" alt="" class="rounded-circle">
+                                    <div class="card-profile-details">
+                                        <div class="name"><h5 class="mb-0 pb-0">John Smith</h5></div>
+                                        <p class="designation">Manchester</p>
+                                    </div>
+                                </div>
+                                <div class="testimonial">
+                                    <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni dolores molestias veniam inventore itaque eius iure omnis. </p>
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet.</p>
+                                </div>
+                                <div class="readmore-link"><a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a></div>
+                            </div>
+                        </div>
+                        <!-- testimonial 2 ends -->
+                        <!-- testimonial 3 starts -->
+                        <div class="home-customer-say-card">
+                            <div class="home-customer-card-bg"><img src="img/customercardsticker.jpg" alt=""></div>
+                            <div class="card customer-say-card-flex">
+
+                                <div class="card-profile">
+                                    <img src="img/customer3.png" alt="" class="rounded-circle">
+                                    <div class="card-profile-details">
+                                        <div class="name"><h5 class="mb-0 pb-0">Lars Johnson</h5></div>
+                                        <p class="designation">Manchester</p>
+                                    </div>
+                                </div>
+                                <div class="testimonial mb-1">
+                                    <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni dolores molestias veniam inventore itaque eius iure omnis. </p>
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet.</p>
+                                </div>
+                                <div class="readmore-link"><a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a></div>
+                            </div>
+                        </div>
+                        <!-- testimonial 3 ends -->
+                    </div>
+
+                    <!-- newsletter starts -->
+                    <div class="text-center home-newsletter">
+                        <h4 class="">GET OUR NEWSLETTER</h4>
+                        <form action="">
+                            <input type="text" name="email" placeholder="YOUR EMAIL" id="home-news-email">
+                            <input type="submit" name="submit" class="" id="home-newsbtn">
+                        </form>
+                    </div>
+                    <!-- newsletter ends -->
+                    <button type="button" class="btn btn-floating" id="timer" style="z-index: 100;"><img src="img/timer.png" alt=""></button>
+                </section>
+                <!-- testimonial ends -->
+
+                <button type="button" class="btn btn-floating" onclick="backToTop();" id="btn-back-to-top" style="z-index: 10000;"><i class="fas fa-chevron-circle-up"></i></button>
+
+            </main>
+            <!-- main ends -->
+            <!-- footer starts -->
+            @await Html.PartialAsync("Footer")
+            <!-- footer ends -->
+
+            @await Html.PartialAsync("MyModals")
+            @await Html.PartialAsync("ForgetPwd")
+
+            <!-- permission starts -->
+            <div id="home-permission">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat nunc libero, ac malesuada ligula aliquam ac. <a href="">Privacy Policy</a>
+                </p>
+                <button type="button" onclick="privacy_permission();">OK!</button>
             </div>
-
-        </div>
-
-
-        <!-- testimonial starts -->
-        <section id="home-customer-say">
-            <h1 class="text-center home-what-say">What Our Customers Say</h1>
-            <div id="home-customer-say-main">
-                <!-- testimonial 1 starts -->
-                <div class="home-customer-say-card">
-                    <div class="home-customer-card-bg"><img src="img/customercardsticker.jpg" alt=""></div>
-                    <div class="card customer-say-card-flex">
-
-                        <div class="card-profile">
-                            <img src="img/customer1.png" alt="" class="rounded-circle">
-                            <div class="card-profile-details">
-                                <div class="name"><h5 class="mb-0 pb-0">Lary Watson</h5></div>
-                                <p class=" designation">Manchester</p>
-                            </div>
-                        </div>
-                        <div class="testimonial mb-1">
-                            <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni dolores molestias veniam inventore itaque eius iure omnis. </p>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet.</p>
-                        </div>
-                        <div class="readmore-link"><a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a></div>
-                    </div>
-                </div>
-                <!-- testimonial 1 ends -->
-                <!-- testimonial 2 starts -->
-                <div class="home-customer-say-card">
-                    <div class="home-customer-card-bg"><img src="img/customercardsticker.jpg" alt=""></div>
-                    <div class="card customer-say-card-flex">
-
-                        <div class="card-profile">
-                            <img src="img/customer2.png" alt="" class="rounded-circle">
-                            <div class="card-profile-details">
-                                <div class="name"><h5 class="mb-0 pb-0">John Smith</h5></div>
-                                <p class="designation">Manchester</p>
-                            </div>
-                        </div>
-                        <div class="testimonial">
-                            <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni dolores molestias veniam inventore itaque eius iure omnis. </p>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet.</p>
-                        </div>
-                        <div class="readmore-link"><a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a></div>
-                    </div>
-                </div>
-                <!-- testimonial 2 ends -->
-                <!-- testimonial 3 starts -->
-                <div class="home-customer-say-card">
-                    <div class="home-customer-card-bg"><img src="img/customercardsticker.jpg" alt=""></div>
-                    <div class="card customer-say-card-flex">
-
-                        <div class="card-profile">
-                            <img src="img/customer3.png" alt="" class="rounded-circle">
-                            <div class="card-profile-details">
-                                <div class="name"><h5 class="mb-0 pb-0">Lars Johnson</h5></div>
-                                <p class="designation">Manchester</p>
-                            </div>
-                        </div>
-                        <div class="testimonial mb-1">
-                            <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni dolores molestias veniam inventore itaque eius iure omnis. </p>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet.</p>
-                        </div>
-                        <div class="readmore-link"><a href="#" class="blacklink">Read the Post <img src="img/rightArrow.png" alt=""></a></div>
-                    </div>
-                </div>
-                <!-- testimonial 3 ends -->
-            </div>
-
-            <!-- newsletter starts -->
-            <div class="text-center home-newsletter">
-                <h4 class="">GET OUR NEWSLETTER</h4>
-                <form action="">
-                    <input type="text" name="email" placeholder="YOUR EMAIL" id="home-news-email">
-                    <input type="submit" name="submit" class="" id="home-newsbtn">
-                </form>
-            </div>
-            <!-- newsletter ends -->
-            <button type="button" class="btn btn-floating" id="timer" style="z-index: 100;"><img src="img/timer.png" alt=""></button>
-        </section>
-        <!-- testimonial ends -->
-
-        <button type="button" class="btn btn-floating" onclick="backToTop();" id="btn-back-to-top" style="z-index: 10000;"><i class="fas fa-chevron-circle-up"></i></button>
-
-    </main>
-    <!-- main ends -->
-    <!-- footer starts -->
-    @await Html.PartialAsync("Footer")
-    <!-- footer ends -->
-
-    @await Html.PartialAsync("MyModals")
-    @await Html.PartialAsync("ForgetPwd")
-
-    <!-- permission starts -->
-    <div id="home-permission">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat nunc libero, ac malesuada ligula aliquam ac. <a href="">Privacy Policy</a>
-        </p>
-        <button type="button" onclick="privacy_permission();">OK!</button>
-    </div>
-    <!-- permission ends -->
-    <!-- scripts -->
+            <!-- permission ends -->
+            <!-- scripts -->
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 
-    <script>
+            <script>
 
-        window.onscroll = function () {
-            scrollFunction()
-        };
+                window.onscroll = function () {
+                    scrollFunction()
+                };
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 35 || document.documentElement.scrollTop > 35) {
-                document.getElementById("mylogo").style.width = "75px";
-                document.getElementById("mylogo").style.height = "55px";
-                document.getElementById("homenav").style.backgroundColor = "#525252";
-                document.getElementById("navbarSupportedContent").style.top = "60px";
-                document.getElementById("btn-back-to-top").style.display = "block";
-            } else {
-                document.getElementById("mylogo").style.width = "156px";
-                document.getElementById("mylogo").style.height = "120px";
-                document.getElementById("homenav").style.backgroundColor = "#52525200";
-                document.getElementById("navbarSupportedContent").style.top = "90px";
-                document.getElementById("btn-back-to-top").style.display = "block";
-            }
-        }
+                function scrollFunction() {
+                    if (document.body.scrollTop > 35 || document.documentElement.scrollTop > 35) {
+                        document.getElementById("mylogo").style.width = "75px";
+                        document.getElementById("mylogo").style.height = "55px";
+                        document.getElementById("homenav").style.backgroundColor = "#525252";
+                        document.getElementById("navbarSupportedContent").style.top = "60px";
+                        document.getElementById("btn-back-to-top").style.display = "block";
+                    } else {
+                        document.getElementById("mylogo").style.width = "156px";
+                        document.getElementById("mylogo").style.height = "120px";
+                        document.getElementById("homenav").style.backgroundColor = "#52525200";
+                        document.getElementById("navbarSupportedContent").style.top = "90px";
+                        document.getElementById("btn-back-to-top").style.display = "block";
+                    }
+                }
 
-        // When the user clicks on the button, scroll to the top of the document
-        function backToTop() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
+                // When the user clicks on the button, scroll to the top of the document
+                function backToTop() {
+                    document.body.scrollTop = 0;
+                    document.documentElement.scrollTop = 0;
+                }
 
-    </script>
+            </script>
 
 
 
-    <script>
+            <script>
 
-        function privacy_permission() {
-            document.getElementById("home-permission").style.display = "none";
-        }
+                function privacy_permission() {
+                    document.getElementById("home-permission").style.display = "none";
+                }
 
-    </script>
+            </script>
 
 
-    <script>
+            <script>
 
-        const url = new URLSearchParams(window.location.search);
+                const url = new URLSearchParams(window.location.search);
 
-        if (url == "loginModal=true" || url == "loginFail=true") {
-            document.getElementById("home-login").click();
-        }
+                if (url == "loginModal=true" || url == "loginFail=true") {
+                    document.getElementById("homelogin-btn").click();
+                }
 
-        if (url == "mailSended=true") {
-            document.getElementById("mailSendedbtn").click();
-        }
-    </script>
+                if (url == "mailSended=true") {
+                    document.getElementById("mailSended").click();
+                }
+            </script>
 
-</body>
+        </body>
 </html>
 
 @section Scripts{

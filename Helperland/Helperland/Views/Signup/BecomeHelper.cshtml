@@ -24,47 +24,8 @@
 </head>
 <body>
 
+    @await Html.PartialAsync("HomeNav")
     <!-- nav starts -->
-    <nav id="homenav" class="navbar navbar-expand-lg">
-
-        <a class="navbar-brand ms-3" asp-controller="Home" asp-action="Index"><img src="/img/white-logo-transparent-background.png" id="mylogo" alt=""></a>
-        <button style="color:white; margin-right: 15px;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" onclick="changeColor()" id="nav-btn">
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto me-2">
-                <li class="nav-item">
-                    <a class="nav-link active rounded-pill nav-padding" aria-current="page" href="#">Book a Cleaner</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="Prices">Prices</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="#">Our Guarantee</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="#">Blog</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link rounded-pill " href="#" role="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link rounded-pill px-3" href="#">Become a Helper</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img style="vertical-align: baseline;" src="/img/ic-flag.png" alt="">
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#"><img src="/img/ic-flag.png" alt=""> <span>India</span> </a></li>
-                        <li><a class="dropdown-item" href="#"><img src="/img/ic-flag.png" alt=""> <span>U.K.</span> </a></li>
-                        <li><a class="dropdown-item" href="#"><img src="/img/ic-flag.png" alt=""> <span>U.S.A.</span> </a></li>
-                    </ul>
-                </li>
-            </ul>
-
-        </div>
-    </nav>
     <!-- nav ends -->
     <!-- main stats -->
     <main>

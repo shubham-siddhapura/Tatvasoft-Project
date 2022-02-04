@@ -54,6 +54,7 @@ namespace Helperland.Models
         public string BankTokenId { get; set; }
         public string TaxNo { get; set; }
 
+
         public virtual ICollection<FavoriteAndBlocked> FavoriteAndBlockedTargetUsers { get; set; }
         public virtual ICollection<FavoriteAndBlocked> FavoriteAndBlockedUsers { get; set; }
         public virtual ICollection<Rating> RatingRatingFromNavigations { get; set; }

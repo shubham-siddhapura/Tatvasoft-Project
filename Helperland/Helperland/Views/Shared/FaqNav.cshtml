@@ -3,46 +3,107 @@
 *@
 <nav id="faqnav" class="navbar navbar-expand-lg">
 
-    <a asp-action="Index"><img src="/img/white-logo-transparent-background.png" id="logo-faq" alt=""></a>
-    <button style="color:white; margin-right: 15px;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-    </button>
+    <a asp-controller="Home" asp-action="Index"><img src="/img/white-logo-transparent-background.png" id="logo-faq" alt=""></a>
+
+    @if (TempData["name"] == null)
+    {
+        <button style="color:white; margin-right: 15px;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+    }
+    else
+    {
+        <div>
+            <div id="upcoming-notification-collapse">
+                <a class="nav-link nav-padding upcoming-notify" href="#">
+                    <img src="/img/upcomingService/icon-notification.png" alt="">
+                    <span id="notification-dot">3</span>
+                </a>
+
+            </div>
+
+            <button style="color:white; margin-right: 15px;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+        </div>
+
+    }
+
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <ul class="navbar-nav ms-auto" id="faq-nav">
             @if (TempData["name"] != null)
-            { 
+            {
+                if (TempData["userType"] == "1")
+                {
+
+                      <div id="upcoming-menu-collapse">
+                        <li id="welcomeName">
+                            Welcome,
+                            <span id="SPname">@TempData["name"]</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-padding" href="#">Dashbord</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-padding" asp-controller="CustomerPage" asp-action="CustServiceHistory">Service History</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-padding" href="#">Service Schedule</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-padding" href="#">Favourite Pros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-padding" href="#">Invoices</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link nav-padding" href="#">My Setting</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-padding" asp-controller="Signup" asp-action="Logout">Logout</a>
+                        </li>
+                    </div>
+                }
+                else if(TempData["userType"] == "2"){
                 <div id="upcoming-menu-collapse">
                     <li id="welcomeName">
                         Welcome,
-                        <span id="SPname">Shubham</span>
+                        <span id="SPname">@TempData["name"]</span>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-padding" href="#">Dashbord</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-padding" asp-controller="CustomerPage" asp-action="CustServiceHistory">Service History</a>
+                        <a class="nav-link nav-padding" href="#">New Service Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-padding" href="#">Upcoming Service</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-padding" href="#">Service Schedule</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">Favourite Pros</a>
+                        <a class="nav-link nav-padding" href="#">Service History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">Invoices</a>
+                        <a class="nav-link nav-padding" href="#">My Ratings</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">Notification</a>
+                        <a class="nav-link nav-padding" href="#">Block Customer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">My Setting</a>
+                        <a class="nav-link nav-padding" href="#">My Settings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-padding" href="#">Logout</a>
                     </li>
                 </div>
-             }
+                }
+            }
             <li class="nav-item">
                 <a class="nav-link rounded-pill nav-padding greenlink" aria-current="page" href="#">Book a Cleaner</a>
             </li>
@@ -88,11 +149,11 @@
                         <li id="userWelcomeName">
                             Welcome,
                             <br />
-                            <span id="UsernameNav">Shubham</span>
+                            <span id="UsernameNav">@TempData["name"]</span>
                         </li>
                         <li><a class="dropdown-item" href="#">My Dashbord</a></li>
                         <li><a class="dropdown-item" href="#">My Setting</a></li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li><a class="dropdown-item" asp-controller="Signup" asp-action="Logout">Logout</a></li>
                     </ul>
                 </li>
 

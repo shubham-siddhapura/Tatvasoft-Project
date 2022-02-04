@@ -165,3 +165,7 @@ D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\bin\Debug\netcoreapp3.1\Mim
 D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\bin\Debug\netcoreapp3.1\NETCore.MailKit.dll
 D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ResetPassword.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\HomeNav.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServicePro\SPUpcomingService.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\bin\Debug\netcoreapp3.1\BCrypt.Net-Next.dll
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ServiceRequest.cshtml.g.cs

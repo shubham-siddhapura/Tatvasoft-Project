@@ -1,0 +1,115 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<nav id="homenav" class="navbar navbar-expand-lg">
+
+    <a class="navbar-brand ms-3" asp-controller="Home" asp-action="Index"><img src="/img/white-logo-transparent-background.png" id="mylogo" alt=""></a>
+    <button style="color:white; margin-right: 15px;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto me-2">
+            @if (TempData["name"] != null)
+            {
+                <div id="upcoming-menu-collapse">
+                <li id="welcomeName">
+                    Welcome,
+                    <span id="SPname">@TempData["name"]</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">Dashbord</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" asp-controller="CustomerPage" asp-action="CustServiceHistory">Service History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">Service Schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">Favourite Pros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">Invoices</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">Notification</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">My Setting</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" asp-controller="Signup" asp-action="Logout">Logout</a>
+                </li>
+            </div>
+            }
+            <li class="nav-item">
+                <a class="nav-link active rounded-pill nav-padding" aria-current="page" href="#">Book a Cleaner</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-action="Prices">Prices</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="#">Our Guarantee</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="#">Blog</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" asp-action="Contact">Contact Us</a>
+            </li>
+
+
+            @if (TempData["name"] == null)
+            {
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill nav-padding " role="button" asp-controller="Home" asp-action="Index" asp-route-loginModal="true">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border-1 rounded-pill nav-padding " asp-controller="Signup" asp-action="Becomehelper">Become a Helper</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img style="vertical-align: baseline;" src="/img/ic-flag.png" alt="">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#"><img src="/img/ic-flag.png" alt=""> <span>India</span> </a></li>
+                        <li><a class="dropdown-item" href="#"><img src="/img/ic-flag.png" alt=""> <span>U.K.</span> </a></li>
+                        <li><a class="dropdown-item" href="#"><img src="/img/ic-flag.png" alt=""> <span>U.S.A.</span> </a></li>
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item" id="upcom-notify">
+                    <div id="upcoming-notification">
+                        <a class="nav-link nav-padding upcoming-notify" href="#">
+                            <img src="/img/upcomingService/icon-notification.png" alt="">
+                            <span id="notification-dot">3</span>
+                        </a>
+
+                    </div>
+
+                </li>
+                <li class="nav-item dropdown nav-padding" id="upcomingUser">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/img/upcomingService/user.png" alt="">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li id="userWelcomeName">
+                            Welcome,
+                            <br />
+                            <span id="UsernameNav">@TempData["name"]</span>
+                        </li>
+                        <li><a class="dropdown-item" href="#">My Dashbord</a></li>
+                        <li><a class="dropdown-item" href="#">My Setting</a></li>
+                        <li><a class="dropdown-item" asp-controller="Signup" asp-action="Logout">Logout</a></li>
+                    </ul>
+                </li>
+
+            }
+
+            </ul>
+
+            </div>
+        </nav>

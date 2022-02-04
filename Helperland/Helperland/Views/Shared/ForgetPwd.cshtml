@@ -14,13 +14,27 @@
             </div>
             <div class="modal-body">
 
-                <form asp-controller="Signup" asp-action="SendMail" method="post">
+                @if (TempData["mailSended"] == null)
+                {
+                    <form asp-controller="Signup" asp-action="SendMail" method="post">
 
-                    <input type="text" asp-for="Email" id="loginEmail" placeholder="Email Address"><span><img src="" alt=""></span>
-                    <span asp-validation-for="Email"></span>
-                    <button type="submit" id="forgetPwdSend" @* data-bs-dismiss="modal"*@>Send</button>
+                        <input type="text" asp-for="Email" id="loginEmail" placeholder="Email Address"><span><img src="" alt=""></span>
+                        <span asp-validation-for="Email"></span>
+                        <button type="submit" id="forgetPwdSend" @* data-bs-dismiss="modal"*@>Send</button>
 
-                </form>
+                    </form>
+                }
+                else
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Mail is sended successfully.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div>
+                        <a href="#" role="button">Resend Mail</a>
+                    </div>
+                }
+
 
                 <div>
                     <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login now</a>
@@ -31,31 +45,3 @@
     </div>
 </div>
 <!-- forget pwd modal ends -->
-
-<a href="#" role="button" data-bs-toggle="modal" data-bs-target="#mailSended" id="mailSendedbtn" style="display:none;"></a>
-
-<div class="modal popupsLogin" tabindex="-1" id="mailSended">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Forgot Password</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-                <div>
-                    <h3 class="text-success">if you have account, you will receive email for reset password.</h3>
-                </div>
-
-                <div>
-                    <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#mailSended">Resend Mail</a>
-                </div>
-
-                <div>
-                    <a href="#" role="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login now</a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
