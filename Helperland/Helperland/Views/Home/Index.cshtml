@@ -474,6 +474,12 @@
                 if (url == "mailSended=true") {
                     document.getElementById("mailSended").click();
                 }
+
+                if (url == "logout=true") {
+                    var backlen = history.length;
+                    history.go(-backlen);
+                    
+                }
             </script>
 
         </body>

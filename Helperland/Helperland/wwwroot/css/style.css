@@ -2497,28 +2497,31 @@ table.dataTable thead .sorting_desc {
     margin: 0 5px;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type="date"]::-webkit-calendar-picker-indicator, input[type="date"]::-moz-calendar-picker-indicator {
     position: absolute;
     left: -15px;
     color: rgba(0, 0, 0, 0);
     opacity: 1;
     display: block;
-    background: url("../img/admin-calendar-blue.png") no-repeat;
+    background: url('../img/admin-calendar-blue.png') no-repeat;
     width: 20px;
     height: 20px;
 }
 
 #admin-sr-fdatepicker::-webkit-datetime-edit, #admin-sr-tdatepicker::-webkit-datetime-edit,
-#admin-sr-mdatepicker::-webkit-datetime-edit {
+#admin-sr-mdatepicker::-webkit-datetime-edit, #admin-sr-fdatepicker::-moz-datetime-edit, #admin-sr-tdatepicker::-moz-datetime-edit,
+#admin-sr-mdatepicker::-moz-datetime-edit {
     display: none;
 }
 
 #admin-sr-fdate::-webkit-calendar-picker-indicator, #admin-sr-tdate::-webkit-calendar-picker-indicator,
-#admin-sr-mdate::-webkit-calendar-picker-indicator {
+#admin-sr-mdate::-webkit-calendar-picker-indicator, #admin-sr-fdate::-moz-calendar-picker-indicator, #admin-sr-tdate::-moz-calendar-picker-indicator,
+#admin-sr-mdate::-moz-calendar-picker-indicator {
     display: none;
+
 }
 
-input::-webkit-datetime-edit-fields-wrapper {
+input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wrapper {
     position: relative;
     left: 0px;
 }
@@ -2715,9 +2718,9 @@ input::-webkit-datetime-edit-fields-wrapper {
     }
 
     .flex-column div {
-        /*display: flex;
+        display: flex;
         justify-content: space-between;
-        align-items: center;*/
+        align-items: center;
         margin: 2px;
     }
 
@@ -2882,6 +2885,7 @@ input::-webkit-datetime-edit-fields-wrapper {
 
 #form2, #form3, #form4 {
     display: none;
+    margin: 46px 0;
 }
 
 #form1Img, #form2Img, #form3Img, #form4Img {
@@ -2897,7 +2901,7 @@ input::-webkit-datetime-edit-fields-wrapper {
     color: #ffffff;
 }
 
-#setupform input:focus {
+#setupform input:focus, #setupform2 input:focus {
     border-color: #1d7a8c !important;
 }
 
@@ -2906,10 +2910,10 @@ input::-webkit-datetime-edit-fields-wrapper {
     flex-wrap: wrap;
     justify-content: space-between;
     border-bottom: 1px solid #e1e1e1;
-    padding: 46px 0;
+    
 }
 
-#setupform h4 {
+#setupform h4, #setupform2 h4 {
     font-size: 18px;
     margin: 20px 0 15px;
 }
@@ -3011,7 +3015,7 @@ input::-webkit-datetime-edit-fields-wrapper {
     border-bottom: 1px solid #e1e1e1;
 }
 
-#setupform button {
+#setupform button, #setupform2 button {
     font-size: 20px;
     color: #ffffff;
     line-height: 46px;

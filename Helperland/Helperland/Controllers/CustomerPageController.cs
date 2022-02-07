@@ -20,30 +20,35 @@ namespace Helperland.Controllers
 
         public IActionResult CustServiceHistory()
         {
-            int typeid = 0;
             if (HttpContext.Session.GetInt32("userId")!=null)
             {
                 var id = HttpContext.Session.GetInt32("userId");
                 Models.User user = _db.Users.Find(id);
                 TempData["Name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
-                typeid = user.UserTypeId;
+                if (user.UserTypeId == 1)
+                {
+                    return PartialView();
+                }
             }
             else if (Request.Cookies["userId"] != null)
             {
                 var user = _db.Users.FirstOrDefault(x => x.UserId == Convert.ToInt32(Request.Cookies["userId"]));
                 TempData["name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
-                typeid = user.UserTypeId;
-            }
-
-            if (typeid == 1)
-            {
-                return PartialView();
+                if (user.UserTypeId == 1)
+                {
+                    return PartialView();
+                }
             }
 
             return RedirectToAction("Index", "Home", new { loginModal = "true" });
             
+        }
+
+        public IActionResult SetupService()
+        {
+            return PartialView();
         }
     }
 }

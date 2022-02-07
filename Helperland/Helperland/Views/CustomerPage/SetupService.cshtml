@@ -1,0 +1,986 @@
+﻿
+@{
+    ViewData["Title"] = "SetupService";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helperland | Set Up Cleaning Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/5602f8a8c9.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+
+    <!-- nav starts -->
+    @await Html.PartialAsync("FaqNav") 
+    <!-- nav ends -->
+    <!-- header starts -->
+    <header>
+
+        <!-- set up service banner starts -->
+        <div>
+            <img src="/img/book-service-banner.jpg" id="banner" alt="">
+        </div>
+        <!-- set up service banner ends -->
+        <!-- title of page starts -->
+        <div class="text-center mt-4">
+            <h1>Set up your cleaning service</h1>
+        </div>
+        <!-- title of page ends -->
+        <!-- title bottom design starts -->
+        <div class="title-bottom-design">
+            <hr>
+            <div class="text-center">
+                <img src="/img/faq/separator.png" alt="">
+            </div>
+            <hr>
+        </div>
+        <!-- title bottom design ends -->
+
+    </header>
+    <!-- header ends -->
+    <!-- main starts -->
+    <main id="bookServiceMainTag">
+
+        <!-- main section starts -->
+        <section>
+            <div id="setUpServiceMain">
+
+                <!-- form section starts -->
+                <div id="set-up-formdiv">
+
+                    <!-- set up form steps -->
+                    <div id="book-now-steps">
+                        <div class="booknow_tab" id="setup-service" role="button" onclick="form1();">
+                            <span><img src="/img/setup-service-white.png" alt=""></span>
+                            <span id="form1Span">Setup Service</span>
+                            <div class="downarrow" id="form1Down"></div>
+                        </div>
+                        <div class="booknow_tab" id="schedule-service" onclick="form2();" role="button">
+                            <span><img src="/img/schedule.png" alt="" id="form2Img"></span>
+                            <span id="form2Span">Schedule & Plan</span>
+                            <div class="downarrow" id="form2Down"></div>
+                        </div>
+                        <div class="booknow_tab" id="details-service" onclick="form3();" role="button">
+                            <span><img src="/img/details.png" alt="" id="form3Img"></span>
+                            <span id="form3Span">Your Details</span>
+                            <div class="downarrow" id="form3Down"></div>
+                        </div>
+                        <div class="booknow_tab" id="payment-service" onclick="form4();" role="button">
+                            <span><img src="/img/payment.png" alt="" id="form4Img"></span>
+                            <span id="form4Span">Make Payment</span>
+                            <div class="downarrow" id="form4Down"></div>
+                        </div>
+                    </div>
+                    <!-- set up form steps ends -->
+
+                    <form asp-controller="CustomerPage" asp-action="validPostcode" id="setupform">
+                        <div id="form1">
+                            <h4>Enter your postal code</h4>
+                            <input type="text" name="postalCode" id="postalCode" placeholder="Postal Code">
+                            <button type="button" onclick="form2();">Check Availibility</button>
+                        </div>
+                    </form>
+                    <form action="" id="setupform2">
+                        <div id="form2">
+
+                            <!-- datetime and how long starts -->
+                            <div id="datetimeAndHowlong">
+                                <!-- date and time starts -->
+                                <div id="book-datetime">
+                                    <h4>When do you need the cleaner?</h4>
+                                    <span id="fdate">
+                                        <input type="date" id="admin-sr-fdatepicker" name="fromdate" onchange="writefDate();">
+                                        <input type="text" name="fromdate" id="admin-sr-fdate" placeholder="Enter Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
+                                    </span>
+                                    <select name="service-time" id="startingtime">
+                                        <option value="1:00" selected>1:00 PM</option>
+                                        <option value="2:00">2:00 PM</option>
+                                        <option value="3:00">3:00 PM</option>
+                                        <option value="4:00">4:00 PM</option>
+                                        <option value="5:00">5:00 PM</option>
+                                    </select>
+                                </div>
+                                <!-- date and time ends -->
+                                <!-- how long starts -->
+                                <div id="">
+                                    <h4>How long do you need your cleaner to stay?</h4>
+                                    <select name="service-hours" id="servicehours">
+                                        <option value="1" selected>1.0 Hrs</option>
+                                        <option value="2">2.0 Hrs</option>
+                                        <option value="3">3.0 Hrs</option>
+                                        <option value="4">4.0 Hrs</option>
+                                        <option value="5">5.0 Hrs</option>
+                                    </select>
+                                </div>
+                                <!-- how long ends -->
+                            </div>
+                            <!-- datetime and how long ends -->
+
+                            <h4>Extra services</h4>
+                            <div id="custom-checkboxes">
+                                <div class="checkbox">
+                                    <input type="checkbox" name="insideCabinet" id="insideCabinetCheck" class="htmlcheckbox" onclick="onInsideCabinet();">
+                                    <label for="insideCabinetCheck" onclick="onInsideCabinet();"><img src="/img/3.png" id="insideCabinetImg" alt=""></label>
+                                    <p>inside cabinets</p>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="insideFridgeCheck" name="insideFridge" class="htmlcheckbox" onclick="onInsideFridge();">
+                                    <label for="insideFridgeCheck"><img src="/img/5.png" id="insideFridgeImg" alt="" onclick="onInsideFridge();"></label>
+                                    <p>inside Fridge</p>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" name="insideOven" id="insideOvenCheck" class="htmlcheckbox" onclick="onInsideOven();">
+                                    <label for="insideOvenCheck" onclick="onInsideOven();"><img src="/img/4.png" id="insideOvenImg" alt=""></label>
+                                    <p>inside Oven</p>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="laundryCheck" name="laundry" class="htmlcheckbox" onclick="onLaundry();">
+                                    <label for="laundryCheck" onclick="onLaundry();"><img src="/img/2.png" id="laundryImg" alt=""></label>
+                                    <p>Laundry Wash & Dry</p>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="interiorCheck" name="interior" class="htmlcheckbox" onclick="onInterior();">
+                                    <label for="interiorCheck" onclick="onInterior();"><img src="/img/1.png" id="interiorImg" alt=""></label>
+                                    <p>interior Windows</p>
+                                </div>
+                            </div>
+
+                            <h4>Comments</h4>
+
+                            <textarea name="comments" id="comments" placeholder="Comments..." cols="30" rows="10"></textarea>
+                            <div id="ihavepet">
+                                <input type="checkbox" name="havepet" id="havepet">
+                                <span>I have pets at home</span>
+                            </div>
+
+                            <button id="form2continue" type="button" onclick="form3();">continue</button>
+                        </div>
+
+
+                        <div id="form3">
+
+                            <h4>Enter your contact details, so we can serve you in better way!</h4>
+
+                            <!-- addresses starts -->
+                            <div id="addresses">
+                                <div>
+                                    <input type="radio" name="address" id="address1">
+                                    <label for="address1">
+                                        <p><b>Address:</b> street 2 40, Troisdorf 53844</p>
+                                        <p><b>Phone number:</b> 8200035128</p>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="address" id="address2">
+                                    <label for="address2">
+                                        <p><b>Address:</b> street 2 40, Troisdorf 53844</p>
+                                        <p><b>Phone number:</b> 8200035128</p>
+                                    </label>
+                                </div>
+
+                            </div>
+                            <!-- addresses ends -->
+                            <!-- add address starts -->
+
+                            <p id="addnewAddressA" onclick="addAddressdiv();">+ Add New Addresses</p>
+
+                            <div id="addAddressDiv">
+                                <div>
+                                    <div>
+                                        <p>Street name</p>
+                                        <input type="text" name="addStreetname" id="addStreetname" placeholder="Street name">
+                                    </div>
+                                    <div>
+                                        <p>House number</p>
+                                        <input type="text" name="addHouseno" id="addHouseno" placeholder="House number">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <p>Postal Code</p>
+                                        <input type="text" name="addPostalcode" placeholder="Postal Code" id="addPostalcode" disabled>
+                                    </div>
+                                    <div>
+                                        <p>City</p>
+                                        <Select name="addCity" id="addCity">
+                                            <option value="#">Select City</option>
+                                            <option value="Bhavnagar">Bhavnagar</option>
+                                            <option value="Ahemdabad">Amdavad</option>
+                                            <option value="Surat">Surat</option>
+                                        </Select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <p>Phone number</p>
+                                        <span></span>
+                                        <input type="text" name="addPhoneno" id="addPhoneno">
+                                    </div>
+                                </div>
+                                <div>
+                                    <button type="button" id="addaddressbtn" onclick="saveAddress();">Save</button>
+                                    <button type="button" id="resetaddressbtn" onclick="cancelAddAddress();">Cancel</button>
+                                </div>
+                            </div>
+
+                            <div id="sendInvoicediv">
+                                <input type="checkbox" name="sendInvoice" id="sendInvoice" onchange="displayInvoiceAd();">
+                                <label for="sendInvoice">Send invoice on this address</label>
+
+
+                                <!-- invoice address starts -->
+                                <div id="invoiceAddressDiv">
+                                    <div>
+                                        <div>
+                                            <p>Street name</p>
+                                            <input type="text" name="invoiceStreetname" id="invoiceStreetname" placeholder="Street name">
+                                        </div>
+                                        <div>
+                                            <p>House number</p>
+                                            <input type="text" name="invoiceHouseno" id="invoiceHouseno" placeholder="House number">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <p>Postal Code</p>
+                                            <input type="text" name="invoicePostalcode" placeholder="Postal Code" id="invoicePostalcode">
+                                        </div>
+                                        <div>
+                                            <p>City</p>
+                                            <Select name="invoiceCity" id="invoiceCity">
+                                                <option value="#">Select City</option>
+                                                <option value="Bhavnagar">Bhavnagar</option>
+                                                <option value="Ahemdabad">Amdavad</option>
+                                                <option value="Surat">Surat</option>
+                                            </Select>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <button type="button" id="invoiceaddressbtn">Save</button>
+                                    </div>
+                                </div>
+                                <!-- invoice address div and -->
+                                <!-- favourite service provider starts -->
+                                <div id="favSPDiv">
+                                    <h4>Your favourite service provider</h4>
+
+                                    <p>You can choose your favourite service provider from the below list</p>
+
+                                    <div id="favSPList">
+                                        <div id="favSP1" class="favSP">
+                                            <img src="/img/customer-serviceHistory/cap.png" alt="">
+                                            <p>Sandip Patel</p>
+                                            <input type="radio" name="favSP" value="sandip" id="sandipSP">
+                                            <label for="sandipSP">Select</label>
+                                        </div>
+                                        <div id="favSP2" class="favSP">
+                                            <img src="/img/customer-serviceHistory/cap.png" alt="">
+                                            <p>Abcd Xyz</p>
+                                            <input type="radio" name="favSP" value="abcd" id="abcdSP">
+                                            <label for="abcdSP">Select</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- favourite service provider ends -->
+
+                            </div>
+                            <button id="form3continue" type="button" onclick="form4();">continue</button>
+                            <!-- add address ends -->
+                        </div>
+
+                        <div id="form4">
+                            <h4>Pay securely with Helperland payment gateway!</h4>
+                            <div id="promocodediv">
+                                <p>Promo code (optional)</p>
+                                <input type="text" placeholder="Promo code (optional)" name="promocode" id="promocode">
+                                <button id="promocodeApply">Apply</button>
+                            </div>
+                            <div id="carddiv">
+                                <input id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
+
+                            </div>
+                            <div id="tandcPP">
+                                <input type="checkbox" name="acceptPrivacyPolicy" id="acceptPrivacyPolicy">
+                                <label for="acceptPrivacyPolicy">
+                                    I accepted <a href="">terms and conditions</a>, the cancellation policy and the <a href="">privacy policy</a>. I confirm that Helperland starts to execute the contract before the expiry of the withdrawal period and I lose my right of withdrawal as a consumer with full performance of the contract.
+
+                                </label>
+                            </div>
+                            <button type="submit" name="completeBooking" id="CompleteBooking">Complete Booking</button>
+                        </div>
+
+
+
+                    </form>
+                </div>
+                <!-- form section ends -->
+                <!-- payment summary and question starts -->
+                <div id="booknow-side">
+                    <div id="paymentSummary">
+                        <div id="payment-questiondiv">
+                            <!-- title starts -->
+                            <div id="payment-title" class="flex-column">
+                                Payment Summary
+                            </div>
+                            <!-- title ends -->
+                            <!-- service time starts -->
+                            <div id="service-time" class="flex-column">
+                                <div id="timeandbed">
+                                    <p>01/01/2022@4:00pm</p>
+                                    <p>1 bed, 1 bath.</p>
+                                </div>
+
+                                <b>Duration</b>
+                                <div>
+                                    <span>Basic</span>
+                                    <span>3 hrs</span>
+                                </div>
+                                <div>
+                                    <span>Inside cabinets (extra)</span>
+                                    <span>30 mins</span>
+                                </div>
+
+                                <div id="total-time">
+                                    <span><b>Total Service Time</b></span>
+                                    <span><b>3.5 hrs</b></span>
+                                </div>
+                            </div>
+                            <!-- service time ends -->
+                            <!-- cost strats -->
+                            <div id="service-cost" class="flex-column">
+                                <div>
+                                    <span>Per cleaning</span>
+                                    <span><b>&dollar;87</b></span>
+                                </div>
+
+                                <div>
+                                    <span>Discount</span>
+                                    <span><b>- &dollar;27</b></span>
+                                </div>
+                            </div>
+                            <!-- cost ends -->
+                            <!-- payment starts-->
+                            <div id="service-pay" class="flex-column">
+                                <div>
+                                    <span id="total-pay">Total Payment</span>
+                                    <span id="amount">&dollar;63</span>
+                                </div>
+                                <div>
+                                    <span>Effective Price</span>
+                                    <span id="last-amount"><b>&dollar;50.4</b></span>
+                                </div>
+
+                            </div>
+                            <!-- payment ends -->
+
+                            <p id="saveP"><span>*</span>You will save 20% according to §35a EStG.</p>
+
+                            <!-- modal starts -->
+                            <div id="call-modal">
+                                <a href=""><i class="far fa-smile"></i> See what is always included</a>
+                            </div>
+                            <!-- modal ends -->
+
+                        </div>
+
+                        <div id="book-questions">
+                            <div id="question-title">
+                                <h3>Questions?</h3>
+                            </div>
+
+                            <!-- question main starts -->
+                            <div id="question-main">
+                                <div class="faq-qa" style="display: flex;">
+
+                                    <a id="faq-q1" href="#faq-ans1" data-bs-toggle="collapse" style="font-size: 16px;color:#565656;">
+
+                                        <div style="display: flex;">
+                                            <div>
+                                                <img id="faq-ar-1" class="faq_arrow_img" src="/img/faq/right-arrow.png" alt="">
+                                            </div>
+
+                                            <p>Which Helperland professional will come to my place?</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id="faq-ans1" class="collapse faq-ans">
+                                    Helperland has a vast network of experienced, top-rated cleaners. Based on the time and date of your request, we work to assign the best professional available.Like working with a specific pro? Add them to your Pro Team from the mobile app and they'll be requested first for all future bookings.You will receive an email with details about your professional prior to your appointment.
+                                </div>
+
+                                <div class="faq-qa" style="display: flex;">
+
+                                    <a id="faq-q2" href="#faq-ans2" data-bs-toggle="collapse" style="font-size: 16px;color:#565656;">
+                                        <div style="display:flex">
+                                            <div>
+                                                <img id="faq-ar-2" class="faq_arrow_img" src="/img/faq/right-arrow.png" alt="">
+                                            </div>
+                                            <p>What's included in a cleaning?</p>
+                                        </div>
+
+                                    </a>
+                                </div>
+                                <div id="faq-ans2" class="collapse faq-ans">
+                                    Bedroom, Living Room & Common Areas,Bathrooms,Kitchen,Extras
+                                </div>
+
+                                <div class="faq-qa" style="display: flex;">
+
+                                    <a id="faq-q3" href="#faq-ans3" data-bs-toggle="collapse" style="font-size: 16px;color:#565656;">
+                                        <div style="display:flex">
+                                            <div>
+                                                <img id="faq-ar-3" class="faq_arrow_img" src="/img/faq/right-arrow.png" alt="">
+                                            </div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
+                                        </div>
+
+                                    </a>
+                                </div>
+                                <div id="faq-ans3" class="collapse faq-ans">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id diam tincidunt, fringilla ante vitae, dapibus velit. Vivamus id tortor rhoncus, efficitur quam at, suscipit tortor.
+                                </div>
+
+                                <div id="for-more-help">
+                                    <a href="">For more help</a>
+                                </div>
+
+                            </div>
+                            <!-- question main ends -->
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- payment summary and question ends -->
+
+
+            </div>
+        </section>
+        <!-- main section ends -->
+
+        <div id="responsivePaySum">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#paymentSummaryModal">
+                Payment Summary
+            </button>
+        </div>
+
+        <!-- PS modal starts -->
+
+        <div class="modal fade" id="paymentSummaryModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Payment Summary</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modal-booknow-side">
+                            <div id="modal-paymentSummary">
+                                <div id="modal-payment-questiondiv">
+                                    <!-- title starts -->
+                                    <!-- <div id="payment-title" class="flex-column">
+                                      Payment Summary
+                                    </div> -->
+                                    <!-- title ends -->
+                                    <!-- service time starts -->
+                                    <div id="modal-service-time" class="flex-column">
+                                        <div id="modal-timeandbed">
+                                            <p>01/01/2022@4:00pm</p>
+                                            <p>1 bed, 1 bath.</p>
+                                        </div>
+
+                                        <b>Duration</b>
+                                        <div>
+                                            <span>Basic</span>
+                                            <span>3 hrs</span>
+                                        </div>
+                                        <div>
+                                            <span>Inside cabinets (extra)</span>
+                                            <span>30 mins</span>
+                                        </div>
+
+                                        <div id="modal-total-time">
+                                            <span><b>Total Service Time</b></span>
+                                            <span><b>3.5 hrs</b></span>
+                                        </div>
+                                    </div>
+                                    <!-- service time ends -->
+                                    <!-- cost strats -->
+                                    <div id="modal-service-cost" class="flex-column">
+                                        <div>
+                                            <span>Per cleaning</span>
+                                            <span><b>&dollar;87</b></span>
+                                        </div>
+
+                                        <div>
+                                            <span>Discount</span>
+                                            <span><b>- &dollar;27</b></span>
+                                        </div>
+                                    </div>
+                                    <!-- cost ends -->
+                                    <!-- payment starts-->
+                                    <div id="modal-service-pay" class="flex-column">
+                                        <div>
+                                            <span id="total-pay">Total Payment</span>
+                                            <span id="amount">&dollar;63</span>
+                                        </div>
+                                        <div>
+                                            <span>Effective Price</span>
+                                            <span id="last-amount"><b>&dollar;50.4</b></span>
+                                        </div>
+
+                                    </div>
+                                    <!-- payment ends -->
+
+                                    <p id="modal-saveP"><span>*</span>You will save 20% according to §35a EStG.</p>
+
+                                    <!-- modal starts -->
+                                    <div id="modal-call-modal">
+                                        <a href=""><i class="far fa-smile"></i> See what is always included</a>
+                                    </div>
+                                    <!-- modal ends -->
+
+                                </div>
+
+                                <div id="modal-book-questions">
+                                    <div id="modal-question-title">
+                                        <h3>Questions?</h3>
+                                    </div>
+
+                                    <!-- question main starts -->
+                                    <div id="modal-question-main">
+                                        <div class="faq-qa" style="display: flex;">
+
+                                            <a id="faq-q1" href="#faq-ans1" data-bs-toggle="collapse" style="font-size: 16px;color:#565656;">
+
+                                                <div style="display: flex;">
+                                                    <div>
+                                                        <img id="faq-ar-1" class="faq_arrow_img" src="/img/faq/right-arrow.png" alt="">
+                                                    </div>
+
+                                                    <p>Which Helperland professional will come to my place?</p>
+                                                </div>
+
+                                            </a>
+                                        </div>
+                                        <div id="faq-ans1" class="collapse faq-ans">
+                                            Helperland has a vast network of experienced, top-rated cleaners. Based on the time and date of your request, we work to assign the best professional available.Like working with a specific pro? Add them to your Pro Team from the mobile app and they'll be requested first for all future bookings.You will receive an email with details about your professional prior to your appointment.
+                                        </div>
+
+                                        <div class="faq-qa" style="display: flex;">
+
+                                            <a id="faq-q2" href="#faq-ans2" data-bs-toggle="collapse" style="font-size: 16px;color:#565656;">
+                                                <div style="display:flex">
+                                                    <div>
+                                                        <img id="faq-ar-2" class="faq_arrow_img" src="/img/faq/right-arrow.png" alt="">
+                                                    </div>
+                                                    <p>What's included in a cleaning?</p>
+                                                </div>
+
+                                            </a>
+                                        </div>
+                                        <div id="faq-ans2" class="collapse faq-ans">
+                                            Bedroom, Living Room & Common Areas,Bathrooms,Kitchen,Extras
+                                        </div>
+
+                                        <div class="faq-qa" style="display: flex;">
+
+                                            <a id="faq-q3" href="#faq-ans3" data-bs-toggle="collapse" style="font-size: 16px;color:#565656;">
+                                                <div style="display:flex">
+                                                    <div>
+                                                        <img id="faq-ar-3" class="faq_arrow_img" src="/img/faq/right-arrow.png" alt="">
+                                                    </div>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
+                                                </div>
+
+                                            </a>
+                                        </div>
+                                        <div id="faq-ans3" class="collapse faq-ans">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id diam tincidunt, fringilla ante vitae, dapibus velit. Vivamus id tortor rhoncus, efficitur quam at, suscipit tortor.
+                                        </div>
+
+                                        <div id="for-more-help">
+                                            <a href="">For more help</a>
+                                        </div>
+
+                                    </div>
+                                    <!-- question main ends -->
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PS modal ends -->
+        <!-- newsletter starts -->
+        <div class="text-center" id="news">
+            <h4 class="">GET OUR NEWSLETTER</h4>
+            <form action="">
+                <input type="text" name="email" placeholder="YOUR EMAIL" class="rounded-pill email">
+                <input type="submit" name="submit" class="rounded-pill submit-btn">
+            </form>
+        </div>
+        <!-- newsletter ends -->
+
+
+    </main>
+    <!-- main ends -->
+    <!-- footer starts -->
+    <footer style="background-color: #111111;" id="faqfooter">
+
+        <div class="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center py-3 footerborder" id="faq-footer">
+            <!-- logo starts -->
+            <div>
+                <img width="100px" src="/img/white-logo-transparent-background.png" alt="">
+            </div>
+            <!-- logo ends -->
+            <!-- links starts -->
+            <div class="d-flex flex-column flex-md-row flex-nowrap flex-md-wrap text-center justify-content-center" style="color: white;" id="faq-footer-links">
+                <a href="home.html">HOME</a>
+                <a href="about.html">ABOUT</a>
+                <a href="home.html#home-customer-say">TESTIMONIALS</a>
+                <a href="faq.html">FAQS</a>
+                <a href="#">INSURRANCE POLICY</a>
+                <a href="#">IMPRESSUM</a>
+            </div>
+            <!-- links ends -->
+            <!-- fb insta starts -->
+            <div>
+                <a class="px-2" href="#"><i style="color: white;" class="fab fa-facebook-f"></i></a>
+
+                <a class="px-2" href="#"><i style="color: white;" class="fab fa-instagram"></i></a>
+            </div>
+            <!-- fb insta ends -->
+        </div>
+
+
+        <!-- privacy policy starts -->
+        <div class="text-center mb-0 py-2" style="position:relative; color:#9BA0A3; background-color: #111111">
+            <p class="mb-0 py-2 d-inline" style="color: #9BA0A3;">
+                &copy;2018 Helperland. All rights reserved.
+                <a href="#" style="color: #9BA0A3;">Terms and Conditions </a>|
+                <a href="#" style="color: #9BA0A3;"> Privacy Policy</a>
+            </p>
+        </div>
+        <!-- privacy policy ends -->
+
+    </footer>
+    <!-- footer ends -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script>
+        let ans1=0;
+          document.getElementById("faq-q1").onclick=function(){
+              ans1+=1;
+              if(ans1&1){
+                  document.getElementById("faq-ar-1").src="/img/faq/down-arrow.png";
+              }
+              else{
+                  document.getElementById("faq-ar-1").src="/img/faq/right-arrow.png";
+              }
+          }
+
+          let ans2=0;
+        document.getElementById("faq-q2").onclick=function(){
+            ans2+=1;
+            if(ans2&1){
+                document.getElementById("faq-ar-2").src="/img/faq/down-arrow.png";
+            }
+            else{
+                document.getElementById("faq-ar-2").src="/img/faq/right-arrow.png";
+            }
+        }
+
+        let ans3=0;
+        document.getElementById("faq-q3").onclick=function(){
+            ans1+=1;
+            if(ans1&1){
+                document.getElementById("faq-ar-3").src="/img/faq/down-arrow.png";
+            }
+            else{
+                document.getElementById("faq-ar-3").src="/img/faq/right-arrow.png";
+            }
+        }
+
+
+    </script>
+
+    <script>
+
+        var insideCabinet=document.getElementById("insideCabinetCheck");
+        var insideFridge=document.getElementById("insideFridgeCheck");
+        var insideOven=document.getElementById("insideOvenCheck");
+        var laundry=document.getElementById("laundryCheck");
+        var interior=document.getElementById("interiorCheck");
+
+        function onInsideCabinet(){
+          if(insideCabinet.checked){
+            document.getElementById("insideCabinetImg").src="/img/3-green.png";
+          }
+          else{
+            document.getElementById("insideCabinetImg").src="/img/3.png";
+          }
+        }
+
+        function onInsideFridge(){
+          if(insideFridge.checked){
+            document.getElementById("insideFridgeImg").src="/img/5-green.png";
+          }
+          else{
+            document.getElementById("insideFridgeImg").src="/img/5.png";
+          }
+        }
+
+        function onInsideOven(){
+          if(insideOven.checked){
+            document.getElementById("insideOvenImg").src="/img/4-green.png";
+          }
+          else{
+            document.getElementById("insideOvenImg").src="/img/4.png";
+          }
+        }
+
+        function onLaundry(){
+          if(laundry.checked){
+            document.getElementById("laundryImg").src="/img/2-green.png";
+          }
+          else{
+            document.getElementById("laundryImg").src="/img/2.png";
+          }
+        }
+
+        function onInterior(){
+          if(interior.checked){
+            document.getElementById("interiorImg").src="/img/1-green.png";
+          }
+          else{
+            document.getElementById("interiorImg").src="/img/1.png";
+          }
+        }
+
+        function writefDate(){
+            document.getElementById("admin-sr-fdate").value=document.getElementById("admin-sr-fdatepicker").value;
+        }
+    </script>
+
+    <script>
+
+        var addAddressBtn=document.getElementById("addnewAddressA");
+        var addAddressDiv=document.getElementById("addAddressDiv");
+        var addStreetname =document.getElementById("addStreetname");
+        var addHouseno=document.getElementById("addHouseno");
+        var addPostalcode=document.getElementById("addPostalcode");
+        var addPhoneno=document.getElementById("addPhoneno");
+        var addCity=document.getElementById("addCity");
+        var invoiceAddress=document.getElementById("invoiceAddressDiv");
+
+
+        function addAddressdiv(){
+          addAddressBtn.style.display="none";
+          addAddressDiv.style.display="block";
+          addPostalcode.value=document.getElementById("postalCode").value;
+        }
+
+        function displayInvoiceAd(){
+          if(invoiceAddress.classList.contains("showAd")){
+            invoiceAddress.classList.remove("showAd");
+          }
+          else{
+            invoiceAddress.classList.add("showAd");
+          }
+        }
+
+        function cancelAddAddress(){
+          addAddressBtn.style.display="inline-block";
+          addAddressDiv.style.display="none"
+          addStreetname.value=null;
+          addHouseno.value=null;
+          addPhoneno.value=null;
+          addCity.value='#';
+        }
+
+        function saveAddress(){
+
+          document.getElementById("addresses").innerHTML+='<div><input type="radio" name="address" id="address'+addHouseno.value+'"><label for="address'+addHouseno.value+'"><p><b>Address:</b> '+addStreetname.value+' '+ addHouseno.value +', '+ addCity.value+' '+addPostalcode.value+'</p><p><b>Phone number:</b> '+addPhoneno.value+'</p></label></div>';
+        }
+
+    </script>
+
+    <script>
+        var form1div=document.getElementById("form1");
+        var form2div=document.getElementById("form2");
+        var form3div=document.getElementById("form3");
+        var form4div=document.getElementById("form4");
+
+        var form1down=document.getElementById("form1Down");
+        var form2down=document.getElementById("form2Down");
+        var form3down=document.getElementById("form3Down");
+        var form4down=document.getElementById("form4Down");
+
+        var form1img=document.getElementById("form1Img");
+        var form2img=document.getElementById("form2Img");
+        var form3img=document.getElementById("form3Img");
+        var form4img=document.getElementById("form4Img");
+
+        var form1span=document.getElementById("form1Span");
+        var form2span=document.getElementById("form2Span");
+        var form3span=document.getElementById("form3Span");
+        var form4span=document.getElementById("form4Span");
+
+        var step1=document.getElementById("setup-service");
+        var step2=document.getElementById("schedule-service");
+        var step3=document.getElementById("details-service");
+        var step4=document.getElementById("payment-service");
+
+        function form1(){
+          form1div.style.display="block";
+          form2div.style.display="none";
+          form3div.style.display="none";
+          form4div.style.display="none";
+
+          form1down.style.display="block";
+          form2down.style.display="none";
+          form3down.style.display="none";
+          form4down.style.display="none";
+
+          form2img.src="/img/schedule.png";
+          form3img.src="/img/details.png";
+          form4img.src="/img/payment.png";
+
+          form2span.style.color="#646464";
+          form3span.style.color="#646464";
+          form4span.style.color="#646464";
+
+          step2.style.backgroundColor="#F3F3F3";
+          step3.style.backgroundColor="#F3F3F3";
+          step4.style.backgroundColor="#F3F3F3";
+        }
+
+        function form2(){
+          form1div.style.display="none";
+          form2div.style.display="block";
+          form3div.style.display="none";
+          form4div.style.display="none";
+
+          form1down.style.display="none";
+          form2down.style.display="block";
+          form3down.style.display="none";
+          form4down.style.display="none";
+
+          form2img.src="/img/schedule-white.png";
+          form3img.src="/img/details.png";
+          form4img.src="/img/payment.png";
+
+          form2span.style.color="#fff";
+          form3span.style.color="#646464";
+          form4span.style.color="#646464";
+
+          step2.style.backgroundColor="#1d7a8c";
+          step3.style.backgroundColor="#F3F3F3";
+          step4.style.backgroundColor="#F3F3F3";
+
+          step1.style.borderRight="1px solid #fff";
+          step2.style.borderRight="1px solid #c8c8c8";
+          step3.style.borderRight="1px solid #c8c8c8";
+        }
+
+        function form3(){
+          form1div.style.display="none";
+          form2div.style.display="none";
+          form3div.style.display="block";
+          form4div.style.display="none";
+
+          form1down.style.display="none";
+          form2down.style.display="none";
+          form3down.style.display="block";
+          form4down.style.display="none";
+
+          form2img.src="/img/schedule-white.png";
+          form3img.src="/img/details-white.png";
+          form4img.src="/img/payment.png";
+
+          form2span.style.color="#fff";
+          form3span.style.color="#fff";
+          form4span.style.color="#646464";
+
+          step2.style.backgroundColor="#1d7a8c";
+          step3.style.backgroundColor="#1d7a8c";
+          step4.style.backgroundColor="#F3F3F3";
+
+          step1.style.borderRight="1px solid #fff";
+          step2.style.borderRight="1px solid #fff";
+          step3.style.borderRight="1px solid #c8c8c8";
+
+        }
+
+        function form4(){
+          form1div.style.display="none";
+          form2div.style.display="none";
+          form3div.style.display="none";
+          form4div.style.display="block";
+
+          form1down.style.display="none";
+          form2down.style.display="none";
+          form3down.style.display="none";
+          form4down.style.display="block";
+
+          form2img.src="/img/schedule-white.png";
+          form3img.src="/img/details-white.png";
+          form4img.src="/img/payment-white.png";
+
+          form2span.style.color="#fff";
+          form3span.style.color="#fff";
+          form4span.style.color="#fff";
+
+          step2.style.backgroundColor="#1d7a8c";
+          step3.style.backgroundColor="#1d7a8c";
+          step4.style.backgroundColor="#1d7a8c";
+
+          step1.style.borderRight="1px solid #fff";
+          step2.style.borderRight="1px solid #fff";
+          step3.style.borderRight="1px solid #fff";
+
+        }
+
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).on("keydown", ":input:not(textarea)", function(event) {
+            if (event.key == "Enter") {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
+
