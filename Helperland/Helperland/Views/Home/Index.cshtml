@@ -21,7 +21,7 @@
     <script src="https://kit.fontawesome.com/5602f8a8c9.js" crossorigin="anonymous"></script>
 
 </head>
-<body>
+<body >
 
     <!-- nav starts -->
 
@@ -405,9 +405,16 @@
             @await Html.PartialAsync("Footer")
             <!-- footer ends -->
 
-            @await Html.PartialAsync("MyModals")
-            @await Html.PartialAsync("ForgetPwd")
+            @if (TempData["name"] == null)
+            {
+                @await Html.PartialAsync("MyModals")
+                @await Html.PartialAsync("ForgetPwd")
+            }
 
+            @await Html.PartialAsync("loggedout")
+
+            <button class="d-none" id="logoutModalbtn" data-bs-toggle="modal" data-bs-target="#logoutModal"></button>
+            <button class="d-none" id="contactModalbtn" data-bs-toggle="modal" data-bs-target="#contactModal"></button>
             <!-- permission starts -->
             <div id="home-permission">
                 <p>
@@ -468,6 +475,7 @@
                 const url = new URLSearchParams(window.location.search);
 
                 if (url == "loginModal=true" || url == "loginFail=true") {
+                    
                     document.getElementById("homelogin-btn").click();
                 }
 
@@ -475,12 +483,29 @@
                     document.getElementById("mailSended").click();
                 }
 
+                if (url == "logoutModal=true") {
+                  
+                    document.getElementById("logoutModalbtn").click();
+                }
+
+                if (url == "msgSent=true") {
+                    
+                    document.getElementById("contactModalbtn").click();
+                }
+
                 if (url == "logout=true") {
                     var backlen = history.length;
                     history.go(-backlen);
-                    
+
                 }
             </script>
+
+            @*<script>
+                window.history.forward();
+                function noBack() {
+                    window.history.forward();
+                }
+            </script>*@
 
         </body>
 </html>

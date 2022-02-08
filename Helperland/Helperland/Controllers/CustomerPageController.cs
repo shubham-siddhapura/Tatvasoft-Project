@@ -1,9 +1,11 @@
 ﻿
 using Helperland.Data;
+using Helperland.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,7 +48,30 @@ namespace Helperland.Controllers
             
         }
 
-        public IActionResult SetupService()
+        
+
+        public IActionResult BookService()
+        {
+            
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public IActionResult BookService(SetupService setup)
+        {
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public IActionResult BookService(ScheduleService schedule)
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public IActionResult BookService(DetailService detail)
         {
             return PartialView();
         }

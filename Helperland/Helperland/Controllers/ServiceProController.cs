@@ -17,7 +17,7 @@ namespace Helperland.Controllers
         {
             _db = db;
         }
-
+        [ResponseCache (Duration = 0)]
         public IActionResult SPUpcomingService()
         {
             

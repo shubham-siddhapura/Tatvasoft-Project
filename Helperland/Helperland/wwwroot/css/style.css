@@ -1081,6 +1081,8 @@ footer {
 
 .contact-desc {
     text-align: center;
+    display:flex;
+    flex-direction : column;
 }
 
     .contact-desc p {
@@ -3427,3 +3429,28 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     #forgetPwdModal input[type=text] {
         margin-bottom: 15px;
     }
+
+.successModal .modal-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 15px 15px;
+}
+
+.successModal .modal-content {
+    width: auto;
+}
+
+.successModal .modal-body p {
+    margin: 20px 0 30px 0;
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.successModal .modal-body a {
+    padding: 8px 20px;
+    background-color: #1d7a8c;
+    color: white;
+    font-size: 20px;
+    border-radius: 22px;
+}

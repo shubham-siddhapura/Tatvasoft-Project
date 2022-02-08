@@ -27,6 +27,8 @@ namespace Helperland
             services.AddControllersWithViews();
             services.AddDbContext<HelperlandContext>();
             services.AddSession();
+            services.AddResponseCaching();
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +51,8 @@ namespace Helperland
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseResponseCaching();
 
             app.UseEndpoints(endpoints =>
             {

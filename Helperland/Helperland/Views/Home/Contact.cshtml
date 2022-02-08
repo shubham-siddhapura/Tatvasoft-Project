@@ -97,22 +97,22 @@
             <form asp-action="Contact" method="post" enctype="multipart/form-data">
                 <div id="form-elements">
                     <div>
-                        <input type="text" asp-for="FirstName" id="fname" placeholder="First name">
+                        <input type="text" asp-for="FirstName" id="fname" placeholder="First name" required>
                         
-                        <input type="text" asp-for="LastName" id="lname" placeholder="Last name">
+                        <input type="text" asp-for="LastName" id="lname" placeholder="Last name" required>
                     </div>
                     <div>
-                        <span id="countrycode">+49</span><input type="number" asp-for="PhoneNumber" id="mobile" placeholder="Mobile number">
-                        <input type="text" asp-for="Email" id="email" placeholder="Email address">
+                        <span id="countrycode">+49</span><input type="number" asp-for="PhoneNumber" id="mobile" placeholder="Mobile number" required>
+                        <input type="text" asp-for="Email" id="email" placeholder="Email address" required>
                     </div>
                     <div>
-                        <select asp-for="Subject" id="subject">
+                        <select asp-for="Subject" id="subject" required>
                             <option value="1">General</option>
                             <option value="2">other</option>
                         </select>
                     </div>
                     <div>
-                        <textarea id="contact-msg" asp-for="Message" cols="30" rows="5" placeholder="Message"></textarea>
+                        <textarea id="contact-msg" asp-for="Message" cols="30" rows="5" placeholder="Message" required></textarea>
                     </div>
 
                     <div id="upload-div">

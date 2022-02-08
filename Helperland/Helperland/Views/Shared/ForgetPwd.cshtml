@@ -18,7 +18,7 @@
                 {
                     <form asp-controller="Signup" asp-action="SendMail" method="post">
 
-                        <input type="text" asp-for="Email" id="loginEmail" placeholder="Email Address"><span><img src="" alt=""></span>
+                        <input type="text" asp-for="Email" id="loginEmail" placeholder="Email Address" required><span><img src="" alt=""></span>
                         <span asp-validation-for="Email"></span>
                         <button type="submit" id="forgetPwdSend" @* data-bs-dismiss="modal"*@>Send</button>
 

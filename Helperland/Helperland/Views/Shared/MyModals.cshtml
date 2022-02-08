@@ -20,12 +20,12 @@
 
                 <form asp-controller="Signup" asp-action="Login">
 
-                    <input type="text" asp-for="Email" id="loginEmail" placeholder="Email"><span><img src="" alt=""></span>
-                    <input type="text" asp-for="Password" id="loginPwd" placeholder="Password"><span><img src="" alt=""></span>
+                    <input type="text" asp-for="Email" id="loginEmail" placeholder="Email" required><span><img src="" alt=""></span>
+                    <input type="text" asp-for="Password" id="loginPwd" placeholder="Password" required><span><img src="" alt=""></span>
 
                     <input type="checkbox" asp-for="Remember" id="loginCheck" placeholder="Remember me"> <label for="loginCheck">Remember me</label>
 
-                    <button type="submit" id="loginButton" data-bs-dismiss="modal">Login</button>
+                    <button type="submit" id="loginButton" >Login</button>
 
                 </form>
 

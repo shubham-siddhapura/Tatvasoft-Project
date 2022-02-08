@@ -35,7 +35,7 @@
 <body>
 
     <!-- nav starts -->
-    @await Html.PartialAsync("FaqNav") 
+    @await Html.PartialAsync("FaqNav")
     <!-- nav ends -->
     <!-- main starts -->
     <main>
@@ -352,13 +352,13 @@
     <!-- footer ends -->
 
     <script>
-        function dashbord(){
-            document.getElementById("dashbord").style.display="block";
-            document.getElementById("upcoming-table").style.display="none";
+        function dashbord() {
+            document.getElementById("dashbord").style.display = "block";
+            document.getElementById("upcoming-table").style.display = "none";
         }
-        function upcoming(){
-            document.getElementById("dashbord").style.display="none";
-            document.getElementById("upcoming-table").style.display="block";
+        function upcoming() {
+            document.getElementById("dashbord").style.display = "none";
+            document.getElementById("upcoming-table").style.display = "block";
         }
     </script>
 
@@ -372,29 +372,35 @@
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
     <script>
-      $(document).ready(function () {
-        $("#mytable").DataTable();
-      });
+        $(document).ready(function () {
+            $("#mytable").DataTable();
+        });
     </script>
 
     <script>
         const dt = new DataTable("#mytable", {
-        dom: 't<"table-bottom d-flex justify-content-between paging"<"table-bottom-inner d-flex "li>p>',
-        responsive: true,
-        pagingType: "full_numbers",
-        language: {
-            paginate: {
-            first: "<img src='/img/pagination-first.png' alt='first'/>",
-            previous: "<img src='/img/pagination-left.png' alt='previous' />",
-            next: '<img src="/img/pagination-left.png" alt="next" style="transform: rotate(180deg)" />',
-            last: "<img src='/img/pagination-first.png' alt='first' style='transform: rotate(180deg) ' />",
+            dom: 't<"table-bottom d-flex justify-content-between paging"<"table-bottom-inner d-flex "li>p>',
+            responsive: true,
+            pagingType: "full_numbers",
+            language: {
+                paginate: {
+                    first: "<img src='/img/pagination-first.png' alt='first'/>",
+                    previous: "<img src='/img/pagination-left.png' alt='previous' />",
+                    next: '<img src="/img/pagination-left.png" alt="next" style="transform: rotate(180deg)" />',
+                    last: "<img src='/img/pagination-first.png' alt='first' style='transform: rotate(180deg) ' />",
+                },
+                info: "Total Record: _MAX_",
+                lengthMenu: "Show_MENU_Entries",
             },
-            info: "Total Record: _MAX_",
-            lengthMenu: "Show_MENU_Entries",
-        },
-        buttons: ["excel"],
-        columnDefs: [{ orderable: false, targets: 4 }],
-    });
+            buttons: ["excel"],
+            columnDefs: [{ orderable: false, targets: 4 }],
+        });
     </script>
+    @*<script>
+        window.history.forward();
+        function noBack() {
+            window.history.forward();
+        }
+    </script>*@
 </body>
 </html>

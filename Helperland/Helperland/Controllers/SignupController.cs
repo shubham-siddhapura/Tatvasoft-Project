@@ -11,6 +11,7 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using Org.BouncyCastle.Crypto.Generators;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Helperland.Controllers
 {
@@ -201,7 +202,7 @@ namespace Helperland.Controllers
         {
             HttpContext.Session.Clear();
             
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { logoutModal = "true"});
         }
 
     }

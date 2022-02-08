@@ -92,18 +92,23 @@ namespace Helperland.Controllers
         public IActionResult Contact(ContactU contactu)
         {
 
-            if(contactu.Attach != null)
+            if (ModelState.IsValid)
             {
-                string folder = "contactFiles/";
-                folder += Guid.NewGuid().ToString() + "_" + contactu.Attach.FileName;
-                string serverFolder=Path.Combine(_webHostEnv.WebRootPath, folder);
-                contactu.Attach.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
-                contactu.FileName = folder;
+                if (contactu.Attach != null)
+                {
+                    string folder = "contactFiles/";
+                    folder += Guid.NewGuid().ToString() + "_" + contactu.Attach.FileName;
+                    string serverFolder = Path.Combine(_webHostEnv.WebRootPath, folder);
+                    contactu.Attach.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                    contactu.FileName = folder;
+                }
+                contactu.CreatedOn = DateTime.Now;
+                _db.ContactUs.Add(contactu);
+                _db.SaveChanges();
+                return RedirectToAction("Index", "Home", new { msgSent = "true" });
             }
-            contactu.CreatedOn = DateTime.Now;
-            _db.ContactUs.Add(contactu);
-            _db.SaveChanges();
             return PartialView();
+
         }
 
         public IActionResult Prices()
