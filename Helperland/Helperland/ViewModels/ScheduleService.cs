@@ -11,7 +11,7 @@ namespace Helperland.ViewModels
         [Required]
         public DateTime Date{ get; set; }
         [Required]
-        public TimeZone Time { get; set; }
+        public string Time { get; set; }
 
         [Required]
         public int Duration { get; set; }
@@ -22,5 +22,11 @@ namespace Helperland.ViewModels
         public String Comments { get; set; }
 
         public bool havePet { get; set; }
+
+        public string Email { get; set; }
+
+        public string Password { get; set; }
+
+        public bool Remember { get; set; }
     }
 }

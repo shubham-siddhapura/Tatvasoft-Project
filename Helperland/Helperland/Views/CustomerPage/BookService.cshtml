@@ -69,7 +69,7 @@
                             <span id="form1Span">Setup Service</span>
                             <div class="downarrow" id="form1Down"></div>
                         </div>
-                        <div class="booknow_tab" id="schedule-service" onclick="form2();" role="button">
+                        <div class="booknow_tab disabled" id="schedule-service" onclick="form2();" role="button">
                             <span><img src="/img/schedule.png" alt="" id="form2Img"></span>
                             <span id="form2Span">Schedule & Plan</span>
                             <div class="downarrow" id="form2Down"></div>
@@ -87,251 +87,11 @@
                     </div>
                     <!-- set up form steps ends -->
 
-                    <form asp-controller="CustomerPage" asp-action="validPostcode" id="setupform">
-                        <div id="form1">
-                            <h4>Enter your postal code</h4>
-                            <input type="text" id="postalCode" placeholder="Postal Code">
-                            <span></span>
-                            <button type="button">Check Availibility</button>
-                        </div>
-                    </form>
-                    <form action="" id="setupform2">
-                        <div id="form2">
+                    @await Html.PartialAsync("SetupServiceform")
+                    @await Html.PartialAsync("ScheduleServiceform")
 
-                            <!-- datetime and how long starts -->
-                            <div id="datetimeAndHowlong">
-                                <!-- date and time starts -->
-                                <div id="book-datetime">
-                                    <h4>When do you need the cleaner?</h4>
-                                    <span id="fdate">
-                                        <input type="date" id="admin-sr-fdatepicker" name="fromdate" onchange="writefDate();">
-                                        <input type="text" name="fromdate" id="admin-sr-fdate" placeholder="Enter Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
-                                    </span>
-                                    <select name="service-time" id="startingtime">
-                                        <option value="1:00" selected>1:00 PM</option>
-                                        <option value="2:00">2:00 PM</option>
-                                        <option value="3:00">3:00 PM</option>
-                                        <option value="4:00">4:00 PM</option>
-                                        <option value="5:00">5:00 PM</option>
-                                    </select>
-                                </div>
-                                <!-- date and time ends -->
-                                <!-- how long starts -->
-                                <div id="">
-                                    <h4>How long do you need your cleaner to stay?</h4>
-                                    <select name="service-hours" id="servicehours">
-                                        <option value="1" selected>1.0 Hrs</option>
-                                        <option value="2">2.0 Hrs</option>
-                                        <option value="3">3.0 Hrs</option>
-                                        <option value="4">4.0 Hrs</option>
-                                        <option value="5">5.0 Hrs</option>
-                                    </select>
-                                </div>
-                                <!-- how long ends -->
-                            </div>
-                            <!-- datetime and how long ends -->
-
-                            <h4>Extra services</h4>
-                            <div id="custom-checkboxes">
-                                <div class="checkbox">
-                                    <input type="checkbox" name="insideCabinet" id="insideCabinetCheck" class="htmlcheckbox" onclick="onInsideCabinet();">
-                                    <label for="insideCabinetCheck" onclick="onInsideCabinet();"><img src="/img/3.png" id="insideCabinetImg" alt=""></label>
-                                    <p>inside cabinets</p>
-                                </div>
-
-                                <div class="checkbox">
-                                    <input type="checkbox" id="insideFridgeCheck" name="insideFridge" class="htmlcheckbox" onclick="onInsideFridge();">
-                                    <label for="insideFridgeCheck"><img src="/img/5.png" id="insideFridgeImg" alt="" onclick="onInsideFridge();"></label>
-                                    <p>inside Fridge</p>
-                                </div>
-
-                                <div class="checkbox">
-                                    <input type="checkbox" name="insideOven" id="insideOvenCheck" class="htmlcheckbox" onclick="onInsideOven();">
-                                    <label for="insideOvenCheck" onclick="onInsideOven();"><img src="/img/4.png" id="insideOvenImg" alt=""></label>
-                                    <p>inside Oven</p>
-                                </div>
-
-                                <div class="checkbox">
-                                    <input type="checkbox" id="laundryCheck" name="laundry" class="htmlcheckbox" onclick="onLaundry();">
-                                    <label for="laundryCheck" onclick="onLaundry();"><img src="/img/2.png" id="laundryImg" alt=""></label>
-                                    <p>Laundry Wash & Dry</p>
-                                </div>
-
-                                <div class="checkbox">
-                                    <input type="checkbox" id="interiorCheck" name="interior" class="htmlcheckbox" onclick="onInterior();">
-                                    <label for="interiorCheck" onclick="onInterior();"><img src="/img/1.png" id="interiorImg" alt=""></label>
-                                    <p>interior Windows</p>
-                                </div>
-                            </div>
-
-                            <h4>Comments</h4>
-
-                            <textarea name="comments" id="comments" placeholder="Comments..." cols="30" rows="10"></textarea>
-                            <div id="ihavepet">
-                                <input type="checkbox" name="havepet" id="havepet">
-                                <span>I have pets at home</span>
-                            </div>
-
-                            <button id="form2continue" type="button" onclick="form3();">continue</button>
-                        </div>
-
-
-                        <div id="form3">
-
-                            <h4>Enter your contact details, so we can serve you in better way!</h4>
-
-                            <!-- addresses starts -->
-                            <div id="addresses">
-                                <div>
-                                    <input type="radio" name="address" id="address1">
-                                    <label for="address1">
-                                        <p><b>Address:</b> street 2 40, Troisdorf 53844</p>
-                                        <p><b>Phone number:</b> 8200035128</p>
-                                    </label>
-                                </div>
-                                <div>
-                                    <input type="radio" name="address" id="address2">
-                                    <label for="address2">
-                                        <p><b>Address:</b> street 2 40, Troisdorf 53844</p>
-                                        <p><b>Phone number:</b> 8200035128</p>
-                                    </label>
-                                </div>
-
-                            </div>
-                            <!-- addresses ends -->
-                            <!-- add address starts -->
-
-                            <p id="addnewAddressA" onclick="addAddressdiv();">+ Add New Addresses</p>
-
-                            <div id="addAddressDiv">
-                                <div>
-                                    <div>
-                                        <p>Street name</p>
-                                        <input type="text" name="addStreetname" id="addStreetname" placeholder="Street name">
-                                    </div>
-                                    <div>
-                                        <p>House number</p>
-                                        <input type="text" name="addHouseno" id="addHouseno" placeholder="House number">
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p>Postal Code</p>
-                                        <input type="text" name="addPostalcode" placeholder="Postal Code" id="addPostalcode" disabled>
-                                    </div>
-                                    <div>
-                                        <p>City</p>
-                                        <Select name="addCity" id="addCity">
-                                            <option value="#">Select City</option>
-                                            <option value="Bhavnagar">Bhavnagar</option>
-                                            <option value="Ahemdabad">Amdavad</option>
-                                            <option value="Surat">Surat</option>
-                                        </Select>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p>Phone number</p>
-                                        <span></span>
-                                        <input type="text" name="addPhoneno" id="addPhoneno">
-                                    </div>
-                                </div>
-                                <div>
-                                    <button type="button" id="addaddressbtn" onclick="saveAddress();">Save</button>
-                                    <button type="button" id="resetaddressbtn" onclick="cancelAddAddress();">Cancel</button>
-                                </div>
-                            </div>
-
-                            <div id="sendInvoicediv">
-                                <input type="checkbox" name="sendInvoice" id="sendInvoice" onchange="displayInvoiceAd();">
-                                <label for="sendInvoice">Send invoice on this address</label>
-
-
-                                <!-- invoice address starts -->
-                                <div id="invoiceAddressDiv">
-                                    <div>
-                                        <div>
-                                            <p>Street name</p>
-                                            <input type="text" name="invoiceStreetname" id="invoiceStreetname" placeholder="Street name">
-                                        </div>
-                                        <div>
-                                            <p>House number</p>
-                                            <input type="text" name="invoiceHouseno" id="invoiceHouseno" placeholder="House number">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <p>Postal Code</p>
-                                            <input type="text" name="invoicePostalcode" placeholder="Postal Code" id="invoicePostalcode">
-                                        </div>
-                                        <div>
-                                            <p>City</p>
-                                            <Select name="invoiceCity" id="invoiceCity">
-                                                <option value="#">Select City</option>
-                                                <option value="Bhavnagar">Bhavnagar</option>
-                                                <option value="Ahemdabad">Amdavad</option>
-                                                <option value="Surat">Surat</option>
-                                            </Select>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <button type="button" id="invoiceaddressbtn">Save</button>
-                                    </div>
-                                </div>
-                                <!-- invoice address div and -->
-                                <!-- favourite service provider starts -->
-                                <div id="favSPDiv">
-                                    <h4>Your favourite service provider</h4>
-
-                                    <p>You can choose your favourite service provider from the below list</p>
-
-                                    <div id="favSPList">
-                                        <div id="favSP1" class="favSP">
-                                            <img src="/img/customer-serviceHistory/cap.png" alt="">
-                                            <p>Sandip Patel</p>
-                                            <input type="radio" name="favSP" value="sandip" id="sandipSP">
-                                            <label for="sandipSP">Select</label>
-                                        </div>
-                                        <div id="favSP2" class="favSP">
-                                            <img src="/img/customer-serviceHistory/cap.png" alt="">
-                                            <p>Abcd Xyz</p>
-                                            <input type="radio" name="favSP" value="abcd" id="abcdSP">
-                                            <label for="abcdSP">Select</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- favourite service provider ends -->
-
-                            </div>
-                            <button id="form3continue" type="button" onclick="form4();">continue</button>
-                            <!-- add address ends -->
-                        </div>
-
-                        <div id="form4">
-                            <h4>Pay securely with Helperland payment gateway!</h4>
-                            <div id="promocodediv">
-                                <p>Promo code (optional)</p>
-                                <input type="text" placeholder="Promo code (optional)" name="promocode" id="promocode">
-                                <button id="promocodeApply">Apply</button>
-                            </div>
-                            <div id="carddiv">
-                                <input id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
-
-                            </div>
-                            <div id="tandcPP">
-                                <input type="checkbox" name="acceptPrivacyPolicy" id="acceptPrivacyPolicy">
-                                <label for="acceptPrivacyPolicy">
-                                    I accepted <a href="">terms and conditions</a>, the cancellation policy and the <a href="">privacy policy</a>. I confirm that Helperland starts to execute the contract before the expiry of the withdrawal period and I lose my right of withdrawal as a consumer with full performance of the contract.
-
-                                </label>
-                            </div>
-                            <button type="submit" name="completeBooking" id="CompleteBooking">Complete Booking</button>
-                        </div>
-
-
-
-                    </form>
+                    @await Html.PartialAsync("DetailServiceform")
+                    @await Html.PartialAsync("BookServiceform")
                 </div>
                 <!-- form section ends -->
                 <!-- payment summary and question starts -->
@@ -821,16 +581,20 @@
 
         function cancelAddAddress() {
             addAddressBtn.style.display = "inline-block";
-            addAddressDiv.style.display = "none"
+            addAddressDiv.style.display = "none";
             addStreetname.value = null;
             addHouseno.value = null;
             addPhoneno.value = null;
             addCity.value = '#';
+            document.getElementById("addingNewAddress").checked=false;
         }
 
         function saveAddress() {
 
+            document.getElementById("addingNewAddress").checked=true;
             document.getElementById("addresses").innerHTML += '<div><input type="radio" name="address" id="address' + addHouseno.value + '"><label for="address' + addHouseno.value + '"><p><b>Address:</b> ' + addStreetname.value + ' ' + addHouseno.value + ', ' + addCity.value + ' ' + addPostalcode.value + '</p><p><b>Phone number:</b> ' + addPhoneno.value + '</p></label></div>';
+            addAddressBtn.style.display = "inline-block";
+            addAddressDiv.style.display = "none";
         }
 
     </script>
@@ -861,6 +625,10 @@
         var step3 = document.getElementById("details-service");
         var step4 = document.getElementById("payment-service");
 
+        step2.style.pointerEvents = "none";
+        step3.style.pointerEvents = "none";
+        step4.style.pointerEvents = "none";
+
         function form1() {
             form1div.style.display = "block";
             form2div.style.display = "none";
@@ -883,6 +651,11 @@
             step2.style.backgroundColor = "#F3F3F3";
             step3.style.backgroundColor = "#F3F3F3";
             step4.style.backgroundColor = "#F3F3F3";
+
+            step2.style.pointerEvents = "none";
+            step3.style.pointerEvents = "none";
+            step4.style.pointerEvents = "none";
+           
         }
 
         function form2() {
@@ -911,6 +684,10 @@
             step1.style.borderRight = "1px solid #fff";
             step2.style.borderRight = "1px solid #c8c8c8";
             step3.style.borderRight = "1px solid #c8c8c8";
+
+            step2.style.pointerEvents = "auto";
+            step3.style.pointerEvents = "none";
+            step4.style.pointerEvents = "none";
         }
 
         function form3() {
@@ -940,6 +717,9 @@
             step2.style.borderRight = "1px solid #fff";
             step3.style.borderRight = "1px solid #c8c8c8";
 
+            step2.style.pointerEvents = "auto";
+            step3.style.pointerEvents = "auto";
+            step4.style.pointerEvents = "none";
         }
 
         function form4() {
@@ -983,11 +763,47 @@
         });
     </script>
 
+
+
     <script>
+
+        const url = new URLSearchParams(window.location.search);
+
+
+        if (url == "validPostcode=true") {
+            step2.pointerEvents = true;
+            form2();
+        }
+
+        if (url == "details=true") {
+            step3.pointerEvents = true;
+            form3();
+        }
+
         window.history.forward();
         function noBack() {
             window.history.forward();
         }
+
+        console.log(document.cookie);
+    </script>
+
+    <script>
+        var cookie = document.cookie;
+        var output = {};
+        cookie.split(/\s*;\s*/).forEach(function (pair) {
+            pair = pair.split(/\s*=\s*/);
+            output[pair[0]] = pair.splice(1).join('=');
+        });
+        
+        var jsons = JSON.stringify(output, null, 4);
+
+        var jsonObj = JSON.parse(jsons);
+
+        console.log(jsonObj);
+
+        if (jsonObj.postalCode != null)
+        document.getElementById("postalCode").value = jsonObj.postalCode;
     </script>
 </body>
 </html>

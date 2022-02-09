@@ -2887,7 +2887,7 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
 
 #form2, #form3, #form4 {
     display: none;
-    margin: 46px 0;
+    margin: 30px 0;
 }
 
 #form1Img, #form2Img, #form3Img, #form4Img {
@@ -2903,7 +2903,7 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     color: #ffffff;
 }
 
-#setupform input:focus, #setupform2 input:focus {
+.setupform input:focus, #setupform2 input:focus {
     border-color: #1d7a8c !important;
 }
 
@@ -2912,10 +2912,10 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     flex-wrap: wrap;
     justify-content: space-between;
     border-bottom: 1px solid #e1e1e1;
-    
+    padding-bottom: 20px;
 }
 
-#setupform h4, #setupform2 h4 {
+.setupform h4, #setupform2 h4 {
     font-size: 18px;
     margin: 20px 0 15px;
 }
@@ -3017,7 +3017,7 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     border-bottom: 1px solid #e1e1e1;
 }
 
-#setupform button, #setupform2 button {
+.setupform button, #setupform2 button {
     font-size: 20px;
     color: #ffffff;
     line-height: 46px;

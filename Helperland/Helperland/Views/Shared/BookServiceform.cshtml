@@ -1,0 +1,30 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<form class="setupform">
+
+    <div id="form4">
+        <h4>Pay securely with Helperland payment gateway!</h4>
+        <div id="promocodediv">
+            <p>Promo code (optional)</p>
+            <input type="text" placeholder="Promo code (optional)" name="promocode" id="promocode">
+            <button id="promocodeApply">Apply</button>
+        </div>
+        <div id="carddiv">
+            <input id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
+
+        </div>
+        <div id="tandcPP">
+            <input type="checkbox" name="acceptPrivacyPolicy" id="acceptPrivacyPolicy">
+            <label for="acceptPrivacyPolicy">
+                I accepted <a href="">terms and conditions</a>, the cancellation policy and the <a href="">privacy policy</a>. I confirm that Helperland starts to execute the contract before the expiry of the withdrawal period and I lose my right of withdrawal as a consumer with full performance of the contract.
+
+            </label>
+        </div>
+        <button type="submit" name="completeBooking" id="CompleteBooking">Complete Booking</button>
+    </div>
+
+
+
+</form>

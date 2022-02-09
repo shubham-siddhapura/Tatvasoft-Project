@@ -1,0 +1,140 @@
+﻿@model Helperland.ViewModels.DetailService
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<form method="post" class="setupform">
+
+    <div id="form3">
+
+        <h4>Enter your contact details, so we can serve you in better way!</h4>
+
+        <!-- addresses starts -->
+        <div id="addresses">
+            <div>
+                <input type="radio" id="address1" value="1">
+                <label for="address1">
+                    <p><b>Address:</b> street 2 40, Troisdorf 53844</p>
+                    <p><b>Phone number:</b> 8200035128</p>
+                </label>
+            </div>
+            <div>
+                <input type="radio"  id="address2" value="2">
+                <label for="address2">
+                    <p><b>Address:</b> street 2 40, Troisdorf 53844</p>
+                    <p><b>Phone number:</b> 8200035128</p>
+                </label>
+            </div>
+
+        </div>
+        <!-- addresses ends -->
+        <!-- add address starts -->
+
+        <p id="addnewAddressA" onclick="addAddressdiv();">+ Add New Addresses</p>
+
+        <div id="addAddressDiv">
+            <div>
+                <input type="checkbox" class="d-none" asp-for="addAddress" id="addingNewAddress">
+                <div>
+                    <p>Street name</p>
+                    <input type="text" asp-for="newAddress.Line2" id="addStreetname" placeholder="Street name">
+                </div>
+                <div>
+                    <p>House number</p>
+                    <input type="text" asp-for="newAddress.Line1" id="addHouseno" placeholder="House number">
+                </div>
+            </div>
+            <div>
+                <div>
+                    <p>Postal Code</p>
+                    <input type="text" asp-for="newAddress.PostalCode" placeholder="Postal Code" id="addPostalcode" disabled>
+                </div>
+                <div>
+                    <p>City</p>
+                    <Select asp-for="newAddress.City" id="addCity">
+                        <option value="#">Select City</option>
+                        <option value="Bhavnagar">Bhavnagar</option>
+                        <option value="Ahemdabad">Amdavad</option>
+                        <option value="Surat">Surat</option>
+                    </Select>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <p>Phone number</p>
+                    <span></span>
+                    <input type="text" asp-for="newAddress.Mobile" id="addPhoneno">
+                </div>
+            </div>
+            <div>
+                <button type="button" id="addaddressbtn" onclick="saveAddress();">Save</button>
+                <button type="button" id="resetaddressbtn" onclick="cancelAddAddress();">Cancel</button>
+            </div>
+        </div>
+
+        <div id="sendInvoicediv">
+            <input type="checkbox" id="sendInvoice" onchange="displayInvoiceAd();">
+            <label for="sendInvoice">Send invoice on this address</label>
+
+
+            <!-- invoice address starts -->
+            <div id="invoiceAddressDiv">
+                <div>
+                    <div>
+                        <p>Street name</p>
+                        <input type="text" asp-for="invoiceAddress.Line2" id="invoiceStreetname" placeholder="Street name">
+                    </div>
+                    <div>
+                        <p>House number</p>
+                        <input type="text" asp-for="invoiceAddress.Line1" id="invoiceHouseno" placeholder="House number">
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <p>Postal Code</p>
+                        <input type="text" asp-for="invoiceAddress.PostalCode" placeholder="Postal Code" id="invoicePostalcode">
+                    </div>
+                    <div>
+                        <p>City</p>
+                        <Select asp-for="invoiceAddress.City" id="invoiceCity">
+                            <option value="#">Select City</option>
+                            <option value="Bhavnagar">Bhavnagar</option>
+                            <option value="Ahemdabad">Amdavad</option>
+                            <option value="Surat">Surat</option>
+                        </Select>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="button" id="invoiceaddressbtn">Save</button>
+                </div>
+            </div>
+            <!-- invoice address div and -->
+            <!-- favourite service provider starts -->
+            <div id="favSPDiv">
+                <h4>Your favourite service provider</h4>
+
+                <p>You can choose your favourite service provider from the below list</p>
+
+                <div id="favSPList">
+                    <div id="favSP1" class="favSP">
+                        <img src="/img/customer-serviceHistory/cap.png" alt="">
+                        <p>Sandip Patel</p>
+                        <input type="radio" name="favSP" value="sandip" id="sandipSP">
+                        <label for="sandipSP">Select</label>
+                    </div>
+                    <div id="favSP2" class="favSP">
+                        <img src="/img/customer-serviceHistory/cap.png" alt="">
+                        <p>Abcd Xyz</p>
+                        <input type="radio" name="favSP" value="abcd" id="abcdSP">
+                        <label for="abcdSP">Select</label>
+                    </div>
+                </div>
+            </div>
+            <!-- favourite service provider ends -->
+
+        </div>
+        <button id="form3continue" type="button" onclick="form4();">continue</button>
+        <!-- add address ends -->
+    </div>
+
+</form>

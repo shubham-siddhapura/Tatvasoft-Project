@@ -1,0 +1,137 @@
+﻿@model Helperland.ViewModels.ScheduleService
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<form asp-controller="CustomerPage" asp-action="ScheduleService" id="setupform2" class="setupform">
+    <div id="form2">
+
+        <!-- datetime and how long starts -->
+        <div id="datetimeAndHowlong">
+            <!-- date and time starts -->
+            <div id="book-datetime">
+                <h4>When do you need the cleaner?</h4>
+                <span id="fdate">
+                    <input type="date" id="admin-sr-fdatepicker" onchange="writefDate();">
+                    <input type="text" asp-for="Date" id="admin-sr-fdate" placeholder="Enter Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
+                    <span asp-validation-for="Date"></span>
+                </span>
+                <select asp-for="Time" id="startingtime">
+                    <option value="1" selected>1:00 PM</option>
+                    <option value="2">2:00 PM</option>
+                    <option value="3">3:00 PM</option>
+                    <option value="4">4:00 PM</option>
+                    <option value="5">5:00 PM</option>
+                </select>
+                <span asp-validation-for="Time"></span>
+            </div>
+            <!-- date and time ends -->
+            <!-- how long starts -->
+            <div id="">
+                <h4>How long do you need your cleaner to stay?</h4>
+                <select asp-for="Duration" id="servicehours">
+                    <option value="1" selected>1.0 Hrs</option>
+                    <option value="2">2.0 Hrs</option>
+                    <option value="3">3.0 Hrs</option>
+                    <option value="4">4.0 Hrs</option>
+                    <option value="5">5.0 Hrs</option>
+                </select>
+                <span asp-validation-for="Duration"></span>
+            </div>
+            <!-- how long ends -->
+        </div>
+        <!-- datetime and how long ends -->
+
+        <h4>Extra services</h4>
+        <div id="custom-checkboxes">
+            <div class="checkbox">
+                <input type="checkbox" asp-for="extra.Cabinet" id="insideCabinetCheck" class="htmlcheckbox" onclick="onInsideCabinet();">
+                <label for="insideCabinetCheck" onclick="onInsideCabinet();"><img src="/img/3.png" id="insideCabinetImg" alt=""></label>
+                <p>inside cabinets</p>
+            </div>
+
+            <div class="checkbox">
+                <input type="checkbox" id="insideFridgeCheck" asp-for="extra.Fridge" class="htmlcheckbox" onclick="onInsideFridge();">
+                <label for="insideFridgeCheck"><img src="/img/5.png" id="insideFridgeImg" alt="" onclick="onInsideFridge();"></label>
+                <p>inside Fridge</p>
+            </div>
+
+            <div class="checkbox">
+                <input type="checkbox" asp-for="extra.Oven" id="insideOvenCheck" class="htmlcheckbox" onclick="onInsideOven();">
+                <label for="insideOvenCheck" onclick="onInsideOven();"><img src="/img/4.png" id="insideOvenImg" alt=""></label>
+                <p>inside Oven</p>
+            </div>
+
+            <div class="checkbox">
+                <input type="checkbox" id="laundryCheck" asp-for="extra.laundry" class="htmlcheckbox" onclick="onLaundry();">
+                <label for="laundryCheck" onclick="onLaundry();"><img src="/img/2.png" id="laundryImg" alt=""></label>
+                <p>Laundry Wash & Dry</p>
+            </div>
+
+            <div class="checkbox">
+                <input type="checkbox" id="interiorCheck" asp-for="extra.window" class="htmlcheckbox" onclick="onInterior();">
+                <label for="interiorCheck" onclick="onInterior();"><img src="/img/1.png" id="interiorImg" alt=""></label>
+                <p>interior Windows</p>
+            </div>
+        </div>
+
+        <h4>Comments</h4>
+
+        <textarea asp-for="Comments" id="comments" placeholder="Comments..." cols="30" rows="10"></textarea>
+
+        <div id="ihavepet">
+            <input type="checkbox" asp-for="havePet" id="havepet">
+            <span>I have pets at home</span>
+        </div>
+
+
+        @if (TempData["name"] == null)
+        {
+        <button id="form2continue" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">continue</button>
+        @*login modal strats*@
+        <div class="modal popupsLogin" tabindex="-1" id="loginModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Login to your account</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="@TempData["showAlert"] alert-danger alert-dismissible fade" role="alert" id="loginFailAlert">
+                            @TempData["loginFail"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+
+
+                        <input type="text" asp-for="Email" id="loginEmail" placeholder="Email" required><span><img src="" alt=""></span>
+                        <input type="text" asp-for="Password" id="loginPwd" placeholder="Password" required><span><img src="" alt=""></span>
+
+                        <input type="checkbox" asp-for="Remember" id="loginCheck" placeholder="Remember me"> <label for="loginCheck">Remember me</label>
+
+                        <button type="submit" id="loginButton">Login</button>
+                        forget pwd and create account
+                        <div id="forgetPwdDiv">
+                            <a href="#" role="button" id="mailSended" data-bs-toggle="modal" data-bs-target="#forgetPwdModal">Forgot Password?</a>
+                            <p>Don't have an account? <a role="button" asp-controller="Signup" asp-action="Signup">Create an account</a></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        @*login modal ends*@
+        }
+        else
+        {
+        <button id="form2continue" type="submit">continue</button>
+        }
+        
+    </div>
+
+
+</form>
+
+

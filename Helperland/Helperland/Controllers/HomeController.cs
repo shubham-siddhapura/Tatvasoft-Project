@@ -49,6 +49,7 @@ namespace Helperland.Controllers
                 TempData["name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
             }
+            
             return PartialView();
         }
 

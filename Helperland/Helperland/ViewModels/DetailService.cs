@@ -9,12 +9,14 @@ namespace Helperland.ViewModels
     public class DetailService
     {
 
-        [Required]
-        public string Address { get; set; }
+        
+        public int Address { get; set; }
 
-        public string newAddress { get; set; }
+        public bool addAddress { get; set; }
 
-        public string invoiceAddress { get; set; }
+        public Address newAddress { get; set; }
+
+        public Address invoiceAddress { get; set; }
 
     }
 }

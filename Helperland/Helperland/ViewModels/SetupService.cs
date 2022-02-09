@@ -9,6 +9,6 @@ namespace Helperland.ViewModels
     public class SetupService
     {
         [Required]
-        public int PostalCode { get; set; }
+        public string PostalCode { get; set; }
     }
 }
