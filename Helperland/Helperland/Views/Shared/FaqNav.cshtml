@@ -39,37 +39,7 @@
                 if (TempData["userType"] == "1")
                 {
 
-                      <div id="upcoming-menu-collapse">
-                        <li id="welcomeName">
-                            Welcome,
-                            <span id="SPname">@TempData["name"]</span>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-padding" href="#">Dashbord</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-padding" asp-controller="CustomerPage" asp-action="CustServiceHistory">Service History</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-padding" href="#">Service Schedule</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-padding" href="#">Favourite Pros</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-padding" href="#">Invoices</a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link nav-padding" href="#">My Setting</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-padding" asp-controller="Signup" asp-action="Logout">Logout</a>
-                        </li>
-                    </div>
-                }
-                else if(TempData["userType"] == "2"){
-                <div id="upcoming-menu-collapse">
+                    <div id="upcoming-menu-collapse">
                     <li id="welcomeName">
                         Welcome,
                         <span id="SPname">@TempData["name"]</span>
@@ -78,35 +48,80 @@
                         <a class="nav-link nav-padding" href="#">Dashbord</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">New Service Requests</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">Upcoming Service</a>
+                        <a class="nav-link nav-padding" asp-controller="CustomerPage" asp-action="CustServiceHistory">Service History</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-padding" href="#">Service Schedule</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">Service History</a>
+                        <a class="nav-link nav-padding" href="#">Favourite Pros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">My Ratings</a>
+                        <a class="nav-link nav-padding" href="#">Invoices</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">Block Customer</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">My Settings</a>
+                        <a class="nav-link nav-padding" href="#">My Setting</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-padding" asp-controller="Signup" asp-action="Logout">Logout</a>
                     </li>
-                </div>
+            </div>
+        }
+        else if (TempData["userType"] == "2")
+        {
+            <div id="upcoming-menu-collapse">
+                <li id="welcomeName">
+                    Welcome,
+                    <span id="SPname">@TempData["name"]</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">Dashbord</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">New Service Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">Upcoming Service</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">Service Schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">Service History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">My Ratings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">Block Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" href="#">My Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-padding" asp-controller="Signup" asp-action="Logout">Logout</a>
+                </li>
+            </div>
+        }
+    }
+
+            @if (TempData["name"] != null)
+            {
+                if (TempData["userType"] == "1")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill nav-padding greenlink" aria-current="page" asp-controller="CustomerPage" asp-action="BookService">Book a Cleaner</a>
+                    </li>
                 }
             }
-            <li class="nav-item">
-                <a class="nav-link rounded-pill nav-padding greenlink" aria-current="page" href="#">Book a Cleaner</a>
-            </li>
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill nav-padding greenlink" aria-current="page" asp-controller="CustomerPage" asp-action="BookService">Book a Cleaner</a>
+                </li>
+            }
+
             <li class="nav-item">
                 <a class="nav-link nav-padding rounded-pill" asp-controller="Home" asp-action="Prices">Price & Services</a>
             </li>
