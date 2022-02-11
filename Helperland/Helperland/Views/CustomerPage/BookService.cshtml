@@ -457,25 +457,21 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-    
-
-        
-    
-
+   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/js/BookService.js">
         console.log(document.cookie);
     </script>
 
     <script>
-
+        
         function postalSubmit() {
             var data = $("#setupform").serialize();
             
             $.ajax({
                 type: 'POST',
                 url: '/CustomerPage/Validpost',
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 data: data,
                 success: function (result) {
                     if (result.value == "true") {
@@ -489,9 +485,9 @@
                     alert('Failed to receive the Data');
                     console.log('Failed ');
                 }
-            })
+            });
         }
-
+        
         function scheduleSubmit() {
             var data = $("#scheduleform").serialize();
             console.log(data);
@@ -513,21 +509,26 @@
                     alert('Failed to receive the Data');
                     console.log('Failed ');
                 }
-            })
+            });
         }
-
+        
         function loadAddress() {
             
             $.ajax({
                 type: 'GET',
                 url: '/CustomerPage/DetailsService',
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                
+
                 success: function (result) {
                     var address = $("#addresses");
                     address.empty();
                     for (let i = 0; i < result.length; i++) {
-                        address.append('<div><input type="radio" id="address' + result[i].addressId + '"+ value="' + result[i].addressId + '"><label for="address' + result[i].addressId + '"><p><b>Address:</b> ' + result[i].addressLine2 + " " + result[i].addressLine1 + ', ' + result[i].city + " " + result[i].postalCode + '</p ><p><b>Phone number:</b> ' + result[i].mobile + '</p></label></div>');
+                        var checked = "";
+                        if (result[i].isDefault == true) {
+                            checked = "checked";
+                        }
+                        address.append('<div><input type="radio" id="address' + i + '"' + checked + ' value="' + result[i].addressId + '" name="bookAddress"><label for="address' + i + '"><p><b>Address:</b> ' + result[i].addressLine2 + ' ' + result[i].addressLine1 + ', ' + result[i].city + ' ' + result[i].postalCode + '</p ><p><b>Phone number:</b> ' + result[i].mobile + '</p></label></div>');
+                        checked = "";
                     }
                     console.log(result);
                 },
@@ -535,9 +536,101 @@
                     alert('Failed to receive the Data');
                     console.log('Failed ');
                 }
-            })
+            });
+        }
+
+
+        function saveAddress() {
+            var data = {};
+            data.addressLine2 = document.getElementById("addStreetname").value;
+            data.addressLine1 = document.getElementById("addHouseno").value;
+            data.postalCode = document.getElementById("addPostalcode").value;
+            data.city = document.getElementById("addCity").value;
+            data.mobile = document.getElementById("addPhoneno").value;
+            console.log(data);
+            $.ajax({
+                type: 'POST',
+                url: '/CustomerPage/AddNewAddress',
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: data,
+                success: function (result) {
+                    if (result.value == "true") {
+                        form3();
+                        cancelAddAddress();
+                    }
+                    else {
+                        alert("schedule is not valid");
+                    }
+                },
+                error: function () {
+                    alert('Failed to receive the Data');
+                    console.log('Failed ');
+                }
+            });
         }
         
+        function completeBookService() {
+            var data = {};
+            var extrahour = 0;
+            var cabinet = document.getElementById("insideCabinetCheck");
+            var window = document.getElementById("interiorCheck");
+            var fridge = document.getElementById("insideFridgeCheck");
+            var oven = document.getElementById("insideOvenCheck");
+            var laundry = document.getElementById("laundryCheck");
+
+            if (cabinet.checked == true) {
+                extrahour += 0.5;
+                data.cabinet = true;
+            }
+            if (window.checked == true) {
+                extrahour += 0.5;
+                data.window = true;
+            }
+            if (fridge.checked == true) {
+                extrahour += 0.5;
+                data.fridge = true;
+            }
+            if (oven.checked == true) {
+                extrahour += 0.5;
+                data.oven = true;
+            }
+            if (laundry.checked == true) {
+                extrahour += 0.5;
+                data.laundry = true;
+            }
+            data.postalCode = document.getElementById("postalCode").value;
+            data.serviceStartDate = document.getElementById("admin-sr-fdate").value;
+            data.serviceHours = document.getElementById("servicehours").value;
+            data.extraHours = extrahour;
+            data.subTotal = extrahour + document.getElementById("servicehours").value;
+            data.totalCost = (extrahour + document.getElementById("servicehours").value) * 25; //25rs per hour
+            data.comments = document.getElementById("comments").value;
+            data.paymentDue = false;
+            data.hasPets = document.getElementById("havepet").checked;
+            data.paymentDone = true;
+
+            data.addressId = $('#addresses div input[type=radio]:checked').val();
+
+            console.log(data.addressId);
+            $.ajax({
+                type: 'POST',
+                url: '/CustomerPage/CompleteBooking',
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: data,
+                success: function (result) {
+                    if (result.value == "true") {
+                        alert("booking successfull");
+                    }
+                    else {
+                        alert("schedule is not valid");
+                    }
+                },
+                error: function () {
+                    alert('Failed to receive the Data');
+                    console.log('Failed ');
+                }
+            });
+        }
     </script>
    
 </body>

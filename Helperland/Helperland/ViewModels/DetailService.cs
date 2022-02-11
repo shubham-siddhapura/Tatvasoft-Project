@@ -24,5 +24,7 @@ namespace Helperland.ViewModels
 
         public Address invoiceAddress { get; set; }
 
+        public bool isDefault { get; set; }
+
     }
 }

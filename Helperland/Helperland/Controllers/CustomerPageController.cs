@@ -128,11 +128,112 @@ namespace Helperland.Controllers
                 useradd.City = add.City;
                 useradd.PostalCode = add.PostalCode;
                 useradd.Mobile = add.Mobile;
-
+                useradd.isDefault = add.IsDefault;
                 Addresses.Add(useradd);
             }
 
             return new JsonResult(Addresses);
+        }
+
+        [HttpPost]
+        public ActionResult AddNewAddress(UserAddress useradd)
+        {
+
+            int Id = (int)HttpContext.Session.GetInt32("userId");
+            useradd.UserId = Id;
+            useradd.IsDefault = false;
+            useradd.IsDeleted = false;
+            User user = _db.Users.Where(x => x.UserId == Id).FirstOrDefault();
+            useradd.Email = user.Email;
+            var result = _db.UserAddresses.Add(useradd);
+            _db.SaveChanges();
+            if (result != null)
+            {
+                return Ok(Json("true"));
+            }
+
+            return Ok(Json("false"));
+        }
+
+        public ActionResult CompleteBooking(CompleteBooking complete)
+        {
+            int Id = (int)HttpContext.Session.GetInt32("userId");
+            
+            ServiceRequest add = new ServiceRequest();
+            add.UserId = Id;
+            add.ServiceId = Id;
+            add.ServiceStartDate = complete.ServiceStartDate;
+            add.ZipCode = complete.PostalCode;
+            add.ServiceHourlyRate = 25;
+            add.ServiceHours = complete.ServiceHours;
+            add.ExtraHours = complete.ExtraHours;
+            add.SubTotal = (decimal)(complete.ServiceHours + complete.ExtraHours);
+            add.TotalCost = (decimal)(add.SubTotal * add.ServiceHourlyRate);
+            add.Comments = complete.Comments;
+            add.PaymentDue = false;
+            add.PaymentDone = true;
+            add.HasPets = complete.HasPet;
+            add.CreatedDate = DateTime.Now;
+            add.ModifiedDate = DateTime.Now;
+            add.HasIssue = false;
+
+            var result = _db.ServiceRequests.Add(add);
+            _db.SaveChanges();
+
+            UserAddress useraddr = _db.UserAddresses.Where(x => x.AddressId == complete.AddressId).FirstOrDefault();
+
+            ServiceRequestAddress srAddr = new ServiceRequestAddress();
+            srAddr.AddressLine1 = useraddr.AddressLine1;
+            srAddr.AddressLine2 = useraddr.AddressLine2;
+            srAddr.City = useraddr.City;
+            srAddr.Email = useraddr.Email;
+            srAddr.Mobile = useraddr.Mobile;
+            srAddr.PostalCode = useraddr.PostalCode;
+            srAddr.ServiceRequestId = result.Entity.ServiceRequestId;
+            srAddr.State = useraddr.State;
+
+            var srAddrResult = _db.ServiceRequestAddresses.Add(srAddr);
+            _db.SaveChanges();
+
+            ServiceRequestExtra srExtra = new ServiceRequestExtra();
+            srExtra.ServiceRequestId = result.Entity.ServiceRequestId;
+            if(complete.Cabinet == true)
+            {
+                srExtra.ServiceExtraId = 1;
+                _db.ServiceRequestExtras.Add(srExtra);
+                _db.SaveChanges();
+            }
+            if (complete.Oven == true)
+            {
+                srExtra.ServiceExtraId = 2;
+                _db.ServiceRequestExtras.Add(srExtra);
+                _db.SaveChanges();
+            }
+            if (complete.Window == true)
+            {
+                srExtra.ServiceExtraId = 3;
+                _db.ServiceRequestExtras.Add(srExtra);
+                _db.SaveChanges();
+            }
+            if (complete.Fridge == true)
+            {
+                srExtra.ServiceExtraId = 4;
+                _db.ServiceRequestExtras.Add(srExtra);
+                _db.SaveChanges();
+            }
+            if (complete.Laundry == true)
+            {
+                srExtra.ServiceExtraId = 5;
+                _db.ServiceRequestExtras.Add(srExtra);
+                _db.SaveChanges();
+            }
+
+            if(result != null && srAddrResult != null)
+            {
+                return Ok(Json("true"));
+            }
+
+            return Ok(Json("false"));
         }
     }
 }

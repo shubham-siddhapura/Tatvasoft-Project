@@ -126,13 +126,6 @@ function cancelAddAddress() {
     document.getElementById("addingNewAddress").checked = false;
 }
 
-function saveAddress() {
-
-    document.getElementById("addingNewAddress").checked = true;
-    document.getElementById("addresses").innerHTML += '<div><input type="radio" name="address" id="address' + addHouseno.value + '"><label for="address' + addHouseno.value + '"><p><b>Address:</b> ' + addStreetname.value + ' ' + addHouseno.value + ', ' + addCity.value + ' ' + addPostalcode.value + '</p><p><b>Phone number:</b> ' + addPhoneno.value + '</p></label></div>';
-    addAddressBtn.style.display = "inline-block";
-    addAddressDiv.style.display = "none";
-}
 
 
 /**/
