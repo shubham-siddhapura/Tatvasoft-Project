@@ -106,23 +106,43 @@
                             <!-- service time starts -->
                             <div id="service-time" class="flex-column">
                                 <div id="timeandbed">
-                                    <p>01/01/2022@4:00pm</p>
-                                    <p>1 bed, 1 bath.</p>
+                                    <p><span class="paymentbill_date">Date</span> <span class="paymentbill_time">Time</span></p>
                                 </div>
 
                                 <b>Duration</b>
                                 <div>
                                     <span>Basic</span>
-                                    <span>3 hrs</span>
+                                    <span><span class="paymentbill_basic">0 </span> hrs</span>
                                 </div>
-                                <div>
-                                    <span>Inside cabinets (extra)</span>
+
+                                <div class="d-none paymentbill_cabinet">
+                                    <span>Inside cabinets <b>(extra)</b></span>
+                                    <span>30 mins</span>
+                                </div>
+
+                                <div class="d-none paymentbill_fridge">
+                                    <span>Inside fridge <b>(extra)</b></span>
+                                    <span>30 mins</span>
+                                </div>
+
+                                <div class="d-none paymentbill_oven">
+                                    <span>Inside oven <b>(extra)</b></span>
+                                    <span>30 mins</span>
+                                </div>
+
+                                <div class="d-none paymentbill_laundry">
+                                    <span>Inside laundry <b>(extra)</b></span>
+                                    <span>30 mins</span>
+                                </div>
+
+                                <div class="d-none paymentbill_window">
+                                    <span>Inside window <b>(extra)</b></span>
                                     <span>30 mins</span>
                                 </div>
 
                                 <div id="total-time">
                                     <span><b>Total Service Time</b></span>
-                                    <span><b>3.5 hrs</b></span>
+                                    <span><b><span class="paymentbill_totalhours">0</span> hrs</b></span>
                                 </div>
                             </div>
                             <!-- service time ends -->
@@ -130,26 +150,28 @@
                             <div id="service-cost" class="flex-column">
                                 <div>
                                     <span>Per cleaning</span>
-                                    <span><b>&dollar;87</b></span>
+                                    <span><b>&dollar;</b><b class="paymentbill_amount">0</b></span>
                                 </div>
 
-                                <div>
+                                <!--<div>
                                     <span>Discount</span>
                                     <span><b>- &dollar;27</b></span>
-                                </div>
+                                </div>-->
                             </div>
                             <!-- cost ends -->
                             <!-- payment starts-->
                             <div id="service-pay" class="flex-column">
                                 <div>
                                     <span id="total-pay">Total Payment</span>
-                                    <span id="amount">&dollar;63</span>
+                                    <span id="amount">&dollar;<span class="paymentbill_amount">0</span></span>
+                                    
                                 </div>
+                                <!--
                                 <div>
                                     <span>Effective Price</span>
-                                    <span id="last-amount"><b>&dollar;50.4</b></span>
+                                    <span id="last-amount"><b class="paymentbill">&dollar;50.4</b></span>
                                 </div>
-
+                                    -->
                             </div>
                             <!-- payment ends -->
 
@@ -264,23 +286,44 @@
                                     <!-- service time starts -->
                                     <div id="modal-service-time" class="flex-column">
                                         <div id="modal-timeandbed">
-                                            <p>01/01/2022@4:00pm</p>
-                                            <p>1 bed, 1 bath.</p>
+                                            <p><span class="paymentbill_date">Date</span> <span class="paymentbill_time">Time</span></p>
                                         </div>
 
                                         <b>Duration</b>
                                         <div>
                                             <span>Basic</span>
-                                            <span>3 hrs</span>
+                                            <span><span class="paymentbill_basic">0</span> hrs</span>
                                         </div>
-                                        <div>
-                                            <span>Inside cabinets (extra)</span>
+
+                                        <div class="d-none paymentbill_cabinet">
+                                            <span>Inside cabinets <b>(extra)</b></span>
                                             <span>30 mins</span>
                                         </div>
 
+                                        <div class="d-none paymentbill_fridge">
+                                            <span>Inside fridge <b>(extra)</b></span>
+                                            <span>30 mins</span>
+                                        </div>
+
+                                        <div class="d-none paymentbill_oven">
+                                            <span>Inside oven <b>(extra)</b></span>
+                                            <span>30 mins</span>
+                                        </div>
+
+                                        <div class="d-none paymentbill_laundry">
+                                            <span>Inside laundry <b>(extra)</b></span>
+                                            <span>30 mins</span>
+                                        </div>
+
+                                        <div class="d-none paymentbill_window">
+                                            <span>Inside window <b>(extra)</b></span>
+                                            <span>30 mins</span>
+                                        </div>
+
+
                                         <div id="modal-total-time">
                                             <span><b>Total Service Time</b></span>
-                                            <span><b>3.5 hrs</b></span>
+                                            <span><b><span class="paymentbill_totalhours">0</span> hrs</b></span>
                                         </div>
                                     </div>
                                     <!-- service time ends -->
@@ -288,26 +331,28 @@
                                     <div id="modal-service-cost" class="flex-column">
                                         <div>
                                             <span>Per cleaning</span>
-                                            <span><b>&dollar;87</b></span>
+                                            <span><b>&dollar;</b><b class="paymentbill_amount">0</b></span>
                                         </div>
-
+                                        <!--
                                         <div>
                                             <span>Discount</span>
                                             <span><b>- &dollar;27</b></span>
                                         </div>
+                                            -->
                                     </div>
                                     <!-- cost ends -->
                                     <!-- payment starts-->
                                     <div id="modal-service-pay" class="flex-column">
                                         <div>
                                             <span id="total-pay">Total Payment</span>
-                                            <span id="amount">&dollar;63</span>
+                                            <span id="amount">&dollar;<span class="paymentbill_amount">0</span></span>
                                         </div>
+                                        <!--
                                         <div>
                                             <span>Effective Price</span>
                                             <span id="last-amount"><b>&dollar;50.4</b></span>
                                         </div>
-
+                                        -->
                                     </div>
                                     <!-- payment ends -->
 
@@ -463,175 +508,6 @@
         console.log(document.cookie);
     </script>
 
-    <script>
-        
-        function postalSubmit() {
-            var data = $("#setupform").serialize();
-            
-            $.ajax({
-                type: 'POST',
-                url: '/CustomerPage/Validpost',
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                data: data,
-                success: function (result) {
-                    if (result.value == "true") {
-                        form2();
-                    }
-                    else {
-                        alert("zipcode is not valid");
-                    }
-                },
-                error: function () {
-                    alert('Failed to receive the Data');
-                    console.log('Failed ');
-                }
-            });
-        }
-        
-        function scheduleSubmit() {
-            var data = $("#scheduleform").serialize();
-            console.log(data);
-           
-            $.ajax({
-                type: 'POST',
-                url: '/CustomerPage/ScheduleService',
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                data: data,
-                success: function (result) {
-                    if (result.value == "true") {
-                        form3();
-                    }
-                    else {
-                        alert("schedule is not valid");
-                    }
-                },
-                error: function () {
-                    alert('Failed to receive the Data');
-                    console.log('Failed ');
-                }
-            });
-        }
-        
-        function loadAddress() {
-            
-            $.ajax({
-                type: 'GET',
-                url: '/CustomerPage/DetailsService',
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-
-                success: function (result) {
-                    var address = $("#addresses");
-                    address.empty();
-                    for (let i = 0; i < result.length; i++) {
-                        var checked = "";
-                        if (result[i].isDefault == true) {
-                            checked = "checked";
-                        }
-                        address.append('<div><input type="radio" id="address' + i + '"' + checked + ' value="' + result[i].addressId + '" name="bookAddress"><label for="address' + i + '"><p><b>Address:</b> ' + result[i].addressLine2 + ' ' + result[i].addressLine1 + ', ' + result[i].city + ' ' + result[i].postalCode + '</p ><p><b>Phone number:</b> ' + result[i].mobile + '</p></label></div>');
-                        checked = "";
-                    }
-                    console.log(result);
-                },
-                error: function () {
-                    alert('Failed to receive the Data');
-                    console.log('Failed ');
-                }
-            });
-        }
-
-
-        function saveAddress() {
-            var data = {};
-            data.addressLine2 = document.getElementById("addStreetname").value;
-            data.addressLine1 = document.getElementById("addHouseno").value;
-            data.postalCode = document.getElementById("addPostalcode").value;
-            data.city = document.getElementById("addCity").value;
-            data.mobile = document.getElementById("addPhoneno").value;
-            console.log(data);
-            $.ajax({
-                type: 'POST',
-                url: '/CustomerPage/AddNewAddress',
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                data: data,
-                success: function (result) {
-                    if (result.value == "true") {
-                        form3();
-                        cancelAddAddress();
-                    }
-                    else {
-                        alert("schedule is not valid");
-                    }
-                },
-                error: function () {
-                    alert('Failed to receive the Data');
-                    console.log('Failed ');
-                }
-            });
-        }
-        
-        function completeBookService() {
-            var data = {};
-            var extrahour = 0;
-            var cabinet = document.getElementById("insideCabinetCheck");
-            var window = document.getElementById("interiorCheck");
-            var fridge = document.getElementById("insideFridgeCheck");
-            var oven = document.getElementById("insideOvenCheck");
-            var laundry = document.getElementById("laundryCheck");
-
-            if (cabinet.checked == true) {
-                extrahour += 0.5;
-                data.cabinet = true;
-            }
-            if (window.checked == true) {
-                extrahour += 0.5;
-                data.window = true;
-            }
-            if (fridge.checked == true) {
-                extrahour += 0.5;
-                data.fridge = true;
-            }
-            if (oven.checked == true) {
-                extrahour += 0.5;
-                data.oven = true;
-            }
-            if (laundry.checked == true) {
-                extrahour += 0.5;
-                data.laundry = true;
-            }
-            data.postalCode = document.getElementById("postalCode").value;
-            data.serviceStartDate = document.getElementById("admin-sr-fdate").value;
-            data.serviceHours = document.getElementById("servicehours").value;
-            data.extraHours = extrahour;
-            data.subTotal = extrahour + document.getElementById("servicehours").value;
-            data.totalCost = (extrahour + document.getElementById("servicehours").value) * 25; //25rs per hour
-            data.comments = document.getElementById("comments").value;
-            data.paymentDue = false;
-            data.hasPets = document.getElementById("havepet").checked;
-            data.paymentDone = true;
-
-            data.addressId = $('#addresses div input[type=radio]:checked').val();
-
-            console.log(data.addressId);
-            $.ajax({
-                type: 'POST',
-                url: '/CustomerPage/CompleteBooking',
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                data: data,
-                success: function (result) {
-                    if (result.value == "true") {
-                        alert("booking successfull");
-                    }
-                    else {
-                        alert("schedule is not valid");
-                    }
-                },
-                error: function () {
-                    alert('Failed to receive the Data');
-                    console.log('Failed ');
-                }
-            });
-        }
-    </script>
    
 </body>
 </html>

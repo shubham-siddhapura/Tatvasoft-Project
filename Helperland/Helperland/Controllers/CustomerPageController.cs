@@ -155,6 +155,7 @@ namespace Helperland.Controllers
             return Ok(Json("false"));
         }
 
+        [HttpPost]
         public ActionResult CompleteBooking(CompleteBooking complete)
         {
             int Id = (int)HttpContext.Session.GetInt32("userId");
@@ -195,39 +196,47 @@ namespace Helperland.Controllers
             var srAddrResult = _db.ServiceRequestAddresses.Add(srAddr);
             _db.SaveChanges();
 
-            ServiceRequestExtra srExtra = new ServiceRequestExtra();
-            srExtra.ServiceRequestId = result.Entity.ServiceRequestId;
             if(complete.Cabinet == true)
             {
+                ServiceRequestExtra srExtra = new ServiceRequestExtra();
+                srExtra.ServiceRequestId = result.Entity.ServiceRequestId;
                 srExtra.ServiceExtraId = 1;
                 _db.ServiceRequestExtras.Add(srExtra);
                 _db.SaveChanges();
             }
             if (complete.Oven == true)
             {
+                ServiceRequestExtra srExtra = new ServiceRequestExtra();
+                srExtra.ServiceRequestId = result.Entity.ServiceRequestId;
                 srExtra.ServiceExtraId = 2;
                 _db.ServiceRequestExtras.Add(srExtra);
                 _db.SaveChanges();
             }
             if (complete.Window == true)
             {
+                ServiceRequestExtra srExtra = new ServiceRequestExtra();
+                srExtra.ServiceRequestId = result.Entity.ServiceRequestId;
                 srExtra.ServiceExtraId = 3;
                 _db.ServiceRequestExtras.Add(srExtra);
                 _db.SaveChanges();
             }
             if (complete.Fridge == true)
             {
+                ServiceRequestExtra srExtra = new ServiceRequestExtra();
+                srExtra.ServiceRequestId = result.Entity.ServiceRequestId;
                 srExtra.ServiceExtraId = 4;
                 _db.ServiceRequestExtras.Add(srExtra);
                 _db.SaveChanges();
             }
             if (complete.Laundry == true)
             {
+                ServiceRequestExtra srExtra = new ServiceRequestExtra();
+                srExtra.ServiceRequestId = result.Entity.ServiceRequestId;
                 srExtra.ServiceExtraId = 5;
                 _db.ServiceRequestExtras.Add(srExtra);
                 _db.SaveChanges();
             }
-
+           
             if(result != null && srAddrResult != null)
             {
                 return Ok(Json("true"));

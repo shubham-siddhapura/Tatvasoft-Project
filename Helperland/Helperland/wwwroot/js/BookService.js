@@ -301,9 +301,263 @@ function noBack() {
     window.history.forward();
 }
 
+var paymentbill_date = document.getElementsByClassName("paymentbill_date");
+var paymentbill_time = document.getElementsByClassName("paymentbill_time");
+var paymentbill_basic = document.getElementsByClassName("paymentbill_basic");
+var paymentbill_cabinet = document.getElementsByClassName("paymentbill_cabinet");
+var paymentbill_fridge = document.getElementsByClassName("paymentbill_fridge");
+var paymentbill_oven = document.getElementsByClassName("paymentbill_oven");
+var paymentbill_laundry = document.getElementsByClassName("paymentbill_laundry");
+var paymentbill_window = document.getElementsByClassName("paymentbill_window");
+var paymentbill_totalhours = document.getElementsByClassName("paymentbill_totalhours");
+var paymentbill_amount = document.getElementsByClassName("paymentbill_amount");
+
+function paymentbill_making() {
+    paymentbill_date[0].innerHTML = document.getElementById("admin-sr-fdate").value;
+    paymentbill_date[1].innerHTML = document.getElementById("admin-sr-fdate").value;
+    paymentbill_time[0].innerHTML = document.getElementById("startingtime").value;
+    paymentbill_time[1].innerHTML = document.getElementById("startingtime").value;
+    paymentbill_basic[0].innerHTML = document.getElementById("servicehours").value;
+    paymentbill_basic[1].innerHTML = document.getElementById("servicehours").value;
+    var cabinet = 0;
+    if (document.getElementById("insideCabinetCheck").checked) {
+        paymentbill_cabinet[0].classList.remove("d-none");
+        paymentbill_cabinet[1].classList.remove("d-none");
+        cabinet = 0.5;
+    }
+    else {
+        paymentbill_cabinet[0].classList.add("d-none");
+        paymentbill_cabinet[1].classList.add("d-none");
+        cabinet = 0;
+    }
+    var fridge = 0;
+    if (document.getElementById("insideFridgeCheck").checked) {
+        paymentbill_fridge[0].classList.remove("d-none");
+        paymentbill_fridge[1].classList.remove("d-none");
+        fridge = 0.5;
+    }
+    else {
+        paymentbill_fridge[0].classList.add("d-none");
+        paymentbill_fridge[1].classList.add("d-none");
+        fridge = 0;
+    }
+    var oven = 0;
+    if (document.getElementById("insideOvenCheck").checked) {
+        paymentbill_oven[0].classList.remove("d-none");
+        paymentbill_oven[1].classList.remove("d-none");
+        oven = 0.5;
+    }
+    else {
+        paymentbill_oven[0].classList.add("d-none");
+        paymentbill_oven[1].classList.add("d-none");
+        oven = 0;
+    }
+    var laundry =0;
+    if (document.getElementById("laundryCheck").checked) {
+        paymentbill_laundry[0].classList.remove("d-none");
+        paymentbill_laundry[1].classList.remove("d-none");
+        laundry = 0.5;
+    }
+    else {
+        paymentbill_laundry[0].classList.add("d-none");
+        paymentbill_laundry[1].classList.add("d-none");
+        laundry = 0;
+    }
+    var window = 0;
+    if (document.getElementById("interiorCheck").checked) {
+        paymentbill_window[0].classList.remove("d-none");
+        paymentbill_window[1].classList.remove("d-none");
+        window = 0.5;
+    }
+    else {
+        paymentbill_window[0].classList.add("d-none");
+        paymentbill_window[1].classList.add("d-none");
+        window = 0;
+    }
+
+    paymentbill_totalhours[0].innerHTML = (parseFloat(document.getElementById("servicehours").value) + cabinet + fridge + oven + laundry + window);
+    paymentbill_totalhours[1].innerHTML = (parseFloat(document.getElementById("servicehours").value) + cabinet + fridge + oven + laundry + window);
+    var bill_amount = (parseFloat(document.getElementById("servicehours").value) + cabinet + fridge + oven + laundry + window) * 25
+    paymentbill_amount[0].innerHTML = bill_amount;
+
+    paymentbill_amount[1].innerHTML = bill_amount;
+
+    paymentbill_amount[2].innerHTML = bill_amount;
+
+    paymentbill_amount[3].innerHTML = bill_amount;
+}
+
 
 $(document).on("keydown", ":input:not(textarea)", function (event) {
     if (event.key == "Enter") {
         event.preventDefault();
     }
 });
+
+function postalSubmit() {
+    var data = $("#setupform").serialize();
+
+    $.ajax({
+        type: 'POST',
+        url: '/CustomerPage/Validpost',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            if (result.value == "true") {
+                form2();
+            }
+            else {
+                document.getElementById("postalcodeAlert").classList.add("show");
+                document.getElementById("postalcodeAlert").classList.add("alert");
+            }
+        },
+        error: function () {
+            alert('Failed to receive the Data');
+            console.log('Failed ');
+        }
+    });
+}
+
+function scheduleSubmit() {
+    var data = $("#scheduleform").serialize();
+    console.log(data);
+
+    $.ajax({
+        type: 'POST',
+        url: '/CustomerPage/ScheduleService',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            if (result.value == "true") {
+                form3();
+            }
+            else {
+                alert("schedule is not valid");
+            }
+        },
+        error: function () {
+            alert('Failed to receive the Data');
+            console.log('Failed ');
+        }
+    });
+}
+
+function loadAddress() {
+
+    $.ajax({
+        type: 'GET',
+        url: '/CustomerPage/DetailsService',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+
+        success: function (result) {
+            var address = $("#addresses");
+            address.empty();
+            for (let i = 0; i < result.length; i++) {
+                var checked = "";
+                if (result[i].isDefault == true) {
+                    checked = "checked";
+                }
+                address.append('<div><input type="radio" id="address' + i + '"' + checked + ' value="' + result[i].addressId + '" name="bookAddress"><label for="address' + i + '"><p><b>Address:</b> ' + result[i].addressLine2 + ' ' + result[i].addressLine1 + ', ' + result[i].city + ' ' + result[i].postalCode + '</p ><p><b>Phone number:</b> ' + result[i].mobile + '</p></label></div>');
+                checked = "";
+            }
+            console.log(result);
+        },
+        error: function () {
+            alert('Failed to receive the Data');
+            console.log('Failed ');
+        }
+    });
+}
+
+
+function saveAddress() {
+    var data = {};
+    data.addressLine2 = document.getElementById("addStreetname").value;
+    data.addressLine1 = document.getElementById("addHouseno").value;
+    data.postalCode = document.getElementById("addPostalcode").value;
+    data.city = document.getElementById("addCity").value;
+    data.mobile = document.getElementById("addPhoneno").value;
+    console.log(data);
+    $.ajax({
+        type: 'POST',
+        url: '/CustomerPage/AddNewAddress',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            if (result.value == "true") {
+                form3();
+                cancelAddAddress();
+            }
+            else {
+                alert("schedule is not valid");
+            }
+        },
+        error: function () {
+            alert('Failed to receive the Data');
+            console.log('Failed ');
+        }
+    });
+}
+
+function completeBookService() {
+    var data = {};
+    var extrahour = 0;
+    var cabinet = document.getElementById("insideCabinetCheck");
+    var window = document.getElementById("interiorCheck");
+    var fridge = document.getElementById("insideFridgeCheck");
+    var oven = document.getElementById("insideOvenCheck");
+    var laundry = document.getElementById("laundryCheck");
+
+    if (cabinet.checked == true) {
+        extrahour += 0.5;
+        data.cabinet = true;
+    }
+    if (window.checked == true) {
+        extrahour += 0.5;
+        data.window = true;
+    }
+    if (fridge.checked == true) {
+        extrahour += 0.5;
+        data.fridge = true;
+    }
+    if (oven.checked == true) {
+        extrahour += 0.5;
+        data.oven = true;
+    }
+    if (laundry.checked == true) {
+        extrahour += 0.5;
+        data.laundry = true;
+    }
+    data.postalCode = document.getElementById("postalCode").value;
+    data.serviceStartDate = document.getElementById("admin-sr-fdate").value;
+    data.serviceHours = document.getElementById("servicehours").value;
+    data.extraHours = extrahour;
+    data.subTotal = extrahour + document.getElementById("servicehours").value;
+    data.totalCost = (extrahour + document.getElementById("servicehours").value) * 25; //25rs per hour
+    data.comments = document.getElementById("comments").value;
+    data.paymentDue = false;
+    data.hasPets = document.getElementById("havepet").checked;
+    data.paymentDone = true;
+
+    data.addressId = $('#addresses div input[type=radio]:checked').val();
+
+    console.log(data.addressId);
+    $.ajax({
+        type: 'POST',
+        url: '/CustomerPage/CompleteBooking',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            if (result.value == "true") {
+                alert("booking successfull");
+            }
+            else {
+                alert("schedule is not valid");
+            }
+        },
+        error: function () {
+            alert('Failed to receive the Data');
+            console.log('Failed ');
+        }
+    });
+}  
