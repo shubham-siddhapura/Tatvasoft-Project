@@ -85,13 +85,15 @@ namespace Helperland.Controllers
             var Zipcode = _db.Zipcodes.Where(x => x.ZipcodeValue == setup.PostalCode);
             if (Zipcode.Count() >0)
             {
+                int cityId = Zipcode.FirstOrDefault().CityId;
+                string cityName = _db.Cities.FirstOrDefault(x=> x.Id == cityId).CityName;
                 CookieOptions cookiePostalcode = new CookieOptions();
                 cookiePostalcode.Expires = DateTime.Now.AddMinutes(30);
                 Response.Cookies.Append("postalCode", setup.PostalCode, cookiePostalcode);
-                TempData["PostalCode"] = setup.PostalCode;               
+                Response.Cookies.Append("city", cityName, cookiePostalcode);
                 return Ok(Json("true"));
             }
-            TempData["wrongZipCode"] = "Postal code you have entered is not valid.";
+            
             return Ok(Json("false"));
         }
 
@@ -239,7 +241,7 @@ namespace Helperland.Controllers
            
             if(result != null && srAddrResult != null)
             {
-                return Ok(Json("true"));
+                return Ok(Json(result.Entity.ServiceRequestId));
             }
 
             return Ok(Json("false"));

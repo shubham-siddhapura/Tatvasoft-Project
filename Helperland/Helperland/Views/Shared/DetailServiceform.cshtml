@@ -32,6 +32,10 @@
         <p id="addnewAddressA" onclick="addAddressdiv();">+ Add New Addresses</p>
 
         <div id="addAddressDiv">
+
+            <div class="alert alert-danger d-none mt-3" id="detailServiceAlert" role="alert">
+            </div>
+
             <div>
                 <input type="checkbox" class="d-none" asp-for="addAddress" id="addingNewAddress">
                 <div>
@@ -50,12 +54,13 @@
                 </div>
                 <div>
                     <p>City</p>
-                    <Select asp-for="newAddress.City" id="addCity">
-                        <option value="#">Select City</option>
-                        <option value="Bhavnagar">Bhavnagar</option>
-                        <option value="Ahemdabad">Amdavad</option>
-                        <option value="Surat">Surat</option>
-                    </Select>
+                    <input type="text" id="addCity" disabled />
+                    <!--<Select asp-for="newAddress.City" id="addCity">
+                <option value="#">Select City</option>
+                <option value="Bhavnagar">Bhavnagar</option>
+                <option value="Ahemdabad">Amdavad</option>
+                <option value="Surat">Surat</option>
+            </Select>-->
                 </div>
             </div>
             <div>

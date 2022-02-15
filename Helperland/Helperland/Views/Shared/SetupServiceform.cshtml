@@ -5,15 +5,11 @@
 
 <form  id="setupform" class="setupform">
     <div id="form1">
-        <div class=" alert-warning alert-dismissible fade" id="postalcodeAlert" role="alert">
-            Service at that pincode is not available. 
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+        <div class="alert alert-danger d-none mt-3" id="postalcodeAlert" role="alert">
         </div>
         <h4>Enter your postal code</h4>
         <input type="text" asp-for="PostalCode" id="postalCode" placeholder="Postal Code" value=@TempData["PostalCode"]>
-        <span asp-validation-for="PostalCode" class="text-danger"></span>
+        
 
         <button type="button" onclick="postalSubmit()">Check Availibility</button>
     </div>

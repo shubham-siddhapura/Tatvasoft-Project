@@ -189,6 +189,9 @@ function form1() {
 }
 
 function form2() {
+
+    var now = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    $("#admin-sr-fdate").attr("min", now);
     form1div.style.display = "none";
     form2div.style.display = "block";
     form3div.style.display = "none";
@@ -396,50 +399,80 @@ $(document).on("keydown", ":input:not(textarea)", function (event) {
 
 function postalSubmit() {
     var data = $("#setupform").serialize();
+    var postalcode = $("#postalCode").val().trim();
+    console.log(postalcode)
+    var isNum = /^[0-9]+$/.test(postalcode);
+    if (postalcode == "") {
+        $("#postalcodeAlert").removeClass("d-none").text("Please Enter Valid PostalCode!");
+    }
+    else if (!isNum) {
+        $("#postalcodeAlert").removeClass("d-none").text("Postalcode must contains only numbers!");
+    }
+    else {
 
-    $.ajax({
-        type: 'POST',
-        url: '/CustomerPage/Validpost',
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        data: data,
-        success: function (result) {
-            if (result.value == "true") {
-                form2();
+        $.ajax({
+            type: 'POST',
+            url: '/CustomerPage/Validpost',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: data,
+            success: function (result) {
+                if (result.value == "true") {
+                    $("#postalcodeAlert").addClass("d-none");
+                    var cookie = document.cookie;
+                    var output = {};
+                    cookie.split(/\s*;\s*/).forEach(function (pair) {
+                        pair = pair.split(/\s*=\s*/);
+                        output[pair[0]] = pair.splice(1).join('=');
+                    });
+                    var json = JSON.stringify(output, null, 4);
+                    
+                    console.log(JSON.parse(json).city);
+                    $("#addCity").val(JSON.parse(json).city);
+                    form2();
+                }
+                else {
+                    $("#postalcodeAlert").removeClass("d-none").text("Sorry, Service is not available for your area!");
+                }
+            },
+            error: function () {
+                alert('Failed to receive the Data');
+                console.log('Failed ');
             }
-            else {
-                document.getElementById("postalcodeAlert").classList.add("show");
-                document.getElementById("postalcodeAlert").classList.add("alert");
-            }
-        },
-        error: function () {
-            alert('Failed to receive the Data');
-            console.log('Failed ');
-        }
-    });
+        });
+    }
 }
 
 function scheduleSubmit() {
     var data = $("#scheduleform").serialize();
     console.log(data);
 
-    $.ajax({
-        type: 'POST',
-        url: '/CustomerPage/ScheduleService',
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        data: data,
-        success: function (result) {
-            if (result.value == "true") {
-                form3();
+    var serviceDate = new Date($("#admin-sr-fdate").val() + " " + $("#startingtime").val()).getTime() / 1000;
+    var todayDate = new Date().getTime() / 1000;
+
+    if (serviceDate <= todayDate) {
+        $("#scheduleServiceAlert").removeClass("d-none").text("Please Select Valid Date and Time!");
+    }
+    else {
+        $.ajax({
+            type: 'POST',
+            url: '/CustomerPage/ScheduleService',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: data,
+            success: function (result) {
+                if (result.value == "true") {
+                    $("#scheduleServiceAlert").addClass("d-none")
+                    form3();
+                }
+                else {
+                    $("#scheduleServiceAlert").removeClass("d-none").text("Please Select Valid Date and time!");
+                }
+            },
+            error: function () {
+                alert('Failed to receive the Data');
+                console.log('Failed ');
             }
-            else {
-                alert("schedule is not valid");
-            }
-        },
-        error: function () {
-            alert('Failed to receive the Data');
-            console.log('Failed ');
-        }
-    });
+        });
+    }
 }
 
 function loadAddress() {
@@ -478,25 +511,41 @@ function saveAddress() {
     data.city = document.getElementById("addCity").value;
     data.mobile = document.getElementById("addPhoneno").value;
     console.log(data);
-    $.ajax({
-        type: 'POST',
-        url: '/CustomerPage/AddNewAddress',
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        data: data,
-        success: function (result) {
-            if (result.value == "true") {
-                form3();
-                cancelAddAddress();
+
+    var numbers = /^[0-9]+$/.test(data.mobile);
+
+    if (data.addressLine1 == "" && data.addressLine2 == "" && data.mobile == "") {
+        $("#detailServiceAlert").removeClass("d-none").text("Please enter Address!");
+    }
+    else if (data.addressLine1.trim(" ") == "") {
+        $("#detailServiceAlert").removeClass("d-none").text("Please enter value of Street!");
+    } else if (data.addressLine2.trim(" ") == "") {
+        $("#detailServiceAlert").removeClass("d-none").text("Please enter value of House no!");
+    } else if (data.mobile.trim(" ") == "" || !numbers) {
+        $("#detailServiceAlert").removeClass("d-none").text("Please enter value of Mobile!");
+    }
+    else {
+        $.ajax({
+            type: 'POST',
+            url: '/CustomerPage/AddNewAddress',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: data,
+            success: function (result) {
+                if (result.value == "true") {
+                    $("#detailServiceAlert").addClass("d-none");
+                    form3();
+                    cancelAddAddress();
+                }
+                else {
+                    $("#detailServiceAlert").removeClass("d-none").text("Sorry! Something went wrong please try again later.");
+                }
+            },
+            error: function () {
+                alert('Failed to receive the Data');
+                console.log('Failed ');
             }
-            else {
-                alert("schedule is not valid");
-            }
-        },
-        error: function () {
-            alert('Failed to receive the Data');
-            console.log('Failed ');
-        }
-    });
+        });
+    }
 }
 
 function completeBookService() {
@@ -548,11 +597,14 @@ function completeBookService() {
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         data: data,
         success: function (result) {
-            if (result.value == "true") {
-                alert("booking successfull");
+            if (result.value == "false") {
+                
+                alert("schedule is not valid");
+
             }
             else {
-                alert("schedule is not valid");
+                $("#modalServiceId").text("Service Id : " + result.value);
+                $("#completebookingmodalbtn").click();
             }
         },
         error: function () {

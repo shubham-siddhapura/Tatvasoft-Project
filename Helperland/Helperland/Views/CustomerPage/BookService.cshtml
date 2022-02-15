@@ -458,6 +458,9 @@
     </main>
     <!-- main ends -->
     <!-- footer starts -->
+
+    @await Html.PartialAsync("loggedout")
+
     <footer style="background-color: #111111;" id="faqfooter">
 
         <div class="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center py-3 footerborder" id="faq-footer">
@@ -505,7 +508,7 @@
    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/js/BookService.js">
-        console.log(document.cookie);
+       
     </script>
 
    

@@ -6,6 +6,9 @@
 <form asp-controller="CustomerPage" asp-action="ScheduleService" id="scheduleform" class="setupform">
     <div id="form2">
 
+        <div class="alert alert-danger d-none mt-3" id="scheduleServiceAlert" role="alert">
+        </div>
+
         <!-- datetime and how long starts -->
         <div id="datetimeAndHowlong">
             <!-- date and time starts -->
@@ -16,6 +19,7 @@
                     <input type="text" asp-for="Date" id="admin-sr-fdate" placeholder="Enter Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'" onchange="paymentbill_making()">
                     <span asp-validation-for="Date"></span>
                 </span>
+
                 <select asp-for="Time" id="startingtime" onchange="paymentbill_making()">
                     <option value="1:00" selected>1:00 PM</option>
                     <option value="2:00">2:00 PM</option>
@@ -23,6 +27,7 @@
                     <option value="4:00">4:00 PM</option>
                     <option value="5:00">5:00 PM</option>
                 </select>
+
                 <span asp-validation-for="Time"></span>
             </div>
             <!-- date and time ends -->
@@ -86,8 +91,8 @@
 
 
         <button id="form2continue" type="button" onclick="scheduleSubmit()">continue</button>
-        
-        
+
+
     </div>
 
 
