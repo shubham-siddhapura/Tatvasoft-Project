@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Helperland.Controllers
@@ -82,6 +83,7 @@ namespace Helperland.Controllers
         [HttpPost]
         public ActionResult Validpost(SetupService setup)
         {
+            Thread.Sleep(1500);
             var Zipcode = _db.Zipcodes.Where(x => x.ZipcodeValue == setup.PostalCode);
             if (Zipcode.Count() >0)
             {

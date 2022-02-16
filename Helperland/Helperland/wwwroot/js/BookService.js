@@ -380,7 +380,7 @@ function paymentbill_making() {
 
     paymentbill_totalhours[0].innerHTML = (parseFloat(document.getElementById("servicehours").value) + cabinet + fridge + oven + laundry + window);
     paymentbill_totalhours[1].innerHTML = (parseFloat(document.getElementById("servicehours").value) + cabinet + fridge + oven + laundry + window);
-    var bill_amount = (parseFloat(document.getElementById("servicehours").value) + cabinet + fridge + oven + laundry + window) * 25
+    var bill_amount = (parseFloat(document.getElementById("servicehours").value) + cabinet + fridge + oven + laundry + window) * 25;
     paymentbill_amount[0].innerHTML = bill_amount;
 
     paymentbill_amount[1].innerHTML = bill_amount;
@@ -416,6 +416,7 @@ function postalSubmit() {
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             data: data,
             success: function (result) {
+                $("#postalProgess").addClass("d-none");
                 if (result.value == "true") {
                     $("#postalcodeAlert").addClass("d-none");
                     var cookie = document.cookie;
@@ -433,6 +434,19 @@ function postalSubmit() {
                 else {
                     $("#postalcodeAlert").removeClass("d-none").text("Sorry, Service is not available for your area!");
                 }
+            },
+            xhr: function () {
+                var xhr = $.ajaxSettings.xhr();
+                xhr.upload.onprogress = function (event) {
+                    $("#postalProgess").removeClass("d-none");
+                    console.log('progress', event.loaded / event.total * 100);
+                }
+                xhr.upload.onload = function () {
+
+                    $("#postalProgess").removeClass("d-none");
+                    console.log('DONE!');
+                };
+                return xhr;
             },
             error: function () {
                 alert('Failed to receive the Data');
@@ -607,6 +621,7 @@ function completeBookService() {
                 $("#completebookingmodalbtn").click();
             }
         },
+
         error: function () {
             alert('Failed to receive the Data');
             console.log('Failed ');

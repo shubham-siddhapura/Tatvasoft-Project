@@ -3454,3 +3454,24 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     font-size: 20px;
     border-radius: 22px;
 }
+
+/*============================ progess loading  ===================================*/
+
+#postalProgess {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: #000;
+    opacity: 0.7;
+}
+#postalProgess div {
+        position: fixed;
+        top: 50%;
+        bottom: 50%;
+        width: 3rem !important;
+        height: 3rem !important;
+        border: 0.4em solid #1d7a8c !important;
+        border-right-color:#00000000!important;
+    }

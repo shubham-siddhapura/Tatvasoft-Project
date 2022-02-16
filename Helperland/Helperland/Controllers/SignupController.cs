@@ -26,6 +26,13 @@ namespace Helperland.Controllers
 
         public IActionResult Signup()
         {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            
+            if(Id != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return PartialView();
         }
 
