@@ -1,0 +1,93 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<!-- dashbord starts here -->
+<div id="dashbord" class="allPageMain">
+    <div>
+        <div class="customer-page-title-export" id="dashbordTitle">
+            <div class="customer-page-title">
+                <h2>
+                    Current Service Requests
+                </h2>
+            </div>
+            <div id="export-btn">
+                <a href="#" role="button" id="export">Add new Service Request</a>
+            </div>
+        </div>
+
+        <table id="dashbordTable">
+            <thead>
+                <tr>
+                    <th>
+                        Service Id
+                    </th>
+                    <th class="dateTime">
+                        Service Details
+                    </th>
+                    <th>
+                        Service Provider
+                    </th>
+                    <th>
+                        Payment
+                    </th>
+
+                    <th class="text-center">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 1st row -->
+                <tr>
+                    <td>
+                        1234
+                    </td>
+                    <td class="dateTime">
+                        <div>
+                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
+                            <span class="upcoming-date"><b>09/04/2018</b></span>
+                        </div>
+                        <div>
+                            <span><img src="/img/upcomingService/timer.png" alt=""></span>
+                            <span class="upcoming-time">12:00-18:00</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="customer-sh-SP">
+                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
+                            <div class="sp-detail">
+                                <p class="SP-name">Lyum Watson</p>
+                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
+                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
+                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
+                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
+                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
+                                <span class="SP-stars">4</span>
+
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="allPagePayment">
+
+                            <span class="payment">63</span>
+                            &euro;
+                        </div>
+                    </td>
+
+                    <td class="allPageActionButtons dashbordActions">
+                        <a href="#">Reschedule</a>
+                        <a href="#">Cancel</a>
+                    </td>
+                </tr>
+                <!-- 1 row ends -->
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+<!-- dashbord ends here -->

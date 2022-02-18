@@ -1662,6 +1662,11 @@ input {
     background-color: #525252;
 }
 
+/* ========================= Data Tables ========================== */
+table.dataTable.no-footer, table.dataTable thead th {
+    border-bottom: 1px solid #e1e1e1 !important;
+}
+
 /* ============================== Upcoming Service ================================= */
 .upcomingService .nav-padding {
     margin: 0 12px !important;
@@ -1751,39 +1756,39 @@ input {
     margin: 30px 0;
 }
 
-#upcoming-table {
+ .allPageMain {
     margin: 0px 15px;
     overflow-x: auto;
 }
 
-    #upcoming-table table {
+     .allPageMain table {
         font-size: 16px;
         border: 1px solid #e1e1e1;
         min-width: 740px;
     }
 
-    #upcoming-table tr {
+     .allPageMain tr {
         color: #646464;
         border-bottom: 1px solid #e1e1e1;
     }
 
-    #upcoming-table td, #upcoming-table th {
+     .allPageMain td,  .allPageMain th {
         padding: 10px 22px;
     }
 
-    #upcoming-table th {
+     .allPageMain th {
         background-color: #F9F9F9;
         margin: 0;
     }
 
-    #upcoming-table tbody a {
+    .allPageMain tbody a {
         color: #ffffff;
         background-color: #FF6B6B;
         border-radius: 20px;
         padding: 7px 16px;
     }
 
-    #upcoming-table tbody .distance, #upcoming-table tbody .actions {
+     .allPageMain tbody .distance,  .allPageMain tbody .actions {
         text-align: center;
     }
 
@@ -1807,7 +1812,7 @@ input {
         width: 210px;
     }
 
-    #upcoming-table td, #upcoming-table th {
+     .allPageMain td,  .allPageMain th {
         padding: 10px 15px;
     }
 
@@ -1815,11 +1820,11 @@ input {
         margin: 0 7.5px 0 15px;
     }
 
-    #upcoming-table {
+     .allPageMain {
         margin: 0 15px 0 7.5px;
     }
 
-        #upcoming-table th {
+         .allPageMain th {
             margin: 10px 10px;
         }
 }
@@ -1908,19 +1913,16 @@ input {
         margin-bottom: 15px !important;
     }
 
-    #upcoming-table table {
+     .allPageMain table {
         width: 95vw !important;
     }
 }
 
-#dashbord {
-    display: none;
-}
 
 
-/* ==============================Customer Service history============================== */
+/* ==============================Customer Service history========================== */
 
-#customer-page-title-export {
+.customer-page-title-export {
     display: flex;
     justify-content: space-between;
     margin: 6px 0 10px 0;
@@ -1989,14 +1991,33 @@ input {
     width: max-content;
 }
 
-.customer-sh-rateSP {
+#serviceHistory .allPageActionButtons{
+    min-width:100px!important;
+}
+
+.allPageActionButtons {
     text-align: center;
     min-width: 83px !important;
 }
 
-    .customer-sh-rateSP a {
-        background-color: #6DA9B5 !important;
-    }
+.allPageActionButtons a {
+    background-color: #6DA9B5 !important;
+}
+
+
+
+.dashbordActions {
+    min-width: 202px !important;
+}
+
+.dashbordActions a:first-child {
+    background-color: #1d7a8c !important;
+}
+
+.dashbordActions a:last-child {
+    background-color: #FF6B6B !important;
+}
+
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
     color: #777777 !important;
@@ -2027,6 +2048,25 @@ input {
 a.paginate_button.current {
     background-color: #1D7A8C !important;
     border: 0;
+}
+
+#mytable td, #mytable th,
+#dashbordTable td, #dashbordTable th {
+    display: table-cell !important;
+}
+
+
+#dashbordTable_length label {
+    margin-top: 15px;
+}
+
+#dashbordTable_length label select {
+    margin: 0 5px;
+}
+
+#dashbordTable_info {
+    margin-top: 7px;
+    margin-left: 7px;
 }
 
 
@@ -2061,7 +2101,7 @@ table.dataTable thead .sorting_desc {
         margin: 15px auto 0px;
     }
 
-    #upcoming-table table {
+     .allPageMain table {
         min-width: 0 !important;
     }
 
@@ -2069,7 +2109,8 @@ table.dataTable thead .sorting_desc {
         min-width: 119px;
     }
 
-    td {
+    #mytable td,
+    #dashbordTable td {
         display: block !important;
         border-bottom: 1px solid #e1e1e1;
         margin: 0 15px;
@@ -2080,19 +2121,19 @@ table.dataTable thead .sorting_desc {
         display: none;
     }
 
-    th {
-        display: none;
+    #mytable th, #dashbordTable th {
+        display: none!important;
     }
 
     tr {
-        box-shadow: 0 3px 8px rgb(75, 71, 71);
+        box-shadow: 0 0px 10px rgb(0, 0, 0, 0.2);
     }
 
-    #upcoming-table {
+     .allPageMain {
         margin: 0;
     }
 
-        #upcoming-table table {
+         .allPageMain table {
             border-collapse: separate;
             border-spacing: 20px 20px;
             margin: 0 !important;
@@ -2102,7 +2143,7 @@ table.dataTable thead .sorting_desc {
             min-width: none;
         }
 
-        #upcoming-table tbody .distance {
+         .allPageMain tbody .distance {
             text-align: left;
         }
 
@@ -2123,6 +2164,24 @@ table.dataTable thead .sorting_desc {
     }
 }
 
+
+@media screen and (max-width:500px) {
+
+    #dashbordTitle {
+        flex-direction: column;
+        align-items: center;
+    }
+
+        #dashbordTitle div {
+            margin: 10px 0;
+        }
+}
+
+/*=================== customer dashbord ==========================*/
+
+#dashbordTable td.dateTime, #dashbordTable td.dateTime{
+    min-width:125px;
+}
 
 /* ============================== admin-usermanagement ============================= */
 
@@ -3467,11 +3526,99 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     opacity: 0.7;
 }
 #postalProgess div {
-        position: fixed;
-        top: 50%;
-        bottom: 50%;
-        width: 3rem !important;
-        height: 3rem !important;
-        border: 0.4em solid #1d7a8c !important;
-        border-right-color:#00000000!important;
+    position: fixed;
+    top: 50%;
+    bottom: 50%;
+    width: 3rem !important;
+    height: 3rem !important;
+    border: 0.4em solid #1d7a8c !important;
+    border-right-color:#00000000!important;
+    border-left-color:#00000000!important;
+}
+
+
+/* ================= Customer Modals===================== */
+#serviceRequestCancelModal .modal-dialog, #serviceRequestReschedule .modal-dialog {
+    border: 0;
+    padding-top: 0;
+    max-width: 400px;
+}
+
+#serviceRequestCancelModal textarea {
+    width: 100%;
+}
+
+#serviceRequestCancelModal .modal-footer {
+    border: 0;
+    padding-top: 0;
+}
+
+#serviceRequestCancelModal .modal-body {
+    padding-bottom: 0;
+}
+
+#serviceRequestCancelModal .cancelBtn, #serviceRequestReschedule .cancelBtn {
+    width: 100%;
+    background-color: #1d7a8c;
+    color: white;
+    line-height: 28px;
+    border-radius: 28px;
+}
+
+#serviceRequestReschedule .rescheduleInput {
+    width: 49%;
+    height: 46px;
+    border: 1px solid #e1e1e1;
+}
+
+#serviceRequestReschedule input[type=date]::-webkit-calendar-picker-indicator {
+    left: 0px;
+}
+
+#serviceRequestReschedule input::-webkit-datetime-edit-fields-wrapper {
+    position: relative;
+    left: 35px;
+}
+
+#serviceRequestDetailsModal .modal-body div {
+    border-bottom: 1px solid #e1e1e1;
+    padding: 10px 0;
+}
+
+    #serviceRequestDetailsModal .modal-body div p {
+        margin: 0;
+    }
+
+#serviceRequestDetailsModal .modal-body .amount {
+    display: block;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1d7a8c;
+}
+
+#serviceRequestDetailsModal .modal-footer {
+    justify-content: flex-start;
+    border: 0;
+    padding-top: 0;
+}
+
+    #serviceRequestDetailsModal .modal-footer button {
+        line-height: 46px;
+        padding: 0 15px;
+        color: #fff;
+        border: 0;
+        border-radius: 23px;
+    }
+
+    #serviceRequestDetailsModal .modal-footer .cancelBtn {
+        background-color: #FF6B6B;
+    }
+
+    #serviceRequestDetailsModal .modal-footer .rescheduleBtn {
+        background-color: #1d7a8c;
+    }
+
+    #serviceRequestDetailsModal .modal-footer svg {
+        margin-top: -3px;
     }

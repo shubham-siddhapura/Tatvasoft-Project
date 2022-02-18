@@ -175,3 +175,6 @@ D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Raz
 D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ScheduleServiceform.cshtml.g.cs
 D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\DetailServiceform.cshtml.g.cs
 D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\BookServiceform.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\CustomerServiceHistory.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\CustomerDashbord.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\CustomerModals.cshtml.g.cs
