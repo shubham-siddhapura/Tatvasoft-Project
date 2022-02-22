@@ -45,7 +45,7 @@
                         <span id="SPname">@TempData["name"]</span>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">Dashbord</a>
+                        <a class="nav-link nav-padding" asp-controller="CustomerPage" asp-action="CustServiceHistory">Dashbord</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-padding" asp-controller="CustomerPage" asp-action="CustServiceHistory">Service History</a>
@@ -61,7 +61,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link nav-padding" href="#">My Setting</a>
+                        <a class="nav-link nav-padding" asp-controller="CustomerPage" asp-action="CustServiceHistory" asp-route-mySetting="true">My Setting</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-padding" asp-controller="Signup" asp-action="Logout">Logout</a>
@@ -166,8 +166,8 @@
                             <br />
                             <span id="UsernameNav">@TempData["name"]</span>
                         </li>
-                        <li><a class="dropdown-item" href="#">My Dashbord</a></li>
-                        <li><a class="dropdown-item" href="#">My Setting</a></li>
+                        <li><a class="dropdown-item" asp-controller="CustomerPage" asp-action="CustServiceHistory">My Dashbord</a></li>
+                        <li><a class="dropdown-item" asp-controller="CustomerPage" asp-action="CustServiceHistory" asp-route-mySetting ="true">My Setting</a></li>
                         <li><a class="dropdown-item" asp-controller="Signup" asp-action="Logout">Logout</a></li>
                     </ul>
                 </li>

@@ -1,12 +1,14 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-
-
+<!--
 <button id="reschedulebtn" data-bs-toggle="modal" data-bs-target="#serviceRequestReschedule">Reschedule</button>
-<button id="cancelbtn" data-bs-toggle="modal" data-bs-target="#serviceRequestCancelModal">cancel</button>
-<button id="serviceReqdetailsbtn" data-bs-toggle="modal" data-bs-target="#serviceRequestDetailsModal">details</button>
+    <button id="cancelbtn" data-bs-toggle="modal" data-bs-target="#serviceRequestCancelModal">cancel</button>
+    <button id="serviceReqdetailsbtn" data-bs-toggle="modal" data-bs-target="#serviceRequestDetailsModal">details</button>
+    <button id="mySettingAddAddressBtn" data-bs-toggle="modal" data-bs-target="#mySettingAddAddressModal">add Address</button>
+    <button id="myRatingModalBtn" data-bs-toggle="modal" data-bs-target="#myRatingModal">Rating</button>
 
+    -->
 <div class="modal" tabindex="-1" id="serviceRequestCancelModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -113,3 +115,149 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal" tabindex="-1" id="mySettingAddAddressModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add New Address</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p>Street Name</p>
+                            <input type="text" placeholder="Street Name" class="form-control">
+                        </div>
+                        <div class="col-lg-6">
+                            <p>House number</p>
+                            <input type="text" placeholder="House Number" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p>Postal Code</p>
+                            <input type="text" placeholder="Postal Code" class="form-control">
+                        </div>
+                        <div class="col-lg-6">
+                            <p>City</p>
+                            <input type="text" placeholder="City" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 ">
+                            <p>Phone Number</p>
+                            <div class="input-group">
+                                <span class="input-group-text">+91</span>
+                                <input type="text" placeholder="Mobile Number" class="form-control">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <button type="button" class="mySettingModalSubmitBtn">Add</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- ratings modal starts -->
+<div class="modal" tabindex="-1" id="myRatingModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="customer-sh-SP">
+                    <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
+                    <div class="sp-detail">
+                        <p class="SP-name">Lyum Watson</p>
+                        <div class="d-flex">
+                            <div class="spStars">
+
+                                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+
+                            <div><span class="ms-2">4</span></div>
+                        </div>
+
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>Rate your service provider</h4>
+                <!-- on time starts -->
+                <div class="spSkills">
+                    <div><p>On Time Arrival</p></div>
+                    <div class="spRatings">
+                        <input type="radio" name="onTime">
+                        <input type="radio" name="onTime">
+                        <input type="radio" name="onTime">
+                        <input type="radio" name="onTime">
+                        <input type="radio" name="onTime">
+                        <input type="radio" name="onTime">
+                        <input type="radio" name="onTime">
+                        <input type="radio" name="onTime">
+                        <input type="radio" name="onTime">
+                        <input type="radio" name="onTime">
+                    </div>
+                </div>
+                <!-- on time ends -->
+                <!-- friendly starts -->
+                <div class="spSkills">
+                    <p>friendly</p>
+                    <div class="spRatings">
+                        <input type="radio" name="friendly">
+                        <input type="radio" name="friendly">
+                        <input type="radio" name="friendly">
+                        <input type="radio" name="friendly">
+                        <input type="radio" name="friendly">
+                        <input type="radio" name="friendly">
+                        <input type="radio" name="friendly">
+                        <input type="radio" name="friendly">
+                        <input type="radio" name="friendly">
+                        <input type="radio" name="friendly">
+                    </div>
+                </div>
+                <!-- friendly ends -->
+                <!-- Quality of Service starts -->
+                <div class="spSkills">
+                    <p>Quality of Service</p>
+                    <div class="spRatings">
+                        <input type="radio" name="qualityService">
+                        <input type="radio" name="qualityService">
+                        <input type="radio" name="qualityService">
+                        <input type="radio" name="qualityService">
+                        <input type="radio" name="qualityService">
+                        <input type="radio" name="qualityService">
+                        <input type="radio" name="qualityService">
+                        <input type="radio" name="qualityService">
+                        <input type="radio" name="qualityService">
+                        <input type="radio" name="qualityService">
+                    </div>
+                </div>
+
+                <!-- quality of service ends -->
+
+                <div class="feedback">
+                    <h5>Feedback Service provider</h5>
+                    <textarea name="feedback" id="myRatingFeedback" cols="30" rows="10"></textarea>
+                </div>
+                <div>
+                    <button id="myRatingModalSubmit" type="button">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ratings modal ends -->

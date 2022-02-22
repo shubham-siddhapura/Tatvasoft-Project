@@ -1,0 +1,190 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<!-- my setting page starts -->
+<div id="mysetting" class="allPageMain ">
+
+    <ul class="mysettingUl">
+        <li class="mysettingTab active" id="myDetailsTab" onclick="mydetails()">
+            <span class="mysettingTabImg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+
+            </span>
+            <span class="mysettingTabText"> My Details </span>
+        </li>
+        <li class="mysettingTab" id="myAddressTab" onclick="myaddress()">
+            <span class="mysettingTabImg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            </span>
+            <span class="mysettingTabText"> My Address </span>
+        </li>
+        <li class="mysettingTab" id="changePasswordTab" onclick="changepassword()">
+            <span class="mysettingTabImg key">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                </svg>
+            </span>
+            <span class="mysettingTabText"> Change Password </span>
+        </li>
+    </ul>
+
+    <!-- my details div starts -->
+    <div class="mysettingDiv" id="myDetailsMySetting">
+
+        <p class="mySettingTitle"><b>My Details</b></p>
+        <form>
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label for="mySettingFname"> First Name </label>
+                        <input type="text" class="form-control" placeholder="First Name" id="mySettingFname" />
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="mySettingLname"> Last Name </label>
+                        <input type="text" placeholder="Last Name" class="form-control" id="mySettingLname" />
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="mySettingEmail"> E-mail Address </label>
+                        <input type="email" class="form-control" placeholder="E-mail" id="mySettingEmail" disabled />
+                    </div>
+                </div>
+                <div class="row cover">
+                    <div class="col-lg-4">
+                        <label for="mySettingMobile">Mobile Number</label>
+                        <div class="input-group" class="mobile-box">
+                            <span class="input-group-text">+49</span>
+                            <input type="tel" class="form-control" placeholder="Mobile Number" aria-label="mobile" aria-describedby="basic-addon1" id="mySettingMobile" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="mySettingDob"> Date of Birth </label>
+                        <input type="date" class="form-control" name="birthdate" id="mySettingDob" />
+                    </div>
+                </div>
+                <button type="button" id="myDetailsSave" class="mySettingSave">Save</button>
+            </div>
+        </form>
+    </div>
+    <!-- my details div ends -->
+    <!-- my address div starts -->
+    <div class="mysettingDiv d-none" id="myAddressMySetting">
+        <p class="mySettingTitle"><b>My Address</b></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Addresses</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <p><strong>Address: </strong>Maruti park 20B, 364002 Bhavnagar</p>
+                        <p><strong>Phone number: </strong>8200035128</p>
+                    </td>
+
+                    <td class="myAddressBtns">
+                        <button class="myAddressButton">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="edit-icon"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        </button>
+                        <button class="myAddressButton">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="delete-icon"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>
+                        <p><strong>Address: </strong>Maruti park 20B, 364002 Bhavnagar</p>
+                        <p><strong>Phone number: </strong>8200035128</p>
+                    </td>
+
+                    <td class="myAddressBtns">
+                        <button class="myAddressButton">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="edit-icon"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        </button>
+                        <button class="myAddressButton">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="delete-icon"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div>
+            <button type="button" class="mySettingSave" id="mySettingAddNewAddress" data-bs-toggle="modal" data-bs-target="#mySettingAddAddressModal">Add New Address</button>
+        </div>
+    </div>
+    <!-- my address div ends -->
+    <!-- change password starts -->
+    <div class="mysettingDiv d-none" id="changePasswordMySetting">
+        <p class="mySettingTitle"><b>Change Password</b></p>
+        <form action="">
+            <div>
+                <p>Old Password</p>
+                <input type="text" placeholder="Current Password">
+            </div>
+            <div>
+                <p>new Password</p>
+                <input type="text" placeholder="New Password">
+            </div>
+            <div>
+                <p>Confirm Password</p>
+                <input type="text" placeholder="Confirm Password">
+            </div>
+
+            <div>
+                <button type="button" class="mySettingSave">Save</button>
+            </div>
+        </form>
+    </div>
+    <!-- change password ends -->
+
+</div>
+<!-- my setting page ends -->

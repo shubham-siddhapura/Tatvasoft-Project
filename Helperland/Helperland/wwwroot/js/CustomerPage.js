@@ -70,7 +70,7 @@ export_button.addEventListener('click', () => {
 // change tabs
 var myDashbord = document.getElementById("dashbord");
 var myServiceHistory = document.getElementById("serviceHistory");
-
+var mysetting = document.getElementById("mysetting");
 var dashbordTab = document.getElementById("dashbordTab");
 var serviceHistoryTab = document.getElementById("serviceHistoryTab");
 
@@ -79,7 +79,7 @@ myServiceHistory.style.display = "none";
 function dashbord() {
     myDashbord.style.display = "block";
     myServiceHistory.style.display = "none";
-
+    mysetting.style.display = "none";
     dashbordTab.classList.add("active");
     serviceHistoryTab.classList.remove("active");
 }
@@ -87,7 +87,64 @@ function dashbord() {
 function serviceHistory() {
     myDashbord.style.display = "none";
     myServiceHistory.style.display = "block";
-
+    mysetting.style.display = "none";
     dashbordTab.classList.remove("active");
     serviceHistoryTab.classList.add("active");
+}
+
+function mySetting() {
+    myDashbord.style.display = "none";
+    myServiceHistory.style.display = "none";
+    mysetting.style.display = "block";
+    dashbordTab.classList.remove("active");
+    serviceHistoryTab.classList.remove("active");
+}
+
+const url = new URLSearchParams(window.location.search);
+
+if (url == "mySetting=true") {
+
+    mySetting();
+}
+
+
+/*============= my setting ===========*/
+
+var myDetailsTab = document.getElementById("myDetailsTab");
+var myAddressTab = document.getElementById("myAddressTab");
+var changePasswordTab = document.getElementById("changePasswordTab");
+
+var myDetails = document.getElementById("myDetailsMySetting");
+var myAddress = document.getElementById("myAddressMySetting");
+var changePassword = document.getElementById("changePasswordMySetting");
+
+function mydetails() {
+    myAddress.classList.add("d-none");
+    changePassword.classList.add("d-none");
+    myDetails.classList.remove("d-none");
+
+    myDetailsTab.classList.add("active");
+    myAddressTab.classList.remove("active");
+    changePasswordTab.classList.remove("active");
+}
+
+
+function myaddress() {
+    myDetails.classList.add("d-none");
+    myAddress.classList.remove("d-none");
+    changePassword.classList.add("d-none");
+
+    myDetailsTab.classList.remove("active");
+    myAddressTab.classList.add("active");
+    changePasswordTab.classList.remove("active");
+}
+
+function changepassword() {
+    myDetails.classList.add("d-none");
+    myAddress.classList.add("d-none");
+    changePassword.classList.remove("d-none");
+
+    myDetailsTab.classList.remove("active");
+    myAddressTab.classList.remove("active");
+    changePasswordTab.classList.add("active");
 }

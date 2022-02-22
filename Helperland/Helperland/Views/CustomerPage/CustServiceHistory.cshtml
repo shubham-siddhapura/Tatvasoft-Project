@@ -61,10 +61,11 @@
 
                     </div>
 
-
                     @await Html.PartialAsync("CustomerDashbord")
 
                     @await Html.PartialAsync("CustomerServiceHistory")
+
+                    @await Html.PartialAsync("CustomerMySetting")
 
                 </div>
 
@@ -72,6 +73,8 @@
             </div>
         </section>
         <!-- main section ends -->
+
+        @await Html.PartialAsync("CustomerModals")
 
     </main>
     <!-- main ends -->

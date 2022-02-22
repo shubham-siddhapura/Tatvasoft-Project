@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 
 body {
@@ -590,9 +590,9 @@ hr {
     z-index: -1;
 }
 
-#userWelcomeName{
-    padding:0.25rem 1rem;
-    border-bottom:1px solid #c8c8c8;
+#userWelcomeName {
+    padding: 0.25rem 1rem;
+    border-bottom: 1px solid #c8c8c8;
 }
 
 .separator {
@@ -1081,8 +1081,8 @@ footer {
 
 .contact-desc {
     text-align: center;
-    display:flex;
-    flex-direction : column;
+    display: flex;
+    flex-direction: column;
 }
 
     .contact-desc p {
@@ -1143,7 +1143,7 @@ input {
     display: flex;
     width: 620px;
     margin: 7.5px 0;
-    align-items:flex-start;
+    align-items: flex-start;
 }
 
     .checkboxes input {
@@ -1187,8 +1187,8 @@ input {
     border: 1px solid #c8c8c8;
 }
 
-#contactbtn-div{
-    text-align:center;
+#contactbtn-div {
+    text-align: center;
 }
 
 #contact-btn {
@@ -1268,9 +1268,9 @@ input {
         flex-wrap: wrap;
     }
 
-    #form-elements #upload-div{
-        display:block;
-        margin:0 15px;
+    #form-elements #upload-div {
+        display: block;
+        margin: 0 15px;
     }
 
     #fname, #lname, #email {
@@ -1756,27 +1756,28 @@ table.dataTable.no-footer, table.dataTable thead th {
     margin: 30px 0;
 }
 
- .allPageMain {
+.allPageMain {
     margin: 0px 15px;
-    overflow-x: auto;
+    width: 75%;
 }
 
-     .allPageMain table {
+    .allPageMain table {
         font-size: 16px;
         border: 1px solid #e1e1e1;
         min-width: 740px;
+        width: 100% !important;
     }
 
-     .allPageMain tr {
+    .allPageMain tr {
         color: #646464;
         border-bottom: 1px solid #e1e1e1;
     }
 
-     .allPageMain td,  .allPageMain th {
+    .allPageMain td, .allPageMain th {
         padding: 10px 22px;
     }
 
-     .allPageMain th {
+    .allPageMain th {
         background-color: #F9F9F9;
         margin: 0;
     }
@@ -1788,7 +1789,7 @@ table.dataTable.no-footer, table.dataTable thead th {
         padding: 7px 16px;
     }
 
-     .allPageMain tbody .distance,  .allPageMain tbody .actions {
+    .allPageMain tbody .distance, .allPageMain tbody .actions {
         text-align: center;
     }
 
@@ -1812,7 +1813,7 @@ table.dataTable.no-footer, table.dataTable thead th {
         width: 210px;
     }
 
-     .allPageMain td,  .allPageMain th {
+    .allPageMain td, .allPageMain th {
         padding: 10px 15px;
     }
 
@@ -1820,20 +1821,24 @@ table.dataTable.no-footer, table.dataTable thead th {
         margin: 0 7.5px 0 15px;
     }
 
-     .allPageMain {
+    .allPageMain {
         margin: 0 15px 0 7.5px;
     }
 
-         .allPageMain th {
+        .allPageMain th {
             margin: 10px 10px;
         }
 }
 
 @media screen and (max-width:992px) {
 
+    .allPageMain {
+        width: 95%;
+    }
+
     #faqnav .nav-item .rounded-pill {
         line-height: 18px;
-        margin:0 12px;
+        margin: 0 12px;
     }
 
     .upcomingService #faq-nav {
@@ -1885,7 +1890,7 @@ table.dataTable.no-footer, table.dataTable thead th {
     #upcoming-menu-collapse {
         display: block;
         border-bottom: 1px solid #ffffff55;
-        width:100%;
+        width: 100%;
     }
 
     #upcoming-notification {
@@ -1913,7 +1918,7 @@ table.dataTable.no-footer, table.dataTable thead th {
         margin-bottom: 15px !important;
     }
 
-     .allPageMain table {
+    .allPageMain table {
         width: 95vw !important;
     }
 }
@@ -1925,6 +1930,7 @@ table.dataTable.no-footer, table.dataTable thead th {
 .customer-page-title-export {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: 6px 0 10px 0;
 }
 
@@ -1991,8 +1997,8 @@ table.dataTable.no-footer, table.dataTable thead th {
     width: max-content;
 }
 
-#serviceHistory .allPageActionButtons{
-    min-width:100px!important;
+#serviceHistory .allPageActionButtons {
+    min-width: 100px !important;
 }
 
 .allPageActionButtons {
@@ -2000,9 +2006,9 @@ table.dataTable.no-footer, table.dataTable thead th {
     min-width: 83px !important;
 }
 
-.allPageActionButtons a {
-    background-color: #6DA9B5 !important;
-}
+    .allPageActionButtons a {
+        background-color: #6DA9B5 !important;
+    }
 
 
 
@@ -2010,13 +2016,13 @@ table.dataTable.no-footer, table.dataTable thead th {
     min-width: 202px !important;
 }
 
-.dashbordActions a:first-child {
-    background-color: #1d7a8c !important;
-}
+    .dashbordActions a:first-child {
+        background-color: #1d7a8c !important;
+    }
 
-.dashbordActions a:last-child {
-    background-color: #FF6B6B !important;
-}
+    .dashbordActions a:last-child {
+        background-color: #FF6B6B !important;
+    }
 
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -2060,9 +2066,9 @@ a.paginate_button.current {
     margin-top: 15px;
 }
 
-#dashbordTable_length label select {
-    margin: 0 5px;
-}
+    #dashbordTable_length label select {
+        margin: 0 5px;
+    }
 
 #dashbordTable_info {
     margin-top: 7px;
@@ -2101,7 +2107,7 @@ table.dataTable thead .sorting_desc {
         margin: 15px auto 0px;
     }
 
-     .allPageMain table {
+    .allPageMain table {
         min-width: 0 !important;
     }
 
@@ -2122,18 +2128,18 @@ table.dataTable thead .sorting_desc {
     }
 
     #mytable th, #dashbordTable th {
-        display: none!important;
+        display: none !important;
     }
 
     tr {
         box-shadow: 0 0px 10px rgb(0, 0, 0, 0.2);
     }
 
-     .allPageMain {
+    .allPageMain {
         margin: 0;
     }
 
-         .allPageMain table {
+        .allPageMain table {
             border-collapse: separate;
             border-spacing: 20px 20px;
             margin: 0 !important;
@@ -2143,7 +2149,7 @@ table.dataTable thead .sorting_desc {
             min-width: none;
         }
 
-         .allPageMain tbody .distance {
+        .allPageMain tbody .distance {
             text-align: left;
         }
 
@@ -2177,10 +2183,166 @@ table.dataTable thead .sorting_desc {
         }
 }
 
+#serviceHistory{
+    display:none;
+}
 /*=================== customer dashbord ==========================*/
+#dashbordTable td.dateTime, #dashbordTable td.dateTime {
+    min-width: 125px;
+}
 
-#dashbordTable td.dateTime, #dashbordTable td.dateTime{
-    min-width:125px;
+/* ================== customer my setting ======================== */
+
+/* #mysetting{
+    width: 750px;
+} */
+
+#mysetting{
+    display:none;
+}
+
+#mysetting .mysettingUl {
+    list-style: none;
+    gap: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-bottom:15px;
+}
+
+    #mysetting .mysettingUl li {
+        display: inline-block;
+        width: 33%;
+        font-weight: 700;
+        font-size: 16px;
+        color: #646464;
+        padding: 15px;
+        margin: 0 -2px;
+        text-align: center;
+        border-bottom: 3px solid #E1E1E1;
+        cursor: pointer;
+        transition: all 0.5s ease;
+    }
+
+        #mysetting .mysettingUl li:hover {
+            color: #1d7a8c;
+            border-bottom-color: #1d7a8c;
+        }
+
+        #mysetting .mysettingUl li.active {
+            color: #1d7a8c;
+            border-bottom-color: #1d7a8c;
+        }
+
+#myDetailsMySetting form div div div {
+    margin-bottom: 15px;
+}
+
+.mySettingSave {
+    background-color: #1d7a8c;
+    color: #fff;
+    line-height: 40px;
+    padding: 0 20px;
+    border-radius: 23px;
+    border: 0;
+    margin: 15px 0 25px;
+}
+
+#mysetting #mySettingDob {
+    color: #646464;
+}
+
+#mysetting #myAddressMySetting p {
+    margin-bottom: 0;
+}
+
+#mysetting .myAddressButton {
+    padding: 0;
+    height: 24px;
+    width: 24px;
+    border: 0;
+    background-color: transparent;
+}
+
+    #mysetting .myAddressButton svg {
+        color: #646464;
+    }
+
+#changePasswordMySetting p {
+    margin-bottom: 0;
+    font-weight: 600;
+    color: #646464;
+}
+
+#mysetting #changePasswordMySetting form {
+    margin-top: 15px;
+}
+
+#mysetting #changePasswordMySetting div {
+    margin: 0 15px 15px;
+}
+
+    #mysetting #changePasswordMySetting div input {
+        line-height: 40px;
+        border-radius: 5px;
+        padding: 0 10px;
+        width: 400px;
+    }
+
+#mysetting p.mySettingTitle {
+    display: none;
+    margin: 15px 0 0;
+    padding: 0 20px 5px;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+#mysetting .mysettingTabImg {
+    display: none;
+}
+
+    #mysetting .mysettingTabImg svg {
+        height: 36px;
+        width: 36px;
+    }
+
+#mysetting .key {
+    transform: rotate(315deg);
+}
+
+@media screen and (max-width: 768px) {
+    #mysetting table td {
+        display: block;
+    }
+
+        #mysetting table td.myAddressBtns {
+            text-align: center;
+        }
+
+    #mySettingAddNewAddress {
+        margin-left: 20px;
+    }
+
+    #mysetting #changePasswordMySetting div input {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width:515px) {
+    #mysetting p.mySettingTitle {
+        display: block;
+    }
+
+    #mysetting #changePasswordMySetting div input {
+        width: 100%;
+    }
+
+    #mysetting .mysettingTabImg {
+        display: block;
+    }
+
+    #mysetting .mysettingTabText {
+        display: none;
+    }
 }
 
 /* ============================== admin-usermanagement ============================= */
@@ -2579,7 +2741,6 @@ input[type="date"]::-webkit-calendar-picker-indicator, input[type="date"]::-moz-
 #admin-sr-mdate::-webkit-calendar-picker-indicator, #admin-sr-fdate::-moz-calendar-picker-indicator, #admin-sr-tdate::-moz-calendar-picker-indicator,
 #admin-sr-mdate::-moz-calendar-picker-indicator {
     display: none;
-
 }
 
 input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wrapper {
@@ -3489,7 +3650,7 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
         margin-bottom: 15px;
     }
 
-.successModal .modal-body{
+.successModal .modal-body {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -3525,16 +3686,17 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     background-color: #000;
     opacity: 0.7;
 }
-#postalProgess div {
-    position: fixed;
-    top: 50%;
-    bottom: 50%;
-    width: 3rem !important;
-    height: 3rem !important;
-    border: 0.4em solid #1d7a8c !important;
-    border-right-color:#00000000!important;
-    border-left-color:#00000000!important;
-}
+
+    #postalProgess div {
+        position: fixed;
+        top: 50%;
+        bottom: 50%;
+        width: 3rem !important;
+        height: 3rem !important;
+        border: 0.4em solid #1d7a8c !important;
+        border-right-color: #00000000 !important;
+        border-left-color: #00000000 !important;
+    }
 
 
 /* ================= Customer Modals===================== */
@@ -3622,3 +3784,131 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     #serviceRequestDetailsModal .modal-footer svg {
         margin-top: -3px;
     }
+
+#mySettingAddAddressModal p {
+    margin-bottom: 0;
+}
+
+#mySettingAddAddressModal form div div {
+    margin-bottom: 15px;
+}
+
+.mySettingModalSubmitBtn {
+    width: 100%;
+    background-color: #1d7a8c;
+    border: 0;
+    line-height: 36px;
+    border-radius: 20px;
+    color: white;
+}
+
+/* =============== Ratings Modal =====================*/
+#myRatingModal .modal-header {
+    margin-bottom: 15px;
+}
+
+#myRatingModal .modal-body h4 {
+    border-bottom: 1px solid #64646466;
+    padding-bottom: 7px;
+}
+
+#myRatingModal .feedback {
+    margin-top: 20px;
+}
+
+#myRatingModal .spSkills {
+    display: flex;
+    align-items: center;
+}
+
+#myRatingModal .spStars {
+    display: flex;
+    align-items: center;
+}
+
+#myRatingModal .spSkills p {
+    width: 150px;
+    margin: 0;
+}
+
+#myRatingModal .spSkills .spRatings {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+    #myRatingModal .spSkills .spRatings input {
+        position: relative;
+        width: 20px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        -webkit-appearance: none;
+        appearance: none;
+        overflow: hidden;
+        border: 0;
+    }
+
+        #myRatingModal .spSkills .spRatings input::before {
+            content: '★';
+            color: #64646466;
+            position: absolute;
+            font-size: 34px;
+            left: 6px;
+        }
+
+        #myRatingModal .spSkills .spRatings input:nth-child(2n+1)::before {
+            right: 6px;
+            left: initial;
+        }
+
+        #myRatingModal .spSkills .spRatings input:hover ~ input::before,
+        #myRatingModal .spSkills .spRatings input:hover::before,
+        #myRatingModal .spSkills .spRatings input:checked ~ input::before,
+        #myRatingModal .spSkills .spRatings input:checked::before {
+            color: #ECB91C;
+        }
+
+#myRatingModal .spStars span {
+    display: inline-block;
+    position: relative;
+    height: 30px;
+    width: 10px;
+    overflow: hidden;
+    margin-top: -7px;
+    padding: 0;
+}
+
+    #myRatingModal .spStars span::before {
+        content: "★";
+        position: absolute;
+        color: #64646466;
+        font-size: 24px;
+        width: fit-content;
+    }
+
+    #myRatingModal .spStars span:nth-child(2n)::before {
+        right: 0px;
+        left: initial;
+    }
+
+
+#myRatingModal h5 {
+    color: #646464;
+    font-size: 17px;
+}
+
+#myRatingModal .feedback textarea {
+    width: 100%;
+}
+
+#myRatingModal #myRatingModalSubmit {
+    background-color: #1d7a8c;
+    color: white;
+    line-height: 36px;
+    padding: 0 15px;
+    border: 0;
+    border-radius: 18px;
+    font-weight: 600;
+}
