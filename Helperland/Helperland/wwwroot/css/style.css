@@ -2006,21 +2006,31 @@ table.dataTable.no-footer, table.dataTable thead th {
     min-width: 83px !important;
 }
 
-    .allPageActionButtons a {
-        background-color: #6DA9B5 !important;
-    }
+.allPageActionButtons a, .allPageActionButtons button {
+    background-color: #6DA9B5 !important;
+    color: white;
+    border: 0;
+    border-radius: 20px;
+    padding:0 15px;
+    line-height: 36px;
+}
 
-
+.allPagePayment {
+    color: #1d7a8c;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+}
 
 .dashbordActions {
     min-width: 202px !important;
 }
 
-    .dashbordActions a:first-child {
+    .dashbordActions button:first-child {
         background-color: #1d7a8c !important;
     }
 
-    .dashbordActions a:last-child {
+    .dashbordActions button:last-child {
         background-color: #FF6B6B !important;
     }
 
@@ -2191,14 +2201,15 @@ table.dataTable thead .sorting_desc {
     min-width: 125px;
 }
 
+#dashbordTable .headingPayment{
+    text-align: center;
+}
 /* ================== customer my setting ======================== */
-
 /* #mysetting{
     width: 750px;
 } */
-
-#mysetting{
-    display:none;
+#mysetting {
+    display: none;
 }
 
 #mysetting .mysettingUl {

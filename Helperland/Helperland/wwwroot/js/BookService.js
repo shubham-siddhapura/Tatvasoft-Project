@@ -593,6 +593,8 @@ function completeBookService() {
     }
     data.postalCode = document.getElementById("postalCode").value;
     data.serviceStartDate = document.getElementById("admin-sr-fdate").value;
+    data.serviceTime = document.getElementById("startingtime").value;
+    console.log(data.serviceTime);
     data.serviceHours = document.getElementById("servicehours").value;
     data.extraHours = extrahour;
     data.subTotal = extrahour + document.getElementById("servicehours").value;

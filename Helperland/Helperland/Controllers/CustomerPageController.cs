@@ -28,12 +28,44 @@ namespace Helperland.Controllers
             if (HttpContext.Session.GetInt32("userId")!=null)
             {
                 var id = HttpContext.Session.GetInt32("userId");
-                Models.User user = _db.Users.Find(id);
+                User user = _db.Users.Find(id);
                 TempData["Name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
+
+                List<CustomerDashbord> dashbord = new List<CustomerDashbord>();
+
+                var table = _db.ServiceRequests.Where(x => x.UserId == id && x.Status == 2).ToList();
+
+                foreach(var data in table)
+                {
+                    
+                    CustomerDashbord sr = new CustomerDashbord();
+                    sr.ServiceRequestId = data.ServiceRequestId;
+
+                    sr.ServiceStartDate = data.ServiceStartDate.ToString("dd/MM/yyyy");
+                    sr.StartTime = data.ServiceStartDate.ToString("HH:mm");
+                    sr.EndTime = data.ServiceStartDate.AddHours((double)data.SubTotal).ToString("HH:mm tt");
+
+                    sr.TotalCost = data.TotalCost;
+
+                    if (data.ServiceProviderId != null) {
+
+                        User sp = _db.Users.Where(x => x.UserId == data.ServiceProviderId).FirstOrDefault();
+
+                        sr.ServiceProvider = sp.FirstName + " " + sp.LastName;
+
+                        decimal rating = _db.Ratings.Where(x => x.RatingTo == data.ServiceProviderId).Average(x => x.Ratings);
+
+                        sr.SPRatings = rating;
+
+                    }
+
+                    dashbord.Add(sr);
+                }             
+
                 if (user.UserTypeId == 1)
                 {
-                    return PartialView();
+                    return PartialView(dashbord);
                 }
             }
             else if (Request.Cookies["userId"] != null)
@@ -58,7 +90,7 @@ namespace Helperland.Controllers
             if (HttpContext.Session.GetInt32("userId") != null)
             {
                 var id = HttpContext.Session.GetInt32("userId");
-                Models.User user = _db.Users.Find(id);
+                User user = _db.Users.Find(id);
                 TempData["Name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
                 if (user.UserTypeId == 1)
@@ -168,7 +200,8 @@ namespace Helperland.Controllers
             ServiceRequest add = new ServiceRequest();
             add.UserId = Id;
             add.ServiceId = Id;
-            add.ServiceStartDate = complete.ServiceStartDate;
+            string date = complete.ServiceStartDate.ToString("dd/MM/yyyy")+ " "+ complete.ServiceTime;
+            add.ServiceStartDate = DateTime.Parse(date);
             add.ZipCode = complete.PostalCode;
             add.ServiceHourlyRate = 25;
             add.ServiceHours = complete.ServiceHours;
@@ -183,6 +216,13 @@ namespace Helperland.Controllers
             add.ModifiedDate = DateTime.Now;
             add.HasIssue = false;
 
+            /* status
+             * 0 : Completed
+             * 1 : Cancelled
+             * 2 : Pending             
+             */
+
+            add.Status = 2;
             var result = _db.ServiceRequests.Add(add);
             _db.SaveChanges();
 
@@ -249,5 +289,49 @@ namespace Helperland.Controllers
 
             return Ok(Json("false"));
         }
+
+        public IActionResult CancelServiceRequest(ServiceRequest cancel)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                
+                ServiceRequest cancelService = _db.ServiceRequests.FirstOrDefault(x=>x.ServiceRequestId == cancel.ServiceRequestId);
+                cancelService.Status = 1;
+                if (cancel.Comments != null)
+                {
+                    cancelService.Comments = cancel.Comments;
+                }
+                    
+                var result = _db.ServiceRequests.Update(cancelService);
+                _db.SaveChanges();
+                if(result != null)
+                {
+                    return Ok(Json("true"));
+                }
+            }
+            return Ok(Json("false"));
+        }
+
+        public IActionResult RescheduleServiceRequest(CustomerDashbord reschedule)
+        {
+            ServiceRequest rescheduleService = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == reschedule.ServiceRequestId);
+
+            string date = reschedule.ServiceStartDate + " " + reschedule.StartTime;
+
+            rescheduleService.ServiceStartDate = DateTime.Parse(date);
+            rescheduleService.ServiceRequestId = reschedule.ServiceRequestId;
+
+            var result = _db.ServiceRequests.Update(rescheduleService);
+            _db.SaveChanges();
+
+            if (result != null)
+            {
+                return Ok(Json("true"));
+            }
+
+            return Ok(Json("false"));
+        }
     }
 }
+

@@ -148,3 +148,77 @@ function changepassword() {
     myAddressTab.classList.remove("active");
     changePasswordTab.classList.add("active");
 }
+
+
+/* =================== Customer Dashbord ================== */
+
+document.addEventListener("click", function (e) {
+    if (e.target.classList == "customerReschedule") {
+        document.getElementById("updateRequestId").value = e.target.value;
+    }
+    if (e.target.classList == "customerCancel") {
+        document.getElementById("CancelRequestId").value = e.target.value;
+    }
+   
+    console.log(e.target.value);
+});
+
+document.getElementById("CancelRequestBtn").addEventListener("click", function () {
+
+    var ServiceRequestId = document.getElementById("CancelRequestId").value;
+    var Comments = document.getElementById("cancelReason").value;
+    var data = {};
+
+    data.serviceRequestId = ServiceRequestId;
+    data.comments = Comments;
+
+    $.ajax({
+        type: 'POST',
+        url: '/CustomerPage/CancelServiceRequest',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            if (result.value == "true") {
+                window.location.reload();
+            }
+            else {
+                alert("fail");
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+
+});
+
+document.getElementById("updateServiceRequest").addEventListener("click", function () {
+    var serviceStartDate = document.getElementById("updateRequestDate").value;
+    var serviceTime = document.getElementById("rescheduleTime").value;
+    var serviceRequestId = document.getElementById("updateRequestId").value;
+    console.log(serviceRequestId);
+    var data = {};
+    data.serviceStartDate = serviceStartDate;
+    data.startTime = serviceTime;
+    data.serviceRequestId = serviceRequestId;
+
+    $.ajax({
+        type: 'POST',
+        url: '/CustomerPage/RescheduleServiceRequest',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            if (result.value == "true") {
+                window.location.reload();
+            }
+            else {
+                alert("fail");
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+
+
+});
