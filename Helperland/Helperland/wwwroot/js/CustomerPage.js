@@ -151,7 +151,7 @@ function changepassword() {
 
 
 /* =================== Customer Dashbord ================== */
-
+var serviceRequestId = 0;
 document.addEventListener("click", function (e) {
     if (e.target.classList == "customerReschedule") {
         document.getElementById("updateRequestId").value = e.target.value;
@@ -159,8 +159,14 @@ document.addEventListener("click", function (e) {
     if (e.target.classList == "customerCancel") {
         document.getElementById("CancelRequestId").value = e.target.value;
     }
-   
-    console.log(e.target.value);
+
+
+    serviceRequestId = e.target.closest("tr").getAttribute("data-value");
+
+    if (serviceRequestId != null && (e.target.classList != "customerCancel" && e.target.classList != "customerReschedule")) {
+        document.getElementById("serviceReqdetailsbtn").click();
+    }
+    console.log(e);
 });
 
 document.getElementById("CancelRequestBtn").addEventListener("click", function () {
@@ -221,4 +227,66 @@ document.getElementById("updateServiceRequest").addEventListener("click", functi
     });
 
 
+});
+
+document.getElementById("serviceReqdetailsbtn").addEventListener("click", function () {
+    console.log("abcd");
+
+    var dateTime = document.getElementById("CDDetailsDateTime");
+    var duration = document.getElementById("CDDetailsDuration");
+    document.getElementById("CDDetailsId").innerHTML = serviceRequestId;
+    var extra = document.getElementById("CDDetailsExtra");
+    var amount = document.getElementById("CDDetailsAmount");
+    var address = document.getElementById("CDDetailsAddress");
+    var phone = document.getElementById("CDDetailsPhone");
+    var email = document.getElementById("CDDetailsEmail");
+    var comment = document.getElementById("CDDetailsComment");
+
+    var data = {};
+    data.ServiceRequestId = parseInt(serviceRequestId);
+    $.ajax({
+        type: 'GET',
+        url: '/CustomerPage/DashbordServiceDetails',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            console.log(result);
+            if (result != null) {
+                dateTime.innerHTML = result.date.substring(0, 10) + " " + result.startTime + " - " + result.endTime;
+                duration.innerHTML = result.duration;
+                extra.innerHTML = "";
+                if (result.cabinet == true) {
+                    extra.innerHTML += "<p>Inside Cabinet</p>";
+                }
+                if (result.laundry == true) {
+                    extra.innerHTML += "<p>Laundry Wash & dry</p>";
+                }
+                if (result.oven == true) {
+                    extra.innerHTML += "<p>Inside Oven</p>";
+                }
+                if (result.fridge == true) {
+                    extra.innerHTML += "<p>Inside Fridge</p>";
+                }
+                if (result.window == true) {
+                    extra.innerHTML += "<p>Interior Window</p>";
+                }
+                amount.innerHTML = result.totalCost + " &euro;";
+                address.innerHTML = result.address;
+                phone.innerHTML = result.phoneNo;
+                email.innerHTML = result.email; 
+                comment.innerHTML = "";
+                if (result.comments != null) {
+                    comment.innerHTML = result.comments;
+                }
+                
+            }
+            else {
+                alert("result is null");
+            }
+            
+        },
+        error: function () {
+            alert("error");
+        }
+    });
 });

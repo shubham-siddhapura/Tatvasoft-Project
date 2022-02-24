@@ -290,6 +290,7 @@ namespace Helperland.Controllers
             return Ok(Json("false"));
         }
 
+        [HttpPost]
         public IActionResult CancelServiceRequest(ServiceRequest cancel)
         {
             int? Id = HttpContext.Session.GetInt32("userId");
@@ -313,6 +314,7 @@ namespace Helperland.Controllers
             return Ok(Json("false"));
         }
 
+        [HttpPost]
         public IActionResult RescheduleServiceRequest(CustomerDashbord reschedule)
         {
             ServiceRequest rescheduleService = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == reschedule.ServiceRequestId);
@@ -332,6 +334,58 @@ namespace Helperland.Controllers
 
             return Ok(Json("false"));
         }
+
+        [HttpGet]
+        public JsonResult DashbordServiceDetails(CustomerDashbord ID)
+        {
+
+            CustomerDashbordServiceDetails Details = new CustomerDashbordServiceDetails();
+
+            ServiceRequest sr = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == ID.ServiceRequestId);
+            Details.ServiceRequestId = ID.ServiceRequestId;
+            Details.Date = sr.ServiceStartDate.ToString("dd/MM/yyyy");
+            Details.StartTime = sr.ServiceStartDate.ToString("HH:mm");
+            Details.Duration = sr.SubTotal;
+            Details.EndTime = sr.ServiceStartDate.AddHours((double)sr.SubTotal).ToString("HH:mm");
+            Details.TotalCost = sr.TotalCost;
+            Details.Comments = sr.Comments;
+
+            List<ServiceRequestExtra> Extra = _db.ServiceRequestExtras.Where(x => x.ServiceRequestId == ID.ServiceRequestId).ToList();
+
+            foreach(ServiceRequestExtra row in Extra)
+            {
+                if(row.ServiceExtraId == 1)
+                {
+                    Details.Cabinet = true;
+                }
+                else if(row.ServiceExtraId == 2)
+                {
+                    Details.Oven = true;
+                }
+                else if(row.ServiceExtraId == 3)
+                {
+                    Details.Window = true;
+                }
+                else if(row.ServiceExtraId == 4)
+                {
+                    Details.Fridge = true;
+                }
+                else
+                {
+                    Details.Laundry = true;
+                }
+            }
+
+            ServiceRequestAddress Address = _db.ServiceRequestAddresses.FirstOrDefault(x=>x.ServiceRequestId == ID.ServiceRequestId);
+
+            Details.Address = Address.AddressLine1 + " " + Address.AddressLine2 + " "+ Address.PostalCode+ " " + Address.City;
+
+            Details.PhoneNo = Address.Mobile;
+            Details.Email = Address.Email;
+
+            return new JsonResult(Details);
+        }
+
     }
 }
 

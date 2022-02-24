@@ -46,8 +46,8 @@
                 {
                     @foreach (var row in Model)
                     {
-                        <tr>
-                            <td>
+                        <tr data-value=@row.ServiceRequestId class="serviceRequestRow">
+                            <td >
                                 @row.ServiceRequestId
                             </td>
                             <td class="dateTime">
@@ -60,7 +60,7 @@
                                     <span class="upcoming-time">@row.StartTime - @row.EndTime</span>
                                 </div>
                             </td>
-                            <td>
+                            <td >
                                 @if (row.ServiceProvider != null) { 
                                 <div class="customer-sh-SP">
                                     <div>
@@ -79,7 +79,7 @@
                                 }
                                 
                             </td>
-                            <td>
+                            <td >
                                 <div class="allPagePayment">
 
                                     <span class="payment">@row.TotalCost</span>
@@ -104,7 +104,6 @@
         </table>
 
     </div>
-
 
 </div>
 <!-- dashbord ends here -->

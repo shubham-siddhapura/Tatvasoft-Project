@@ -4,11 +4,15 @@
 <!--
 <button id="reschedulebtn" data-bs-toggle="modal" data-bs-target="#serviceRequestReschedule">Reschedule</button>
     <button id="cancelbtn" data-bs-toggle="modal" data-bs-target="#serviceRequestCancelModal">cancel</button>
-    <button id="serviceReqdetailsbtn" data-bs-toggle="modal" data-bs-target="#serviceRequestDetailsModal">details</button>
+    
     <button id="mySettingAddAddressBtn" data-bs-toggle="modal" data-bs-target="#mySettingAddAddressModal">add Address</button>
     <button id="myRatingModalBtn" data-bs-toggle="modal" data-bs-target="#myRatingModal">Rating</button>
 
     -->
+
+<button id="serviceReqdetailsbtn" data-bs-toggle="modal" data-bs-target="#serviceRequestDetailsModal" class="d-none">details</button>
+
+<!--Cancel Request-->
 <div class="modal" tabindex="-1" id="serviceRequestCancelModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -28,7 +32,7 @@
     </div>
 </div>
 
-
+<!--Reschedule-->
 <div class="modal" tabindex="-1" id="serviceRequestReschedule">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -75,7 +79,7 @@
     </div>
 </div>
 
-
+<!--Details-->
 <div class="modal" tabindex="-1" id="serviceRequestDetailsModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -84,24 +88,28 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                
                 <div>
-                    <h4>05/10/2021 08:00 - 11:30</h4>
-                    <p><b>Duration: </b>3.5 hrs</p>
+                    <h4 id="CDDetailsDateTime">05/10/2021 08:00 - 11:30</h4>
+                    <p><b>Duration: </b ><span id="CDDetailsDuration"></span> hrs</p>
                 </div>
                 <div>
-                    <p><b>Service Id: </b>8445</p>
-                    <p><b>Extras: </b> <span>Inside Cabinets</span></p>
-                    <p><b>Net Amount:</b><span class="amount">8750 &euro;</span></p>
+                    <p><b>Service Id: </b><span id="CDDetailsId"></span></p>
+                    <div class="d-flex border border-0">
+                        <p><b>Extras: </b> </p>
+                        <div id="CDDetailsExtra" class="border border-0 p-0 ps-1" ></div>
+                    </div>
+                    <p><b>Net Amount:</b><span class="amount" id="CDDetailsAmount">8750 &euro;</span></p>
                 </div>
                 <div>
-                    <p><b>Service Address: </b> <span class="customerModalServiceAddress"></span></p>
+                    <p><b>Service Address: </b> <span class="customerModalServiceAddress" id="CDDetailsAddress"></span></p>
                     <p><b>Billing Address: </b><span>Same as Service Address</span></p>
-                    <p><b>Phone: </b><span>+91</span><span class="customerModalPhone"></span></p>
-                    <p><b>Email: </b><span class="customerModalEmail"></span></p>
+                    <p><b>Phone: </b><span>+91</span><span class="customerModalPhone" id="CDDetailsPhone"></span></p>
+                    <p><b>Email: </b><span class="customerModalEmail" id="CDDetailsEmail"> </span></p>
                 </div>
                 <div>
-                    <p><b>Comments: </b><span class="customerModalComments"></span></p>
-                    <p><img src="" alt="" class="cusomerModalPetImg"> <span class="cusomerModalPet">I don't have pets at home.</span></p>
+                    <p><b>Comments: </b><span class="customerModalComments" id="CDDetailsComment"></span></p>
+                    <!--<p><img src="" alt="" class="cusomerModalPetImg"> <span class="cusomerModalPet">I don't have pets at home.</span></p>-->
                 </div>
             </div>
             <div class="modal-footer">
