@@ -378,7 +378,7 @@ namespace Helperland.Controllers
 
             ServiceRequestAddress Address = _db.ServiceRequestAddresses.FirstOrDefault(x=>x.ServiceRequestId == ID.ServiceRequestId);
 
-            Details.Address = Address.AddressLine1 + " " + Address.AddressLine2 + " "+ Address.PostalCode+ " " + Address.City;
+            Details.Address = Address.AddressLine1 + ", " + Address.AddressLine2 + ", "+ Address.City+ " - " + Address.PostalCode;
 
             Details.PhoneNo = Address.Mobile;
             Details.Email = Address.Email;
@@ -386,6 +386,119 @@ namespace Helperland.Controllers
             return new JsonResult(Details);
         }
 
+        /*====================== MY SETTING ========================*/
+
+        [HttpGet]
+        public JsonResult GetUserData()
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                User user = _db.Users.FirstOrDefault(x=>x.UserId == Id);
+                return new JsonResult(user);
+            }
+            return new JsonResult(false);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateUserData(User user)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                User updated = _db.Users.FirstOrDefault(x => x.UserId == Id);
+                updated.FirstName = user.FirstName;
+                updated.LastName = user.LastName;
+                updated.Mobile = user.Mobile;
+                updated.DateOfBirth = user.DateOfBirth;
+                updated.ModifiedDate = DateTime.Now;
+                var result = _db.Users.Update(updated);
+                _db.SaveChanges();
+                if(result != null)
+                {
+                    return Ok(Json("true"));
+                }
+            }
+            return Ok(Json("false"));
+        }
+
+        [HttpGet]
+        public JsonResult GetUserAddresses()
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+
+                List<UserAddress> Addresses = _db.UserAddresses.Where(x => x.UserId == Id && x.IsDeleted == false).ToList();
+                return new JsonResult(Addresses);
+            }
+
+            return new JsonResult(false);
+
+        }
+
+        [HttpPost]
+        public JsonResult DeleteUserAddress(UserAddress addr)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                UserAddress delete = _db.UserAddresses.FirstOrDefault(x=>x.AddressId == addr.AddressId);
+
+                delete.IsDeleted = true;
+                var result = _db.UserAddresses.Update(delete);
+                _db.SaveChanges();
+                if(result != null)
+                {
+                    return new JsonResult(true);
+                }
+            }
+            return new JsonResult(false);
+        }
+
+        /*----- Add User Address -----*/
+        public IActionResult AddUserAddress(UserAddress addr)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                addr.UserId = (int)Id;
+                addr.IsDefault = false;
+                addr.IsDeleted = false;
+                var result = _db.UserAddresses.Add(addr);
+                _db.SaveChanges();
+                if(result != null)
+                {
+                    return Ok(Json("true"));
+                }
+            }
+            return Ok(Json("false"));
+        }
+
+        /*-- change password --*/
+        public IActionResult ChangePassword(ChangePassword pwd)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                User user = _db.Users.FirstOrDefault(x => x.UserId == Id);
+                if(BCrypt.Net.BCrypt.Verify(pwd.oldPassword, user.Password))
+                {
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(pwd.newPassword);
+                    user.ModifiedDate = DateTime.Now;
+                    _db.Users.Update(user);
+                    _db.SaveChanges();
+                    return Ok(Json("true"));
+                }
+                else
+                {
+                    return Ok(Json("wrong password"));
+                }
+            }
+            return Ok(Json("false"));
+        }
     }
 }
+
+
 

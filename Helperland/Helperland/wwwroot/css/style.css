@@ -2320,6 +2320,16 @@ table.dataTable thead .sorting_desc {
     transform: rotate(315deg);
 }
 
+#mySettingDateDiv select {
+    padding: 5px 3px;
+    background: #ffffff;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    margin: 0 3px;
+    color: #646464;
+    flex-grow: 1;
+}
+
 @media screen and (max-width: 768px) {
     #mysetting table td {
         display: block;

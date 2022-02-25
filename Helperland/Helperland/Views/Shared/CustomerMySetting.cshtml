@@ -63,12 +63,12 @@
                             <input type="tel" class="form-control" placeholder="Mobile Number" aria-label="mobile" aria-describedby="basic-addon1" id="mySettingMobile" />
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" id="mySettingDateDiv">
                         <label for="mySettingDob"> Date of Birth </label>
-                        <input type="date" class="form-control" name="birthdate" id="mySettingDob" />
+                        <input type="hidden" class="form-control" name="birthdate" id="mySettingDob" />
                     </div>
                 </div>
-                <button type="button" id="myDetailsSave" class="mySettingSave">Save</button>
+                <button type="button" id="customerMySettingDetailsSave" class="mySettingSave">Save</button>
             </div>
         </form>
     </div>
@@ -83,7 +83,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="customerMySettingAddressBody">
                 <tr>
                     <td>
                         <p><strong>Address: </strong>Maruti park 20B, 364002 Bhavnagar</p>
@@ -165,22 +165,25 @@
     <!-- change password starts -->
     <div class="mysettingDiv d-none" id="changePasswordMySetting">
         <p class="mySettingTitle"><b>Change Password</b></p>
+
+        <div class="alert alert-danger d-none mt-3" id="ms_changePasswordAlert" role="alert">
+        </div>
         <form action="">
             <div>
                 <p>Old Password</p>
-                <input type="text" placeholder="Current Password">
+                <input type="text" id="ms_OldPassword" placeholder="Current Password">
             </div>
             <div>
                 <p>new Password</p>
-                <input type="text" placeholder="New Password">
+                <input type="text" id="ms_NewPassword" placeholder="New Password">
             </div>
             <div>
                 <p>Confirm Password</p>
-                <input type="text" placeholder="Confirm Password">
+                <input type="text" id="ms_ConfirmPassword" placeholder="Confirm Password">
             </div>
 
             <div>
-                <button type="button" class="mySettingSave">Save</button>
+                <button type="button" id="mySettingChangePasswordBtn" class="mySettingSave">Save</button>
             </div>
         </form>
     </div>
