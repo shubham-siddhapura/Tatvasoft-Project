@@ -1,4 +1,4 @@
-﻿//const { data } = required("jquery");
+﻿// const { data } = required("jquery");
 
 // datatable
 $(document).ready(function () {
@@ -42,14 +42,11 @@ const dashbordTable = new DataTable("#dashbordTable", {
     columnDefs: [{ orderable: false, targets: 4 }],
 });
 
-
-
-
-if (document.querySelector(".customer-sh-status").innerHTML == "Cancelled") {
+/*if (document.querySelector(".customer-sh-status").innerHTML == "Cancelled") {
     document.querySelector(".customer-sh-status").style.backgroundColor = "#FF6B6B";
 } else {
     document.querySelector(".customer-sh-status").style.backgroundColor = "#67B644";
-}
+}*/
 
 // export button js
 function html_table_to_excel(type) {
@@ -87,6 +84,7 @@ function dashbord() {
 }
 
 function serviceHistory() {
+    getServiceHistoryTable();
     myDashbord.style.display = "none";
     myServiceHistory.style.display = "block";
     mysetting.style.display = "none";
@@ -131,7 +129,6 @@ function mydetails() {
     changePasswordTab.classList.remove("active");
 }
 
-
 function myaddress() {
     getAddress();
     myDetails.classList.add("d-none");
@@ -156,13 +153,18 @@ function changepassword() {
 
 /* =================== Customer Dashbord ================== */
 var serviceRequestId = 0;
-
+var serviceDate="";
+var serviceTime="";
 
 $("#dashbordTable").click(function (e) {
     serviceRequestId = e.target.closest("tr").getAttribute("data-value");
 
     if (e.target.classList == "customerReschedule") {
+        serviceRequestId = e.target.value;
+        console.log(serviceRequestId)
         document.getElementById("updateRequestId").value = e.target.value;
+        getDateforReschedule();
+        
     }
     if (e.target.classList == "customerCancel") {
         document.getElementById("CancelRequestId").value = e.target.value;
@@ -173,6 +175,42 @@ $("#dashbordTable").click(function (e) {
     }
     console.log(e);
 });
+
+function getDateforReschedule() {
+    var data = {};
+    data.serviceRequestId = serviceRequestId;
+    $.ajax({
+        type: 'GET',
+        url: "/CustomerPage/GetDateforReschedule",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
+        success: function (result) {
+            if (result != false) {
+
+                console.log(result);
+                var date = result.split("T");
+                console.log(date);
+
+                var time = date[1];
+                console.log(time.substring(0, 2));
+                if (parseInt(time.substring(0, 2)) <= 12) {
+                    time = time + " AM";
+                } else {
+                    var temp = parseInt(time.substring(0, 2)) - 12;
+
+                    time = temp + time.substring(2, time.length) + " PM";
+                }
+                console.log(time);
+                $("#updateRequestDate").val(date[0]);
+                $("#rescheduleTime").val(time);
+
+            }
+        },
+        error: function (error) {
+
+        }
+    });
+}
 
 document.getElementById("CancelRequestBtn").addEventListener("click", function () {
 
@@ -200,7 +238,6 @@ document.getElementById("CancelRequestBtn").addEventListener("click", function (
             alert("error");
         }
     });
-
 });
 
 document.getElementById("updateServiceRequest").addEventListener("click", function () {
@@ -231,22 +268,9 @@ document.getElementById("updateServiceRequest").addEventListener("click", functi
         }
     });
 
-
 });
 
-document.getElementById("serviceReqdetailsbtn").addEventListener("click", function () {
-    console.log("abcd");
-
-    var dateTime = document.getElementById("CDDetailsDateTime");
-    var duration = document.getElementById("CDDetailsDuration");
-    document.getElementById("CDDetailsId").innerHTML = serviceRequestId;
-    var extra = document.getElementById("CDDetailsExtra");
-    var amount = document.getElementById("CDDetailsAmount");
-    var address = document.getElementById("CDDetailsAddress");
-    var phone = document.getElementById("CDDetailsPhone");
-    var email = document.getElementById("CDDetailsEmail");
-    var comment = document.getElementById("CDDetailsComment");
-
+function getAllServiceDetails() {
     var data = {};
     data.ServiceRequestId = parseInt(serviceRequestId);
     $.ajax({
@@ -257,45 +281,61 @@ document.getElementById("serviceReqdetailsbtn").addEventListener("click", functi
         success: function (result) {
             console.log(result);
             if (result != null) {
-                dateTime.innerHTML = result.date.substring(0, 10) + " " + result.startTime + " - " + result.endTime;
-                duration.innerHTML = result.duration;
-                extra.innerHTML = "";
-                if (result.cabinet == true) {
-                    extra.innerHTML += "<p>Inside Cabinet</p>";
-                }
-                if (result.laundry == true) {
-                    extra.innerHTML += "<p>Laundry Wash & dry</p>";
-                }
-                if (result.oven == true) {
-                    extra.innerHTML += "<p>Inside Oven</p>";
-                }
-                if (result.fridge == true) {
-                    extra.innerHTML += "<p>Inside Fridge</p>";
-                }
-                if (result.window == true) {
-                    extra.innerHTML += "<p>Interior Window</p>";
-                }
-                amount.innerHTML = result.totalCost + " &euro;";
-                address.innerHTML = result.address;
-                phone.innerHTML = result.phoneNo;
-                email.innerHTML = result.email; 
-                comment.innerHTML = "";
-                if (result.comments != null) {
-                    comment.innerHTML = result.comments;
-                }
-                
+                showAllServiceRequestDetails(result);
             }
             else {
                 alert("result is null");
             }
-            
+
         },
         error: function () {
             alert("error");
         }
     });
-});
+}
 
+function showAllServiceRequestDetails(result) {
+    var dateTime = document.getElementById("CDDetailsDateTime");
+    var duration = document.getElementById("CDDetailsDuration");
+    document.getElementById("CDDetailsId").innerHTML = serviceRequestId;
+    var extra = document.getElementById("CDDetailsExtra");
+    var amount = document.getElementById("CDDetailsAmount");
+    var address = document.getElementById("CDDetailsAddress");
+    var phone = document.getElementById("CDDetailsPhone");
+    var email = document.getElementById("CDDetailsEmail");
+    var comment = document.getElementById("CDDetailsComment");
+
+    dateTime.innerHTML = result.date.substring(0, 10) + " " + result.startTime + " - " + result.endTime;
+    duration.innerHTML = result.duration;
+    extra.innerHTML = "";
+    if (result.cabinet == true) {
+        extra.innerHTML += "<p>Inside Cabinet</p>";
+    }
+    if (result.laundry == true) {
+        extra.innerHTML += "<p>Laundry Wash & dry</p>";
+    }
+    if (result.oven == true) {
+        extra.innerHTML += "<p>Inside Oven</p>";
+    }
+    if (result.fridge == true) {
+        extra.innerHTML += "<p>Inside Fridge</p>";
+    }
+    if (result.window == true) {
+        extra.innerHTML += "<p>Interior Window</p>";
+    }
+    amount.innerHTML = result.totalCost + " &euro;";
+    address.innerHTML = result.address;
+    phone.innerHTML = result.phoneNo;
+    email.innerHTML = result.email;
+    comment.innerHTML = "";
+    if (result.comments != null) {
+        comment.innerHTML = result.comments;
+    }
+}
+
+document.getElementById("serviceReqdetailsbtn").addEventListener("click", function () {
+    getAllServiceDetails();
+});
 
 /*==================== MY SETTING ========================*/
 
@@ -319,10 +359,12 @@ function getUserData(){
 
                 mobile.value = result.mobile;
 
-
+                console.log(result);
+                console.log(result.dateOfBirth);
                 if (result.dateOfBirth != null) {
                     var dateOfBirth = result.dateOfBirth.split('T');
                     var dateOfBirthArray = dateOfBirth[0].split("-");
+                    console.log(dateOfBirthArray);
                     $(".day").val(dateOfBirthArray[2]);
                     $(".month").val(dateOfBirthArray[1]);
                     $(".year").val(dateOfBirthArray[0]);
@@ -350,31 +392,55 @@ document.getElementById('customerMySettingDetailsSave').addEventListener("click"
 });
 
 function updateUserData() {
+
     console.log("inside update");
     var data = {};
     data.firstName = document.getElementById("mySettingFname").value;
     data.lastName = document.getElementById("mySettingLname").value;
     data.email = document.getElementById("mySettingEmail").value;
     data.mobile = document.getElementById("mySettingMobile").value;
-    data.dateOfBirth = $(".month").val() + "/" + $(".day").val() + "/" + $(".year").val();
+    data.dateOfBirth = $(".day").val() + "-" + $(".month").val() + "-" + $(".year").val();
 
-    $.ajax({
-        type: 'POST',
-        url: '/CustomerPage/UpdateUserData',
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        data: data,
-        success: function (result) {
-            if (result.value == "true") {
-                window.location.reload();
+    console.log(data.dateOfBirth);
+    window.setTimeout(function () {
+        $('#ms_myDetailsAlert').addClass('d-none');
+    }, 5000);
+
+    if (data.firstName == "") {
+        $("#ms_myDetailsAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Firstname is Required.");
+        $("#mySettingFname").focus();
+    }
+    else if (data.lastName == "") {
+        $("#ms_myDetailsAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Lastname is Required.");
+        $("#mySettingLname").focus();
+    }
+    else if (data.mobile == "") {
+        $("#ms_myDetailsAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Mobile is Required.");
+        $("#mySettingMobile").focus();
+    }
+    else {
+        $.ajax({
+            type: 'POST',
+            url: '/CustomerPage/UpdateUserData',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: data,
+            success: function (result) {
+                if (result.value == "true") {
+                    $("#ms_myDetailsAlert").removeClass("alert-danger d-none").addClass("alert-success").text("User is updated.");
+                    window.setTimeout(function () {
+                        window.location.reload();
+                    }, 5000);
+                    
+                }
+                else {
+                    $("#ms_myDetailsAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Something went wrong! please try again later.");
+                }
+            },
+            error: function () {
+                alert("error");
             }
-            else {
-                alert("not updated");
-            }
-        },
-        error: function () {
-            alert("error");
-        }
-    });
+        });
+    }
 }
 
 /*-------------------- my setting Address ------------------------*/
@@ -415,8 +481,16 @@ document.getElementById("myAddressMySetting").addEventListener("click", function
     console.log(element);
     if (element != null) {
         if (element.classList.contains("myAddressEditBtn")) {
-            console.log("edit");
             addressId = element.getAttribute("data-value");
+            console.log("edit");
+            getAddressDataToModal();
+            $("#mySettingAddressModalUpdateBtn").removeClass("d-none");
+            $("#mySettingAddressModalSubmitBtn").addClass("d-none");
+            
+            console.log(addressId);
+            $("#mySettingAddAddressModal").modal("show");
+            $("#mySettingAddressModalTitle").text("Edit Address");
+            
         }
         if (element.classList.contains("myAddressDeleteBtn")) {
             console.log("delete");
@@ -426,6 +500,14 @@ document.getElementById("myAddressMySetting").addEventListener("click", function
     }
     
 });
+
+$("#mySettingAddNewAddress").click(function () {
+    $("#mySettingAddressModalUpdateBtn").addClass("d-none");
+    $("#mySettingAddressModalSubmitBtn").removeClass("d-none");
+    $("#mySettingAddressModalTitle").text("Add New Address");
+    clearAddAddressField();
+});
+    
 
 $("#MySettingDeleteAddress").click(function () {
     var data = {};
@@ -457,34 +539,167 @@ document.getElementById("mySettingAddressModalSubmitBtn").addEventListener("clic
 
 });
 
+document.getElementById("mySettingAddressModalUpdateBtn").addEventListener("click", function () {
+    
+    EditAddress();
+
+});
+
 function addNewAddress() {
     var data = {};
-    data.addressLine1 = document.getElementById("ms_addAddr_house").value;
-    data.addressLine2 = document.getElementById("ms_addAddr_street").value;
-    data.postalCode = document.getElementById("ms_addAddr_postal").value;
-    data.city = document.getElementById("ms_addAddr_city").value;
-    data.mobile = document.getElementById("ms_addAddr_mobile").value;
+    data.addressLine1 = document.getElementById("ms_addAddr_house").value.trim();
+    data.addressLine2 = document.getElementById("ms_addAddr_street").value.trim();
+    data.postalCode = document.getElementById("ms_addAddr_postal").value.trim();
+    data.city = document.getElementById("ms_addAddr_city").value.trim();
+    data.mobile = document.getElementById("ms_addAddr_mobile").value.trim();
+    data.state = document.getElementById("ms_addAddr_state").value();
 
+    window.setTimeout(function () {
+        $('#ms_addAddressAlert').addClass('d-none');
+    }, 5000);
+
+    if (data.addressLine1 == "" && data.addressLine2 == "" && data.postalCode == "" && data.city == "" && data.mobile == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("All Fields are Required.");
+        $("#ms_addAddr_street").focus();
+    }
+    else if (data.addressLine1 == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("House no. is Required.");
+        $("#ms_addAddr_house").focus();
+    }
+    else if (data.addressLine2 == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Street name is Required.");
+        $("#ms_addAddr_street").focus();
+    }
+    else if (data.postalCode == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Postalcode is Required.");
+        $("#ms_addAddr_postal").focus();
+    }
+    else if (data.city == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("City is Required.");
+        $("#ms_addAddr_city").focus();
+    }
+    else if (data.mobile == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Mobile is Required.");
+        $("#ms_addAddr_house").focus();
+    }
+    else {
+        $.ajax({
+            type: "POST",
+            url: "/CustomerPage/AddUserAddress",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            data: data,
+            success: function (result) {
+                if (result.value == "true") {
+                    getAddress();
+                    clearAddAddressField();
+                    $("#mySettingAddAddressModal").modal("hide");
+                }
+                else {
+                    alert("not saved");
+                }
+
+            },
+            error: function (error) {
+                alert(error);
+            }
+
+        });
+    }
+}
+
+function getAddressDataToModal() {
+    var data = {};
+    data.addressId = addressId;
+    
     $.ajax({
-        type: "POST",
-        url: "/CustomerPage/AddUserAddress",
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        type: 'GET',
+        url: '/CustomerPage/GetAddressDataToModal',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         data: data,
         success: function (result) {
-            if (result.value == "true") {
-                getAddress();
-                clearAddAddressField();
+            if (result != false) {
+
+                document.getElementById("ms_addAddr_house").value = result.addressLine1;
+                document.getElementById("ms_addAddr_street").value = result.addressLine2;
+                document.getElementById("ms_addAddr_postal").value = result.postalCode;
+                document.getElementById("ms_addAddr_city").value = result.city;
+                document.getElementById("ms_addAddr_mobile").value = result.mobile;
             }
-            else {
-                alert("not saved");
-            }
-                
         },
         error: function (error) {
             alert(error);
         }
+    })
+}
 
-    });
+function EditAddress() {
+    var data = {};
+    data.addressId = addressId;
+    data.addressLine1 = document.getElementById("ms_addAddr_house").value.trim();
+    data.addressLine2 = document.getElementById("ms_addAddr_street").value.trim();
+    data.postalCode = document.getElementById("ms_addAddr_postal").value.trim();
+    data.city = document.getElementById("ms_addAddr_city").value.trim();
+    data.mobile = document.getElementById("ms_addAddr_mobile").value.trim();
+
+
+    window.setTimeout(function () {
+        $('#ms_addAddressAlert').addClass('d-none');
+    }, 5000);
+
+    if (data.addressLine1 == "" && data.addressLine2 == "" && data.postalCode == "" && data.city == "" && data.mobile == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("All Fields are Required.");
+        $("#ms_addAddr_street").focus();
+    }
+    else if (data.addressLine1 == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("House no. is Required.");
+        $("#ms_addAddr_house").focus();
+    }
+    else if (data.addressLine2 == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Street name is Required.");
+        $("#ms_addAddr_street").focus();
+    }
+    else if (data.postalCode == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Postalcode is Required.");
+        $("#ms_addAddr_postal").focus();
+    }
+    else if (data.city == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("City is Required.");
+        $("#ms_addAddr_city").focus();
+    }
+    else if (data.mobile == "") {
+        $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Mobile is Required.");
+        $("#ms_addAddr_house").focus();
+    }
+    else {
+        $.ajax({
+            type: "POST",
+            url: "/CustomerPage/EditUserAddress",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            data: data,
+            success: function (result) {
+                if (result.value == "true") {
+                    getAddress();
+                    clearAddAddressField();
+                    $("#ms_addAddressAlert").removeClass("alert-danger d-none").addClass("alert-success").text("Address is updated successfully.");
+
+                    $("#mySettingAddAddressModal").modal("hide");
+                }
+                else {
+                    alert("not saved");
+                }
+                $("#mySettingAddressModalUpdateBtn").addClass("d-none");
+                $("#mySettingAddressModalSubmitBtn").removeClass("d-none");
+
+            },
+            error: function (error) {
+                $("#mySettingAddressModalUpdateBtn").addClass("d-none");
+                $("#mySettingAddressModalSubmitBtn").removeClass("d-none");
+                alert(error);
+            }
+
+        });
+    }
+
 }
 
 function clearAddAddressField() {
@@ -495,13 +710,42 @@ function clearAddAddressField() {
     document.getElementById("ms_addAddr_mobile").value = null;
 }
 
+$("#ms_addAddr_postal").keyup(function () {
+    console.log($("#ms_addAddr_postal").val());
+    if ($("#ms_addAddr_postal").val().length == 6) {
+        getCityFromPostalCode($("#ms_addAddr_postal").val());
+    }
+});
+
+
+function getCityFromPostalCode(zip) {
+    $.ajax({
+        method: "GET",
+        url: "https://api.postalpincode.in/pincode/"+zip,
+        dataType: 'json',
+        cache: false,
+        success: function (result) {
+            if (result[0].status == "Error" || result[0].status == "404") {
+                $("#ms_addAddressAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Enter Valid PostalCode.");
+
+            }
+            else {
+                console.log(result);
+                $("#ms_addAddr_city").val(result[0].PostOffice[0].District);
+                $("#ms_addAddr_state").val(result[0].PostOffice[0].State);
+                $("#ms_addAddr_city").prop("disabled", true);
+            }
+        },
+        error: function (error) {
+
+        }
+    });
+}
+
 /* ================ My Setting Change Password ==================*/
 document.getElementById("mySettingChangePasswordBtn").addEventListener("click", function () {
     changeUserPassword();
 });
-
-
-
 
 function changeUserPassword() {
     var data = {};
@@ -554,4 +798,47 @@ function changeUserPassword() {
         });
     }
     
+}
+
+/*====================== Customer Service History ========================*/
+
+function getServiceHistoryTable() {
+
+    $.ajax({
+        type: "GET",
+        url: "/CustomerPage/GetServiceHistoryTable",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        success: function (result) {
+            console.log(result);
+
+            $("#CustomerServiceHistoryTBody").empty();
+            for (var i = 0; i < result.length; i++) {
+                var status = "";
+                var background = "";
+                var disabled = "btn lh-base";
+                if (result[i].status == 1) {
+                    status = "Cancelled";
+                    background = "background-color:#FF6B6B";
+                    disabled = "btn disabled lh-base";
+                }
+                else if (result[i].status == 0) {
+                    status = "Completed";
+                    background = "background-color: #67B644";
+                }
+                if (result[i].serviceProvider != null) {
+
+                    $("#CustomerServiceHistoryTBody").append('<tr><td>' + result[i].serviceRequestId + '</td><td><div><span><img src="/img/customer-serviceHistory/calendar.png" alt=""></span><span class="upcoming-date"><b>' + result[i].serviceStartDate + '</b></span></div><div><span class="upcoming-time">' + result[i].startTime + ' - ' + result[i].endTime + '</span></div></td><td><div class="customer-sh-SP"><div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div><div class="sp-detail"><p class="SP-name">' + result[i].serviceProvider + '</p><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span><span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span><span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span><span class="SP-stars"></span>' + result[i].spRatings + '</div></div></td> <td><div class="customer-sh-pay">&euro;<span class="payment"> ' + result[i].totalCost + '</span></div></td><td><p class="customer-sh-status" style="' + background + ';">' + status + '</p></td><td class="allPageActionButtons "><a href="#" class="' + disabled + '">Rate SP</a></td></tr>');
+                }
+                else {
+                    $("#CustomerServiceHistoryTBody").append('<tr><td>' + result[i].serviceRequestId + '</td><td><div><span><img src="/img/customer-serviceHistory/calendar.png" alt=""></span><span class="upcoming-date"><b>' + result[i].serviceStartDate + '</b></span></div><div><span class="upcoming-time">' + result[i].startTime + ' - ' + result[i].endTime + '</span></div></  td><td></td> <td><div class="customer-sh-pay">&euro;<span class="payment"> ' + result[i].totalCost + '</span></div></td><td><p class="customer-sh-status" style="' + background + ';">' + status + '</p></td><td class="allPageActionButtons "><a href="#" class="' + disabled + '">Rate SP</a></td></tr>');
+                }
+
+                
+            }
+        },
+        error: function (error) {
+
+        }
+    });
+
 }

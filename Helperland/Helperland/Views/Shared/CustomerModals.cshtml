@@ -134,10 +134,12 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add New Address</h4>
+                <h4 id="mySettingAddressModalTitle" class="modal-title">Add New Address</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div class="alert alert-danger d-none mt-3" id="ms_addAddressAlert" role="alert">
+                </div>
                 <form action="">
 
                     <div class="row">
@@ -158,7 +160,9 @@
                         </div>
                         <div class="col-lg-6">
                             <p>City</p>
-                            <input type="text" placeholder="City" id="ms_addAddr_city" class="form-control">
+                            <input type="text" placeholder="City" id="ms_addAddr_city" class="form-control" disabled>
+
+                            <input type="hidden" id="ms_addAddr_state" />
                         </div>
                     </div>
 
@@ -174,7 +178,9 @@
 
                     </div>
 
-                    <button type="button" class="mySettingModalSubmitBtn" id="mySettingAddressModalSubmitBtn" data-bs-dismiss="modal">Add</button>
+                    <button type="button" class="mySettingModalSubmitBtn" id="mySettingAddressModalSubmitBtn">Add</button>
+
+                    <button type="button" class="mySettingModalSubmitBtn d-none" id="mySettingAddressModalUpdateBtn">Update</button>
                 </form>
             </div>
 

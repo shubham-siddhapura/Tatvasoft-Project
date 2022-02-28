@@ -475,7 +475,38 @@ namespace Helperland.Controllers
             return Ok(Json("false"));
         }
 
+        [HttpGet]
+        public JsonResult GetAddressDataToModal(UserAddress addr)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                UserAddress address = _db.UserAddresses.FirstOrDefault(x => x.AddressId == addr.AddressId);
+                return new JsonResult(address);
+
+            }
+            return new JsonResult(false);
+        }
+
+        public IActionResult EditUserAddress(UserAddress addr)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                addr.UserId = (int)Id;
+                var result = _db.UserAddresses.Update(addr);
+                _db.SaveChanges();
+                if(result != null)
+                {
+                    return Ok(Json("true"));
+                }
+                
+            }
+            return Ok(Json("false"));
+        }
+
         /*-- change password --*/
+
         public IActionResult ChangePassword(ChangePassword pwd)
         {
             int? Id = HttpContext.Session.GetInt32("userId");
@@ -496,6 +527,72 @@ namespace Helperland.Controllers
                 }
             }
             return Ok(Json("false"));
+        }
+
+        /*---------- reschedule service ---- */
+        public JsonResult GetDateforReschedule(ServiceRequest req)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                ServiceRequest res = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == req.ServiceRequestId);
+
+                return new JsonResult(res.ServiceStartDate);
+            }
+            return new JsonResult(false);
+        }
+
+        /*====== Service History ===========*/
+        public JsonResult GetServiceHistoryTable()
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null)
+            {
+                var id = HttpContext.Session.GetInt32("userId");
+                User user = _db.Users.Find(id);
+                TempData["Name"] = user.FirstName;
+                TempData["userType"] = user.UserTypeId.ToString();
+
+                List<CustomerDashbord> dashbord = new List<CustomerDashbord>();
+
+                var table = _db.ServiceRequests.Where(x => x.UserId == id && x.Status != 2).ToList();
+
+                foreach (var data in table)
+                {
+
+                    CustomerDashbord sr = new CustomerDashbord();
+                    sr.ServiceRequestId = data.ServiceRequestId;
+
+                    sr.ServiceStartDate = data.ServiceStartDate.ToString("dd/MM/yyyy");
+                    sr.StartTime = data.ServiceStartDate.ToString("HH:mm");
+                    sr.EndTime = data.ServiceStartDate.AddHours((double)data.SubTotal).ToString("HH:mm tt");
+
+                    sr.Status = data.Status;
+
+                    sr.TotalCost = data.TotalCost;
+                                       
+                    if (data.ServiceProviderId != null)
+                    {
+
+                        User sp = _db.Users.Where(x => x.UserId == data.ServiceProviderId).FirstOrDefault();
+
+                        sr.ServiceProviderId = sp.UserId;
+
+                        sr.ServiceProvider = sp.FirstName + " " + sp.LastName;
+
+                        var rating = _db.Ratings.Where(x => x.RatingTo == data.ServiceProviderId);
+
+                        if(rating != null)
+                        {
+                            sr.SPRatings = rating.Average(x => x.Ratings);
+                        }
+                    }
+
+                    dashbord.Add(sr);
+                }
+                return new JsonResult(dashbord);
+            }
+            return new JsonResult(false);
         }
     }
 }

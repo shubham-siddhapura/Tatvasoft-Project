@@ -10,6 +10,9 @@ namespace Helperland.Models
         public int ServiceRequestId { get; set; }
         public string ServiceStartDate { get; set; }
 
+        public int ServiceProviderId { get; set; }
+        
+        public int? Status { get; set; }
         public string StartTime { get; set;  }
 
         public string EndTime { get; set; }
