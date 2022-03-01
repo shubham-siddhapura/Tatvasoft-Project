@@ -349,6 +349,25 @@ namespace Helperland.Controllers
             Details.EndTime = sr.ServiceStartDate.AddHours((double)sr.SubTotal).ToString("HH:mm");
             Details.TotalCost = sr.TotalCost;
             Details.Comments = sr.Comments;
+            Details.Status = sr.Status;
+
+            if (sr.ServiceProviderId != null)
+            {
+                Details.CompletedService = _db.ServiceRequests.Where(x => x.ServiceProviderId == sr.ServiceProviderId && x.Status == 0).Count();
+
+                User sp = _db.Users.Where(x => x.UserId == sr.ServiceProviderId).FirstOrDefault();
+
+                Details.ServiceProviderId = sp.UserId;
+
+                Details.ServiceProvider = sp.FirstName + " " + sp.LastName;
+
+                var rating = _db.Ratings.Where(x => x.RatingTo == sr.ServiceProviderId);
+
+                if (rating != null)
+                {
+                    Details.SPRatings = rating.Average(x => x.Ratings);
+                }
+            }
 
             List<ServiceRequestExtra> Extra = _db.ServiceRequestExtras.Where(x => x.ServiceRequestId == ID.ServiceRequestId).ToList();
 
@@ -570,7 +589,16 @@ namespace Helperland.Controllers
                     sr.Status = data.Status;
 
                     sr.TotalCost = data.TotalCost;
-                                       
+
+                    if (_db.Ratings.Where(x => x.ServiceRequestId == data.ServiceRequestId).Count() > 0)
+                    {
+                        sr.AlreadyRated = true;
+                    }
+                    else
+                    {
+                        sr.AlreadyRated = false;
+                    }
+
                     if (data.ServiceProviderId != null)
                     {
 
@@ -582,7 +610,7 @@ namespace Helperland.Controllers
 
                         var rating = _db.Ratings.Where(x => x.RatingTo == data.ServiceProviderId);
 
-                        if(rating != null)
+                        if(rating.Count()>0)
                         {
                             sr.SPRatings = rating.Average(x => x.Ratings);
                         }
@@ -593,6 +621,31 @@ namespace Helperland.Controllers
                 return new JsonResult(dashbord);
             }
             return new JsonResult(false);
+        }
+
+        public IActionResult RateServiceProvider(Rating rating)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                if(_db.Ratings.Where(x=>x.ServiceRequestId == rating.ServiceRequestId).Count() > 0)
+                {
+                    return Ok(Json("false"));
+                }
+                rating.RatingDate = DateTime.Now;
+                ServiceRequest sr = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == rating.ServiceRequestId);
+                rating.RatingTo = (int)sr.ServiceProviderId;
+                rating.RatingFrom =(int)Id;
+
+                var result = _db.Ratings.Add(rating);
+                _db.SaveChanges();
+
+                if(result != null)
+                {
+                    return Ok(Json("true"));
+                }
+            }
+            return Ok(Json("false"));
         }
     }
 }

@@ -24,5 +24,7 @@ namespace Helperland.Models
         public decimal SPRatings { get; set; }
 
         public string SPAvatar { get; set; }
+
+        public bool AlreadyRated { get; set; }
     }
 }

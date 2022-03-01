@@ -2,26 +2,32 @@
 
 // datatable
 $(document).ready(function () {
-    $("#mytable").DataTable();
 });
 
-const dt = new DataTable("#mytable", {
-    dom: 't<"table-bottom d-flex justify-content-between paging"<"table-bottom-inner d-flex "li>p>',
-    responsive: true,
-    pagingType: "full_numbers",
-    language: {
-        paginate: {
-            first: "<img src='/img/pagination-first.png' alt='first'/>",
-            previous: "<img src='/img/pagination-left.png' alt='previous' />",
-            next: '<img src="/img/pagination-left.png" alt="next" style="transform: rotate(180deg)" />',
-            last: "<img src='/img/pagination-first.png' alt='first' style='transform: rotate(180deg) ' />",
+function serviceHistoryDatatable() {
+    console.log("inside datatable")
+    $("#mytable").DataTable({
+        
+        dom: 't<"table-bottom d-flex justify-content-between paging"<"table-bottom-inner d-flex "li>p>',
+        responsive: true,
+        pagingType: "full_numbers",
+        language: {
+            paginate: {
+                first: "<img src='/img/pagination-first.png' alt='first'/>",
+                previous: "<img src='/img/pagination-left.png' alt='previous' />",
+                next: '<img src="/img/pagination-left.png" alt="next" style="transform: rotate(180deg)" />',
+                last: "<img src='/img/pagination-first.png' alt='first' style='transform: rotate(180deg) ' />",
+            },
+            info: "Total Record: _MAX_",
+            lengthMenu: "Show_MENU_Entries",
         },
-        info: "Total Record: _MAX_",
-        lengthMenu: "Show_MENU_Entries",
-    },
-    buttons: ["excel"],
-    columnDefs: [{ orderable: false, targets: 4 }],
-});
+        buttons: ["excel"],
+        columnDefs: [{ orderable: false, targets: 4 }],
+        
+    });
+
+}
+
 
 // for dashbord table
 const dashbordTable = new DataTable("#dashbordTable", {
@@ -84,7 +90,9 @@ function dashbord() {
 }
 
 function serviceHistory() {
+
     getServiceHistoryTable();
+
     myDashbord.style.display = "none";
     myServiceHistory.style.display = "block";
     mysetting.style.display = "none";
@@ -104,7 +112,6 @@ function mySetting() {
 const url = new URLSearchParams(window.location.search);
 
 if (url == "mySetting=true") {
-
     mySetting();
 }
 
@@ -171,10 +178,51 @@ $("#dashbordTable").click(function (e) {
     }
 
     if (serviceRequestId != null && (e.target.classList != "customerCancel" && e.target.classList != "customerReschedule")) {
+        document.getElementById("modalCancelBtn").style.display = "inline";
+        document.getElementById("modalRescheduleBtn").style.display = "inline";
+        document.getElementById("modalRateSPBtn").style.display = "none";
         document.getElementById("serviceReqdetailsbtn").click();
     }
     console.log(e);
 });
+
+$("#mytable").click(function(e){
+
+    console.log(e);
+    serviceRequestId = e.target.closest("tr").getAttribute("data-value");
+
+    if (serviceRequestId != null && !e.target.classList.contains("btn")) {
+        document.getElementById("modalCancelBtn").style.display = "none";
+        document.getElementById("modalRescheduleBtn").style.display = "none";
+        document.getElementById("modalRateSPBtn").style.display = "inline";
+
+       
+        document.getElementById("serviceReqdetailsbtn").click();
+    }
+
+    if (e.target.classList.contains("btn")) {
+        
+    }
+
+});
+
+/*== Onclick on service details modal's Reschedule Btn ==*/
+document.getElementById("modalRescheduleBtn").addEventListener("click", function () {
+
+    $("#customerDashbordRescheduleBtn").click();
+
+});
+/*== Onclick on service details modal's Cancel Btn ==*/
+document.getElementById("modalCancelBtn").addEventListener("click", function () {
+    $("#customerDashbordCancelBtn").click();
+});
+
+/*== Onclick on service details modal's RateSP Btn ==*/
+document.getElementById("modalRateSPBtn").addEventListener("click", function () {
+    console.log($("#CustomerServiceHistoryRateSPBtn"));
+    
+});
+
 
 function getDateforReschedule() {
     var data = {};
@@ -304,6 +352,33 @@ function showAllServiceRequestDetails(result) {
     var phone = document.getElementById("CDDetailsPhone");
     var email = document.getElementById("CDDetailsEmail");
     var comment = document.getElementById("CDDetailsComment");
+    
+
+    if (result.serviceProvider != null) {
+        $("#serviceProviderDetailsInModal").removeClass("d-none");
+        $("#CDDetails_SPName").text(result.serviceProvider);
+        $("#CDDetailsRating").text(result.spRatings);
+        $("#totalCompletedServices").text(result.completedService);
+        console.table(result.status);
+        if (result.status != 0) {
+            $("#modalRateSPBtn").addClass("disabled");
+        }
+        else {
+            $("#modalRateSPBtn").removeClass("disabled");
+            
+        }
+    }
+    else {
+        $("#serviceProviderDetailsInModal").addClass("d-none");
+    }
+
+    if (result.status != 0) {
+        $("#modalRateSPBtn").addClass("disabled");
+    }
+    else {
+        $("#modalRateSPBtn").removeClass("disabled");
+
+    }
 
     dateTime.innerHTML = result.date.substring(0, 10) + " " + result.startTime + " - " + result.endTime;
     duration.innerHTML = result.duration;
@@ -804,19 +879,23 @@ function changeUserPassword() {
 
 function getServiceHistoryTable() {
 
+    console.log("inside getServiceHistoryTable");
+
     $.ajax({
         type: "GET",
         url: "/CustomerPage/GetServiceHistoryTable",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: function (result) {
-            console.log(result);
+            console.table(result);
 
             $("#CustomerServiceHistoryTBody").empty();
+           
             for (var i = 0; i < result.length; i++) {
                 var status = "";
                 var background = "";
+                console.log(result[i].alreadyRated + " " + i + " " + result[i].spRatings);
                 var disabled = "btn lh-base";
-                if (result[i].status == 1) {
+                if (result[i].status == 1 ) {
                     status = "Cancelled";
                     background = "background-color:#FF6B6B";
                     disabled = "btn disabled lh-base";
@@ -824,21 +903,80 @@ function getServiceHistoryTable() {
                 else if (result[i].status == 0) {
                     status = "Completed";
                     background = "background-color: #67B644";
+                    if (result[i].alreadyRated == true) {
+                        disabled = "btn disabled lh-base";
+                    }
+                    else {
+                        disabled = "btn lh-base";
+                    }
                 }
+
+               
+                console.log(i);
                 if (result[i].serviceProvider != null) {
 
-                    $("#CustomerServiceHistoryTBody").append('<tr><td>' + result[i].serviceRequestId + '</td><td><div><span><img src="/img/customer-serviceHistory/calendar.png" alt=""></span><span class="upcoming-date"><b>' + result[i].serviceStartDate + '</b></span></div><div><span class="upcoming-time">' + result[i].startTime + ' - ' + result[i].endTime + '</span></div></td><td><div class="customer-sh-SP"><div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div><div class="sp-detail"><p class="SP-name">' + result[i].serviceProvider + '</p><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span><span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span><span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span><span class="SP-stars"></span>' + result[i].spRatings + '</div></div></td> <td><div class="customer-sh-pay">&euro;<span class="payment"> ' + result[i].totalCost + '</span></div></td><td><p class="customer-sh-status" style="' + background + ';">' + status + '</p></td><td class="allPageActionButtons "><a href="#" class="' + disabled + '">Rate SP</a></td></tr>');
+                    $("#CustomerServiceHistoryTBody").append('<tr data-value=' + result[i].serviceRequestId + '><td>' + result[i].serviceRequestId + '</td><td><div><span><img src="/img/customer-serviceHistory/calendar.png" alt=""></span><span class="upcoming-date"><b>' + result[i].serviceStartDate + '</b></span></div><div><span class="upcoming-time">' + result[i].startTime + ' - ' + result[i].endTime + '</span></div></td><td><div class="customer-sh-SP"><div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div><div class="sp-detail"><p class="SP-name">' + result[i].serviceProvider + '</p><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span><span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span><span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span><span class="SP-stars"></span>' + result[i].spRatings + '</div></div></td> <td><div class="customer-sh-pay">&euro;<span class="payment"> ' + result[i].totalCost + '</span></div></td><td><p class="customer-sh-status" style="' + background + ';">' + status + '</p></td><td class="allPageActionButtons "><a href="#" data-bs-toggle="modal" data-bs-target="#myRatingModal" class="' + disabled + '">Rate SP</a></td></tr>');
+                    
                 }
                 else {
-                    $("#CustomerServiceHistoryTBody").append('<tr><td>' + result[i].serviceRequestId + '</td><td><div><span><img src="/img/customer-serviceHistory/calendar.png" alt=""></span><span class="upcoming-date"><b>' + result[i].serviceStartDate + '</b></span></div><div><span class="upcoming-time">' + result[i].startTime + ' - ' + result[i].endTime + '</span></div></  td><td></td> <td><div class="customer-sh-pay">&euro;<span class="payment"> ' + result[i].totalCost + '</span></div></td><td><p class="customer-sh-status" style="' + background + ';">' + status + '</p></td><td class="allPageActionButtons "><a href="#" class="' + disabled + '">Rate SP</a></td></tr>');
+                    
+                    $("#CustomerServiceHistoryTBody").append('<tr data-value=' + result[i].serviceRequestId + '><td>' + result[i].serviceRequestId + '</td><td><div><span><img src="/img/customer-serviceHistory/calendar.png" alt=""></span><span class="upcoming-date"><b>' + result[i].serviceStartDate + '</b></span></div><div><span class="upcoming-time">' + result[i].startTime + ' - ' + result[i].endTime + '</span></div></  td><td></td> <td><div class="customer-sh-pay">&euro;<span class="payment"> ' + result[i].totalCost + '</span></div></td><td><p class="customer-sh-status" style="' + background + ';">' + status + '</p></td><td class="allPageActionButtons "><a href="#"  data-bs-toggle="modal" data-bs-target="#myRatingModal" class="' + disabled + '">Rate SP</a></td></tr>');
                 }
 
                 
             }
+
+            
+
+            serviceHistoryDatatable();
         },
         error: function (error) {
-
+            console.log(error);
         }
+    });
+
+}
+
+/*=-=- Rating service Provider -=-=*/
+
+
+document.getElementById("myRatingModalSubmit").addEventListener("click", function () {
+    
+    rateServiceProvider();
+
+});
+
+function rateServiceProvider() {
+    var data = {};
+    data.onTimeArrival = $("#ratingModalOnTime input[type=radio]:checked").val();
+    data.friendly = $("#ratingModalFriendly input[type=radio]:checked").val();
+    data.qualityOfService = $("#ratingModalQuality input[type=radio]:checked").val();
+    data.ratings = (parseFloat(data.onTimeArrival) + parseFloat(data.friendly) + parseFloat(data.qualityOfService)) / 3;
+    data.comments = $("#myRatingFeedback").val();
+    data.serviceRequestId = serviceRequestId;
+
+    console.log(data);
+
+    $.ajax({
+
+        type: "POST",
+        url: "/CustomerPage/RateServiceProvider",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
+        success: function (result) {
+            if (result.value == "true") {
+                $("#myRatingModal").modal("hide");
+                getServiceHistoryTable();
+                console.log("submited");
+            }
+            else {
+                alert("kirpal");
+            }
+        },
+        error: function (error) {
+            alert("nikal");
+        }
+
     });
 
 }

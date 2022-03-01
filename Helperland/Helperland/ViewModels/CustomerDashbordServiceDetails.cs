@@ -9,6 +9,16 @@ namespace Helperland.ViewModels
     {
         public int ServiceRequestId { get; set; }
 
+        public int ServiceProviderId { get; set; }
+
+        public string ServiceProvider { get; set; }
+
+        public decimal SPRatings { get; set; }
+
+        public int? Status { get; set; }
+
+        public int CompletedService { get; set; }
+
         public string Date { get; set; }
 
         public string StartTime { get; set; }
@@ -36,5 +46,7 @@ namespace Helperland.ViewModels
         public string Email { get; set; }
 
         public string Comments { get; set; }
+
+        
     }
 }
