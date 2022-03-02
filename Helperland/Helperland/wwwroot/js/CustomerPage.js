@@ -10,6 +10,7 @@ function serviceHistoryDatatable() {
         
         dom: 't<"table-bottom d-flex justify-content-between paging"<"table-bottom-inner d-flex "li>p>',
         responsive: true,
+        retrieve: true,
         pagingType: "full_numbers",
         language: {
             paginate: {
@@ -198,10 +199,16 @@ $("#mytable").click(function(e){
 
        
         document.getElementById("serviceReqdetailsbtn").click();
+
     }
 
     if (e.target.classList.contains("btn")) {
-        
+        var name = $("#serviceProviderId" + serviceRequestId + " .SP-name").text();
+        var rating = $("#serviceProviderId" + serviceRequestId + " .SP-stars").text();
+        console.log(name + " " + rating);
+        $("#ratingModalSPName").text(name);
+        $("#ratingModalSPStarts").text(rating);
+        starAsperRating(rating, ".spStarsRatingModal");
     }
 
 });
@@ -259,6 +266,7 @@ function getDateforReschedule() {
         }
     });
 }
+
 
 document.getElementById("CancelRequestBtn").addEventListener("click", function () {
 
@@ -352,7 +360,7 @@ function showAllServiceRequestDetails(result) {
     var phone = document.getElementById("CDDetailsPhone");
     var email = document.getElementById("CDDetailsEmail");
     var comment = document.getElementById("CDDetailsComment");
-    
+
 
     if (result.serviceProvider != null) {
         $("#serviceProviderDetailsInModal").removeClass("d-none");
@@ -365,7 +373,7 @@ function showAllServiceRequestDetails(result) {
         }
         else {
             $("#modalRateSPBtn").removeClass("disabled");
-            
+
         }
     }
     else {
@@ -406,6 +414,8 @@ function showAllServiceRequestDetails(result) {
     if (result.comments != null) {
         comment.innerHTML = result.comments;
     }
+
+    starAsperRating(result.spRatings, ".spRatingDetailsModal");
 }
 
 document.getElementById("serviceReqdetailsbtn").addEventListener("click", function () {
@@ -538,6 +548,7 @@ function getAddress() {
                     $("#customerMySettingAddressBody").append('<tr data-value=' + result[i].addressId + ' ><td><p><strong>Address: </strong>' + result[i].addressLine2 + ", " + result[i].addressLine1 + ', ' + result[i].postalCode + ' - ' + result[i].city + '</p><p><strong>Phone number: </strong>' + result[i].mobile + '</p></td><td class="myAddressBtns"><button class="myAddressButton myAddressEditBtn" data-value=' + result[i].addressId + '><svg xmlns="http://www.w3.org/2000/svg" class="edit-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /> </svg> </button> <button class="myAddressButton myAddressDeleteBtn" data-value=' + result[i].addressId +'> <svg xmlns="http://www.w3.org/2000/svg" class="delete-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /> </svg> </button> </td> </tr >');
                 }
 
+                showAddressPagination();
             }
             else {
                 alert("something wrong");
@@ -627,7 +638,7 @@ function addNewAddress() {
     data.postalCode = document.getElementById("ms_addAddr_postal").value.trim();
     data.city = document.getElementById("ms_addAddr_city").value.trim();
     data.mobile = document.getElementById("ms_addAddr_mobile").value.trim();
-    data.state = document.getElementById("ms_addAddr_state").value();
+    data.state = document.getElementById("ms_addAddr_state").value;
 
     window.setTimeout(function () {
         $('#ms_addAddressAlert').addClass('d-none');
@@ -817,6 +828,43 @@ function getCityFromPostalCode(zip) {
     });
 }
 
+/* ==== my address pagination =====*/
+var showedRows = 5
+
+function showAddressPagination() {
+
+    showedRows = 5;
+
+    var $table = $('#myAddressMySetting').find('tbody');
+    var totalRows = $table.find('tr').length;
+
+    if (showedRows > totalRows) {
+        showedRows = totalRows;
+    }
+
+    $table.find('tr:gt(' + (showedRows - 1) + ')').hide();
+    
+    $("#showedAddress").text(showedRows);
+    $("#totalAddress").text(totalRows);
+}
+
+$("#showMoreAddressBtn").click(function () {
+
+    showedRows += 5;
+
+    var $table = $('#myAddressMySetting').find('tbody');
+    var totalRows = $table.find('tr').length;
+
+
+    if (showedRows > totalRows) {
+        showedRows = totalRows;
+    }
+
+    $("#showedAddress").text(showedRows);
+    $table.find('tr:lt(' + showedRows + ')').show();
+});
+
+
 /* ================ My Setting Change Password ==================*/
 document.getElementById("mySettingChangePasswordBtn").addEventListener("click", function () {
     changeUserPassword();
@@ -893,7 +941,7 @@ function getServiceHistoryTable() {
             for (var i = 0; i < result.length; i++) {
                 var status = "";
                 var background = "";
-                console.log(result[i].alreadyRated + " " + i + " " + result[i].spRatings);
+                
                 var disabled = "btn lh-base";
                 if (result[i].status == 1 ) {
                     status = "Cancelled";
@@ -911,18 +959,20 @@ function getServiceHistoryTable() {
                     }
                 }
 
-               
-                console.log(i);
                 if (result[i].serviceProvider != null) {
 
-                    $("#CustomerServiceHistoryTBody").append('<tr data-value=' + result[i].serviceRequestId + '><td>' + result[i].serviceRequestId + '</td><td><div><span><img src="/img/customer-serviceHistory/calendar.png" alt=""></span><span class="upcoming-date"><b>' + result[i].serviceStartDate + '</b></span></div><div><span class="upcoming-time">' + result[i].startTime + ' - ' + result[i].endTime + '</span></div></td><td><div class="customer-sh-SP"><div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div><div class="sp-detail"><p class="SP-name">' + result[i].serviceProvider + '</p><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span><span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span><span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span><span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span><span class="SP-stars"></span>' + result[i].spRatings + '</div></div></td> <td><div class="customer-sh-pay">&euro;<span class="payment"> ' + result[i].totalCost + '</span></div></td><td><p class="customer-sh-status" style="' + background + ';">' + status + '</p></td><td class="allPageActionButtons "><a href="#" data-bs-toggle="modal" data-bs-target="#myRatingModal" class="' + disabled + '">Rate SP</a></td></tr>');
-                    
+                    $("#CustomerServiceHistoryTBody").append('<tr data-value=' + result[i].serviceRequestId + '><td>' + result[i].serviceRequestId + '</td><td><div><span><img src="/img/customer-serviceHistory/calendar.png" alt=""></span><span class="upcoming-date"><b>' + result[i].serviceStartDate + '</b></span></div><div><span class="upcoming-time">' + result[i].startTime + ' - ' + result[i].endTime + '</span></div></td><td id="serviceProviderId' + result[i].serviceRequestId + '"> <div class="customer-sh-SP"><div><span class="cap-span" ><img id="ratingModalSPAvtar" src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div><div class="sp-detail"><p class="SP-name" >' + result[i].serviceProvider + '</p><div class="d-flex"><div class="spStars" id="serviceHistoryRating' + result[i].serviceRequestId + '"><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span></div > <div><span class="ms-2 SP-stars" >' + result[i].spRatings + '</span></div></div></div ></div ></td ><td><div class="customer-sh-pay">&euro;<span class="payment"> ' + result[i].totalCost + '</span></div></td><td><p class="customer-sh-status" style="' + background + ';">' + status + '</p></td><td class="allPageActionButtons "><a href="#" data-bs-toggle="modal" data-bs-target="#myRatingModal" class="' + disabled + '">Rate SP</a></td></tr > ');
+
                 }
                 else {
                     
                     $("#CustomerServiceHistoryTBody").append('<tr data-value=' + result[i].serviceRequestId + '><td>' + result[i].serviceRequestId + '</td><td><div><span><img src="/img/customer-serviceHistory/calendar.png" alt=""></span><span class="upcoming-date"><b>' + result[i].serviceStartDate + '</b></span></div><div><span class="upcoming-time">' + result[i].startTime + ' - ' + result[i].endTime + '</span></div></  td><td></td> <td><div class="customer-sh-pay">&euro;<span class="payment"> ' + result[i].totalCost + '</span></div></td><td><p class="customer-sh-status" style="' + background + ';">' + status + '</p></td><td class="allPageActionButtons "><a href="#"  data-bs-toggle="modal" data-bs-target="#myRatingModal" class="' + disabled + '">Rate SP</a></td></tr>');
                 }
 
+                if (result[i].serviceProvider != null) {
+
+                    starAsperRating(result[i].spRatings, "#serviceHistoryRating" + result[i].serviceRequestId);
+                }
                 
             }
 
@@ -938,7 +988,6 @@ function getServiceHistoryTable() {
 }
 
 /*=-=- Rating service Provider -=-=*/
-
 
 document.getElementById("myRatingModalSubmit").addEventListener("click", function () {
     
@@ -974,9 +1023,31 @@ function rateServiceProvider() {
             }
         },
         error: function (error) {
-            alert("nikal");
+            alert("error");
         }
 
     });
+
+}
+
+/* ======= star as per rating ======= */
+
+function starAsperRating(rate, id) {
+
+    console.log(id);
+
+    var rate = Math.ceil(rate * 2);
+
+    var starDiv = document.querySelector(id);
+
+    var stars = starDiv.querySelectorAll(".stars");
+
+    for (var i = 0; i < rate; i++) {
+        stars[i].classList.add("yellowStars");
+    }
+
+    for (var i = rate; i < 10; i++) {
+        stars[i].classList.remove("yellowStars");
+    }
 
 }

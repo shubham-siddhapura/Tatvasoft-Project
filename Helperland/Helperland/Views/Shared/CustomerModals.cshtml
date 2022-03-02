@@ -119,17 +119,21 @@
                 <div id="serviceProviderDetailsInModal" class="serviceProvidersDetails d-none">
                     <div><h5>Service Provider Details</h5></div>
                     <div class="customer-sh-SP">
-                        <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
+
+                        <div><span class="cap-span"><img id="ratingModalSPAvtar" src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
                         <div class="sp-detail">
-                            <p class="SP-name" id="CDDetails_SPName"></p>
-                            <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                            <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                            <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                            <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                            <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                            <span class="SP-stars" id="CDDetailsRating">4</span>
+                            <p class="SP-name" id="CDDetails_SPName">Lyum Watson</p>
+                            <div class="d-flex p-0">
+                                <div class="spStars spRatingDetailsModal p-0">
+
+                                    <span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span>
+                                </div>
+
+                                <div class="p-0"><span class="ms-2" id="CDDetailsRating"></span></div>
+                            </div>
 
                         </div>
+
                     </div>
                     <p><span id="totalCompletedServices">15</span> Cleanings</p>
                 </div>
@@ -183,7 +187,7 @@
                             <p>City</p>
                             <input type="text" placeholder="City" id="ms_addAddr_city" class="form-control" disabled>
 
-                            <input type="hidden" id="ms_addAddr_state" />
+                            <input type="hidden" id="ms_addAddr_state" name="state" placeholder="state"/>
                         </div>
                     </div>
 
@@ -216,16 +220,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="customer-sh-SP">
-                    <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
+                    <div><span class="cap-span" ><img id="ratingModalSPAvtar" src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
                     <div class="sp-detail">
-                        <p class="SP-name">Lyum Watson</p>
+                        <p class="SP-name" id="ratingModalSPName">Lyum Watson</p>
                         <div class="d-flex">
-                            <div class="spStars">
+                            <div class="spStars spStarsRatingModal">
 
-                                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                                <span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span>
                             </div>
 
-                            <div><span class="ms-2">4</span></div>
+                            <div><span class="ms-2" id="ratingModalSPStarts">4</span></div>
                         </div>
 
                     </div>

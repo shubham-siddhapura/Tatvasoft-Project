@@ -22,12 +22,19 @@ namespace Helperland.Controllers
             _db = db;
         }
 
-        
+        [HttpGet]
         public IActionResult CustServiceHistory()
         {
-            if (HttpContext.Session.GetInt32("userId")!=null)
+            int? id = HttpContext.Session.GetInt32("userId");
+            if (id == null && Request.Cookies["userid"] != null)
             {
-                var id = HttpContext.Session.GetInt32("userId");
+                HttpContext.Session.SetInt32("userId", Convert.ToInt32(Request.Cookies["userId"]));
+                id = HttpContext.Session.GetInt32("userId");
+            }
+            if (id !=null)
+            {
+                
+
                 User user = _db.Users.Find(id);
                 TempData["Name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
@@ -54,9 +61,12 @@ namespace Helperland.Controllers
 
                         sr.ServiceProvider = sp.FirstName + " " + sp.LastName;
 
-                        decimal rating = _db.Ratings.Where(x => x.RatingTo == data.ServiceProviderId).Average(x => x.Ratings);
+                        var rating = _db.Ratings.Where(x => x.RatingTo == data.ServiceProviderId);
 
-                        sr.SPRatings = rating;
+                        if (rating.Count() > 0)
+                        {
+                            sr.SPRatings = Math.Round(rating.Average(x => x.Ratings),1);
+                        }
 
                     }
 
@@ -68,28 +78,23 @@ namespace Helperland.Controllers
                     return PartialView(dashbord);
                 }
             }
-            else if (Request.Cookies["userId"] != null)
-            {
-                var user = _db.Users.FirstOrDefault(x => x.UserId == Convert.ToInt32(Request.Cookies["userId"]));
-                TempData["name"] = user.FirstName;
-                TempData["userType"] = user.UserTypeId.ToString();
-                if (user.UserTypeId == 1)
-                {
-                    return PartialView();
-                }
-            }
-
+            
             return RedirectToAction("Index", "Home", new { loginModal = "true" });
             
         }
 
         
-
         public IActionResult BookService()
         {
+            int? id = HttpContext.Session.GetInt32("userId");
+            if (id == null && Request.Cookies["userId"] != null)
+            {
+                HttpContext.Session.SetInt32("userId", Convert.ToInt32(Request.Cookies["userid"]));
+                id = HttpContext.Session.GetInt32("userId");
+            }
             if (HttpContext.Session.GetInt32("userId") != null)
             {
-                var id = HttpContext.Session.GetInt32("userId");
+                
                 User user = _db.Users.Find(id);
                 TempData["Name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
@@ -98,16 +103,7 @@ namespace Helperland.Controllers
                     return PartialView();
                 }
             }
-            else if (Request.Cookies["userId"] != null)
-            {
-                var user = _db.Users.FirstOrDefault(x => x.UserId == Convert.ToInt32(Request.Cookies["userId"]));
-                TempData["name"] = user.FirstName;
-                TempData["userType"] = user.UserTypeId.ToString();
-                if (user.UserTypeId == 1)
-                {
-                    return PartialView();
-                }
-            }
+            
 
             return RedirectToAction("Index", "Home", new { loginModal = "true" });
 

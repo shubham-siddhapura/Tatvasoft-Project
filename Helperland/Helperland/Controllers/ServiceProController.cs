@@ -20,10 +20,15 @@ namespace Helperland.Controllers
         [ResponseCache (Duration = 0)]
         public IActionResult SPUpcomingService()
         {
-            
-            if (HttpContext.Session.GetInt32("userId") != null)
+            int? id = HttpContext.Session.GetInt32("userId");
+            if (id == null && Request.Cookies["userid"] != null)
             {
-                var id = HttpContext.Session.GetInt32("userId");
+                HttpContext.Session.SetInt32("userId", Convert.ToInt32(Request.Cookies["userId"]));
+                id = HttpContext.Session.GetInt32("userId");
+            }
+            if (id != null)
+            {
+                
                 Models.User user = _db.Users.Find(id);
                 TempData["Name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
@@ -33,16 +38,7 @@ namespace Helperland.Controllers
                 }
 
             }
-            else if (Request.Cookies["userId"] != null)
-            {
-                var user = _db.Users.FirstOrDefault(x => x.UserId == Convert.ToInt32(Request.Cookies["userId"]));
-                TempData["name"] = user.FirstName;
-                TempData["userType"] = user.UserTypeId.ToString();
-                if (user.UserTypeId == 2)
-                {
-                    return PartialView();
-                }
-            }
+            
             
             return RedirectToAction("Index", "Home", new { loginModal = "true" });
             

@@ -2330,6 +2330,15 @@ table.dataTable thead .sorting_desc {
     flex-grow: 1;
 }
 
+#showMoreAddressBtn {
+    color: #646464;
+    line-height: 40px;
+    padding: 0 20px;
+    border-radius: 23px;
+    border: 1px solid #646464;
+    margin: 15px 0 25px 10px;
+}
+
 @media screen and (max-width: 768px) {
     #mysetting table td {
         display: block;
@@ -3891,7 +3900,7 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
             color: #ECB91C;
         }
 
-#myRatingModal .spStars span {
+ .spStars span {
     display: inline-block;
     position: relative;
     height: 30px;
@@ -3901,7 +3910,7 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     padding: 0;
 }
 
-    #myRatingModal .spStars span::before {
+    .spStars span::before {
         content: "★";
         position: absolute;
         color: #64646466;
@@ -3909,7 +3918,11 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
         width: fit-content;
     }
 
-    #myRatingModal .spStars span:nth-child(2n)::before {
+.yellowStars::before {
+    color: #ECB91C!important;
+}
+
+     .spStars span:nth-child(2n)::before {
         right: 0px;
         left: initial;
     }

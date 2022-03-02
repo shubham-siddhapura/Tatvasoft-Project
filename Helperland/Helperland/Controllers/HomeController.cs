@@ -36,16 +36,17 @@ namespace Helperland.Controllers
 
         public IActionResult Index()
         {
-            var id = HttpContext.Session.GetInt32("userId");
+            
+            int? id = HttpContext.Session.GetInt32("userId");
+            if (id == null && Request.Cookies["userid"] != null)
+            {
+                HttpContext.Session.SetInt32("userId", Convert.ToInt32(Request.Cookies["userId"]));
+                id = HttpContext.Session.GetInt32("userId");
+            }
+            
             if (id != null)
             {
                 var user = _db.Users.FirstOrDefault(x => x.UserId == id);
-                TempData["name"] = user.FirstName;
-                TempData["userType"] = user.UserTypeId.ToString();
-            }
-            else if (Request.Cookies["userId"] != null)
-            {
-                var user = _db.Users.FirstOrDefault(x => x.UserId == Convert.ToInt32(Request.Cookies["userId"]));
                 TempData["name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
             }
@@ -55,37 +56,39 @@ namespace Helperland.Controllers
 
         public IActionResult About()
         {
-            var id = HttpContext.Session.GetInt32("userId");
+            int? id = HttpContext.Session.GetInt32("userId");
+            if (id == null && Request.Cookies["userid"] != null)
+            {
+                HttpContext.Session.SetInt32("userId", Convert.ToInt32(Request.Cookies["userId"]));
+                id = HttpContext.Session.GetInt32("userId");
+            }
+
             if (id != null)
             {
                 var user = _db.Users.FirstOrDefault(x => x.UserId == id);
                 TempData["name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
             }
-            else if (Request.Cookies["userId"] != null)
-            {
-                var user = _db.Users.FirstOrDefault(x => x.UserId == Convert.ToInt32(Request.Cookies["userId"]));
-                TempData["name"] = user.FirstName;
-                TempData["userType"] = user.UserTypeId.ToString();
-            }
+            
             return PartialView();
         }
 
         public IActionResult Contact()
         {
-            var id = HttpContext.Session.GetInt32("userId");
+            int? id = HttpContext.Session.GetInt32("userId");
+            if (id == null && Request.Cookies["userid"] != null)
+            {
+                HttpContext.Session.SetInt32("userId", Convert.ToInt32(Request.Cookies["userId"]));
+                id = HttpContext.Session.GetInt32("userId");
+            }
+
             if (id != null)
             {
                 var user = _db.Users.FirstOrDefault(x => x.UserId == id);
                 TempData["name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
             }
-            else if (Request.Cookies["userId"] != null)
-            {
-                var user = _db.Users.FirstOrDefault(x => x.UserId == Convert.ToInt32(Request.Cookies["userId"]));
-                TempData["name"] = user.FirstName;
-                TempData["userType"] = user.UserTypeId.ToString();
-            }
+            
             return PartialView();
         }
 
@@ -114,37 +117,39 @@ namespace Helperland.Controllers
 
         public IActionResult Prices()
         {
-            var id = HttpContext.Session.GetInt32("userId");
+            int? id = HttpContext.Session.GetInt32("userId");
+            if (id == null && Request.Cookies["userid"] != null)
+            {
+                HttpContext.Session.SetInt32("userId", Convert.ToInt32(Request.Cookies["userId"]));
+                id = HttpContext.Session.GetInt32("userId");
+            } 
+
             if (id != null)
             {
                 var user = _db.Users.FirstOrDefault(x => x.UserId == id);
                 TempData["name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
             }
-            else if (Request.Cookies["userId"] != null)
-            {
-                var user = _db.Users.FirstOrDefault(x => x.UserId == Convert.ToInt32(Request.Cookies["userId"]));
-                TempData["name"] = user.FirstName;
-                TempData["userType"] = user.UserTypeId.ToString();
-            }
+            
             return PartialView();
         }
 
         public IActionResult Faq()
         {
-            var id = HttpContext.Session.GetInt32("userId");
+            int? id = HttpContext.Session.GetInt32("userId");
+            if (id == null && Request.Cookies["userid"] != null)
+            {
+                HttpContext.Session.SetInt32("userId", Convert.ToInt32(Request.Cookies["userId"]));
+                id = HttpContext.Session.GetInt32("userId");
+            }
+
             if (id != null)
             {
                 var user = _db.Users.FirstOrDefault(x => x.UserId == id);
                 TempData["name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
             }
-            else if(Request.Cookies["userId"] != null)
-            {
-                var user = _db.Users.FirstOrDefault(x => x.UserId == Convert.ToInt32(Request.Cookies["userId"]));
-                TempData["name"] = user.FirstName;
-                TempData["userType"] = user.UserTypeId.ToString();
-            }
+            
             return PartialView();
         }
 

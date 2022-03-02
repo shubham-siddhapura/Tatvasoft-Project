@@ -110,8 +110,9 @@ namespace Helperland.Controllers
                     if(loginUser.Remember == true)
                     {
                         CookieOptions cookieRemember = new CookieOptions();
-                        cookieRemember.Expires = DateTime.Now.AddSeconds(60);
+                        cookieRemember.Expires = DateTime.Now.AddMinutes(60);
                         Response.Cookies.Append("userId", Convert.ToString(user.UserId), cookieRemember);
+
                     }
 
                     HttpContext.Session.SetInt32("userId", user.UserId);

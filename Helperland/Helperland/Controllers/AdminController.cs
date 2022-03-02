@@ -20,21 +20,17 @@ namespace Helperland.Controllers
 
         public IActionResult ServiceRequest()
         {
-            var id = HttpContext.Session.GetInt32("userId");
-
+            
+            int? id = HttpContext.Session.GetInt32("userId");
+            if (id == null && Request.Cookies["userid"] != null)
+            {
+                HttpContext.Session.SetInt32("userId", Convert.ToInt32(Request.Cookies["userId"]));
+                id = HttpContext.Session.GetInt32("userId");
+            }
             if (id != null)
             {
                 User user = _db.Users.Find(id);
                 if(user.UserTypeId == 3)
-                {
-                    TempData["Name"] = user.FirstName;
-                    return PartialView();
-                }
-            }
-            else if (Request.Cookies["userId"] != null)
-            {
-                User user = _db.Users.FirstOrDefault(x => x.UserId == Convert.ToInt32(Request.Cookies["userId"]));
-                if (user.UserTypeId == 3)
                 {
                     TempData["Name"] = user.FirstName;
                     return PartialView();
