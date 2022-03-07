@@ -1,4 +1,6 @@
 ﻿using Helperland.Data;
+using Helperland.Models;
+using Helperland.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -42,6 +44,48 @@ namespace Helperland.Controllers
             
             return RedirectToAction("Index", "Home", new { loginModal = "true" });
             
+        }
+
+
+        [HttpGet]
+        public JsonResult GetServiceHistory()
+        {
+
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id == null && Request.Cookies["userid"] != null)
+            {
+                HttpContext.Session.SetInt32("userId", Convert.ToInt32(Request.Cookies["userId"]));
+                Id = HttpContext.Session.GetInt32("userId");
+            }
+            if(Id != null)
+            {
+                List<SPNewServiceRequest> result = new List<SPNewServiceRequest>();
+                List<ServiceRequest> table = _db.ServiceRequests.Where(x => x.ServiceProviderId == Id && x.Status == 0).ToList();
+
+                foreach (ServiceRequest row in table)
+                {
+                    SPNewServiceRequest add = new SPNewServiceRequest();
+
+                    add.ServiceId = row.ServiceRequestId;
+                    add.ServiceStartDate = row.ServiceStartDate.ToString("dd/MM/yyyy");
+                    add.ServiceStartTime = row.ServiceStartDate.ToString("HH:mm");
+                    add.ServiceEndTime = row.ServiceStartDate.AddHours((double)row.SubTotal).ToString("HH:mm");
+
+
+                    ServiceRequestAddress address = _db.ServiceRequestAddresses.FirstOrDefault(x => x.ServiceRequestId == row.ServiceRequestId);
+
+                    add.CustomerAddress = address.AddressLine1 + " " + address.AddressLine2 + " " + address.City + " - " + address.PostalCode;
+
+                    User user = _db.Users.FirstOrDefault(x => x.UserId == row.UserId);
+
+                    add.CustomerName = user.FirstName + " " + user.LastName;
+
+                    result.Add(add);
+                }
+
+                return new JsonResult(result);
+            }
+            return new JsonResult(false);
         }
     }
 }

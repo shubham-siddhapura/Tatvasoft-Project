@@ -44,6 +44,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div class="alert alert-danger d-none mt-3" id="scheduleServiceAlert" role="alert">
+                </div>
+
                 <p><label for="cancelReason">Select New Date & Time</label></p>
                 <input type="hidden" id="updateRequestId" name="updateRequestId" />
                 <input type="date" class="rescheduleInput" id="updateRequestDate">
@@ -63,16 +66,16 @@
                     <option value="2:00:00 PM">14:00 </option>
                     <option value="2:30:00 PM">14:30 </option>
                     <!--<option value="3:00">3:00 </option>
-                    <option value="3:30">3:30 </option>
-                    <option value="4:00">4:00 </option>
-                    <option value="4:30">4:30 </option>
-                    <option value="5:00">5:00 </option>
-                    <option value="5:30">5:30 </option>
-                    <option value="6:00">6:00 </option>
-                    <option value="6:30">6:30 </option>
-                    <option value="7:00">7:00 </option>
-                    <option value="7:30">7:30 </option>
-                    <option value="8:00">8:00 </option>-->
+        <option value="3:30">3:30 </option>
+        <option value="4:00">4:00 </option>
+        <option value="4:30">4:30 </option>
+        <option value="5:00">5:00 </option>
+        <option value="5:30">5:30 </option>
+        <option value="6:00">6:00 </option>
+        <option value="6:30">6:30 </option>
+        <option value="7:00">7:00 </option>
+        <option value="7:30">7:30 </option>
+        <option value="8:00">8:00 </option>-->
                 </select>
             </div>
             <div class="modal-footer">

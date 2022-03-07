@@ -2311,10 +2311,10 @@ table.dataTable thead .sorting_desc {
     display: none;
 }
 
-    #mysetting .mysettingTabImg svg {
-        height: 36px;
-        width: 36px;
-    }
+#mysetting .mysettingTabImg svg {
+    height: 36px;
+    width: 36px;
+}
 
 #mysetting .key {
     transform: rotate(315deg);
@@ -2328,6 +2328,7 @@ table.dataTable thead .sorting_desc {
     margin: 0 3px;
     color: #646464;
     flex-grow: 1;
+    height: 36.7px;
 }
 
 #showMoreAddressBtn {
@@ -2338,6 +2339,8 @@ table.dataTable thead .sorting_desc {
     border: 1px solid #646464;
     margin: 15px 0 25px 10px;
 }
+
+.cancelBtn
 
 @media screen and (max-width: 768px) {
     #mysetting table td {
@@ -3803,9 +3806,14 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
         border-radius: 23px;
     }
 
-    #serviceRequestDetailsModal .modal-footer .cancelBtn {
-        background-color: #FF6B6B;
-    }
+#MySettingDeleteAddress.cancelBtn{
+    color: white;
+    border-radius:25px;
+}
+
+#serviceRequestDetailsModal .modal-footer .cancelBtn, #MySettingDeleteAddress.cancelBtn {
+    background-color: #FF6B6B;
+}
 
     #serviceRequestDetailsModal .modal-footer .rescheduleBtn {
         background-color: #1d7a8c;
@@ -4010,3 +4018,175 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
         padding: 0;
     }
 }
+
+
+/* ======= Service Provider My setting =========== */
+#mysetting .mysettingUl.serviceProvider li {
+    width: 50%;
+}
+
+#mySettingDetails > div {
+    padding: 10px 0;
+}
+
+#mySettingDetails .mySettingHeadings {
+    display: inline-block;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#mySettingDetails .basicDetailsTitle {
+    display: flex;
+    position: relative;
+}
+
+#mySettingDetails .mySettingHeadings.basicDetails {
+    width: calc(100% - 90px);
+    border-bottom: 1px solid #e1e1e1;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+}
+
+#mySettingDetails .basicDetailsTitle div {
+    position: absolute;
+    right: 0;
+    top: -40px;
+    width: 90px;
+    height: 90px;
+    background-color: #e1e1e1;
+    border-radius: 50%;
+}
+
+    #mySettingDetails .basicDetailsTitle div img {
+        border-radius: 50%;
+        height: 100%;
+        width: 100%;
+    }
+
+.mysettingGender input[type=radio]:checked {
+    accent-color: #1d7a8c !important;
+}
+
+.allAvatars input[type=radio] {
+    display: none;
+}
+
+
+.allAvatars label img {
+    height: 75px;
+    width: 75px;
+}
+
+
+.allAvatars label, .allAvatars label img {
+    border-radius: 50%;
+}
+
+.allAvatars input[type=radio] + label img {
+    border: 3px solid #ffffff00;
+}
+
+.allAvatars input[type=radio]:checked + label img {
+    border: 3px solid #1d7a8c;
+}
+
+.myAddressDetails .mySettingHeadings {
+    border-bottom: 1px solid #e1e1e1;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+
+
+@media screen and (max-width: 768px) {
+    #mySettingDetails .basicDetailsTitle div {
+        width: 75px;
+        height: 75px;
+        top: -25px;
+    }
+
+    #mySettingDetails .mySettingHeadings.basicDetails {
+        width: calc(100% - 75px);
+    }
+}
+
+/* ========= sp rating table ==============*/
+
+#SPRatings p {
+    margin: 0;
+}
+
+#SPRatings table {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    border: 0;
+}
+
+#SPRatings tr {
+    outline: 1px solid #e1e1e1;
+    border-radius: 4px;
+}
+
+#SPRatings td {
+    float: left;
+    padding: 15px 2.5%;
+}
+
+    #SPRatings td:nth-child(3) {
+        float: right;
+    }
+
+    #SPRatings td:last-child {
+        border-top: 1px solid #e1e1e1;
+        display: block;
+        width: 95%;
+        margin: 0 2.5%;
+        padding-left: 0;
+    }
+
+@media screen and (max-width: 600px) {
+
+    #SPRatings td {
+        float: none !important;
+        display: block;
+    }
+}
+
+/* ============== Block Customer ================= */
+.allCustomerCards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+    .allCustomerCards .customerCard {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        border: 1px solid #e1e1e1;
+        border-radius: 4px;
+        min-width: 250px;
+        padding: 15px;
+        margin: 7.5px 15px;
+    }
+
+        .allCustomerCards .customerCard div, .allCustomerCards .customerCard p {
+            margin: 10px 0;
+        }
+
+        .allCustomerCards .customerCard img {
+            height: 75px;
+            width: 75px;
+            border-radius: 50%;
+            border: 2px solid #9c9c9c;
+        }
+
+        .allCustomerCards .customerCard .blockBtn {
+            line-height: 46px;
+            padding: 0 25px;
+            color: #fff;
+            border: 0;
+            border-radius: 23px;
+            background-color: #FF6B6B;
+        }

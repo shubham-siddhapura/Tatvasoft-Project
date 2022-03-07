@@ -1,0 +1,211 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div id="mysetting" class="allPageMain tableContents d-none">
+
+    <ul class="mysettingUl serviceProvider">
+        <li class="mysettingTab active" id="myDetailsTab">
+            <span class="mysettingTabImg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            </span>
+            <span class="mysettingTabText"> My Details </span>
+        </li>
+
+        <li class="mysettingTab" id="changePasswordTab" onclick="changepassword()">
+            <span class="mysettingTabImg key">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                </svg>
+            </span>
+            <span class="mysettingTabText"> Change Password </span>
+        </li>
+    </ul>
+
+    <div id="mySettingDetails">
+
+        <p class="mySettingTitle"><b>My Details</b></p>
+
+        <!-- account status -->
+        <div class="mySettingAccountStatus">
+            <p class="mySettingHeadings">Account Status:</p><span class="accountStatus"> Active</span>
+        </div>
+
+        <!-- Basic Details -->
+        <div class="myBasicDetails">
+
+            <div class="basicDetailsTitle">
+                <p class="mySettingHeadings basicDetails">Basic Details</p>
+                <div><img id="SPSelectedAvatar" src="/img/cap.jpg" alt=""></div>
+
+            </div>
+
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col-lg-4 mb-3">
+                        <label for="mySettingFname"> First Name </label>
+                        <input type="text" class="form-control" placeholder="First Name" id="mySettingFname" />
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <label for="mySettingLname"> Last Name </label>
+                        <input type="text" placeholder="Last Name" class="form-control" id="mySettingLname" />
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <label for="mySettingEmail"> E-mail Address </label>
+                        <input type="email" class="form-control ReadOnly input" placeholder="E-mail" id="mySettingEmail" readonly />
+                    </div>
+
+                </div>
+                <div class="row cover">
+                    <div class="col-lg-4 mb-3">
+                        <label for="mySettingMobile">Mobile Number</label>
+                        <div class="input-group" class="mobile-box">
+                            <span class="input-group-text">+49</span>
+                            <input type="tel" class="form-control" placeholder="Mobile Number" aria-label="mobile" aria-describedby="basic-addon1" id="mySettingMobile" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <label for="mySettingDob"> Date of Birth </label>
+                        <input type="date" class="form-control" name="birthdate" id="mySettingDob" />
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <label for="mySettingNationality">Nationality</label>
+                        <select id="mySettingNationality" class="form-select" aria-label="Default select example">
+                            <option selected>Nationality</option>
+                            <option value="In">India</option>
+                            <option value="Uk">UK</option>
+                            <option value="Usa">USA</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row cover mysettingGender">
+                    <div class="mb-3">
+                        <label for="" class="d-block">Gender</label>
+
+                        <input type="radio" name="gender" id="maleBtn">
+                        <label class="form-check-label me-3" for="maleBtn">
+                            Male
+                        </label>
+
+                        <input type="radio" name="gender" id="femaleBtn">
+                        <label class="form-check-label me-3" for="femaleBtn">
+                            Female
+                        </label>
+
+                        <input type="radio" name="gender" id="ratherNotBtn">
+                        <label class="form-check-label" for="ratherNotBtn">
+                            Rather not to say
+                        </label>
+
+                    </div>
+                </div>
+
+                <div class="row cover selectAvatar">
+                    <p>Select Avatar</p>
+
+                    <div class="mb-3 allAvatars">
+
+                        <input type="radio" name="avatar" id="cap" checked>
+                        <label class="me-3" for="cap">
+                            <img src="/img/cap.jpg" alt="">
+                        </label>
+
+                        <input type="radio" name="avatar" id="female">
+                        <label class="form-check-label me-3" for="female">
+                            <img src="/img/female.jpg" alt="">
+                        </label>
+
+                        <input type="radio" name="avatar" id="car">
+                        <label class="form-check-label me-3" for="car">
+                            <img src="/img/car.jpg" alt="">
+                        </label>
+
+                        <input type="radio" name="avatar" id="male">
+                        <label class="form-check-label me-3" for="male">
+                            <img src="/img/male.jpg" alt="">
+                        </label>
+
+                        <input type="radio" name="avatar" id="iron">
+                        <label class="form-check-label me-3" for="iron">
+                            <img src="/img/iron.jpg" alt="">
+                        </label>
+
+                        <input type="radio" name="avatar" id="ship">
+                        <label class="form-check-label me-3" for="ship">
+                            <img src="/img/ship.jpg" alt="">
+                        </label>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- basic Details Ends -->
+        <!-- my address Details -->
+        <div class="myAddressDetails">
+            <p class="mySettingHeadings">My Address</p>
+
+
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col-lg-4 mb-3">
+                        <label for="mySettingStreetname"> Street Name </label>
+                        <input type="text" class="form-control" placeholder="Street Name" id="mySettingStreetname" />
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <label for="mySettingHouse"> House Number </label>
+                        <input type="text" placeholder="House Number" class="form-control" id="mySettingHouse" />
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <label for="mySettingPostal"> Postal Code </label>
+                        <input type="text" class="form-control" placeholder="Postal Code" id="mySettingPostal" />
+                    </div>
+
+                </div>
+                <div class="row cover">
+                    <div class="col-lg-4 mb-3">
+                        <label for="mySettingCity">City</label>
+                        <input type="text" class="form-control ReadOnly input" placeholder="City" id="mySettingCity" readonly />
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- my address details -->
+
+        <button type="button" id="myDetailsSave" class="mySettingSave">Save</button>
+    </div>
+
+    <div id="changePasswordMySetting" class="d-none">
+
+        <p class="mySettingTitle"><b>Change Password</b></p>
+        <form action="">
+            <div>
+                <p>Old Password</p>
+                <input type="text" placeholder="Current Password">
+            </div>
+            <div>
+                <p>new Password</p>
+                <input type="text" placeholder="New Password">
+            </div>
+            <div>
+                <p>Confirm Password</p>
+                <input type="text" placeholder="Confirm Password">
+            </div>
+
+            <div>
+                <button type="button" class="mySettingSave">Save</button>
+            </div>
+        </form>
+
+    </div>
+
+</div>

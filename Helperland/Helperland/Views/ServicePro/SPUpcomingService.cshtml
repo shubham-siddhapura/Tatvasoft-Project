@@ -53,293 +53,32 @@
                 <div id="upcoming-desktop-flex">
                     <div id="upcoming-menu-desktop">
                         <ul>
-                            <li onclick="dashbord();"> Dashbord</li>
-                            <li>New Service Requests</li>
-                            <li class="active"><a href="" onclick="upcoming();"> Upcoming Service</a></li>
-                            <li>Service Schedule</li>
-                            <li>Service History</li>
-                            <li>My Ratings</li>
-                            <li>Block Customer</li>
+                            <li id="spDashbordTab" class="spTabs"> Dashbord</li>
+                            <li id="spNewServiceRequestTab" class="active spTabs">New Service Requests</li>
+                            <li id="spUpcomingServiceTab" class="spTabs">Upcoming Service</li>
+                            <li id="spServiceScheduleTab" class="spTabs">Service Schedule</li>
+                            <li id="spServiceHistoryTab" class="spTabs">Service History</li>
+                            <li id="spMyRatingsTab" class="spTabs">My Ratings</li>
+                            <li id="spBlockCustomerTab" class="spTabs">Block Customer</li>
                         </ul>
 
                     </div>
-                    <div id="dashbord" style="width: 740px; height:100%; border:5px solid black;"></div>
-                    <div id="upcoming-table">
-                        <table id="mytable">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Service ID
-                                    </th>
-                                    <th>
-                                        Service Date
-                                    </th>
-                                    <th>
-                                        Customer Details
-                                    </th>
-                                    <th>
-                                        Distance
-                                    </th>
-                                    <th>
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    
+                    @await Html.PartialAsync("ServiceProUpcomingService")
+                    
+                    @await Html.PartialAsync("ServiceProMySetting")
+                    
+                    @await Html.PartialAsync("ServiceProRatings")
 
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td class="distance">
-                                        15 km
-                                    </td>
-                                    <td class="actions">
-                                        <a href="#">Cancel</a>
-                                    </td>
-                                </tr>
+                    @await Html.PartialAsync("ServiceProNewServiceRequest")
+                    
+                    @await Html.PartialAsync("ServiceProServiceHistory")
 
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td class="distance">
-                                        15 km
-                                    </td>
-                                    <td class="actions">
-                                        <a href="#">Cancel</a>
-                                    </td>
-                                </tr>
+                    @await Html.PartialAsync("ServiceProBlockCustomer")
 
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td class="distance">
-                                        15 km
-                                    </td>
-                                    <td class="actions">
-                                        <a href="#">Cancel</a>
-                                    </td>
-                                </tr>
 
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td class="distance">
-                                        15 km
-                                    </td>
-                                    <td class="actions">
-                                        <a href="#">Cancel</a>
-                                    </td>
-                                </tr>
 
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td class="distance">
-                                        15 km
-                                    </td>
-                                    <td class="actions">
-                                        <a href="#">Cancel</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td class="distance">
-                                        15 km
-                                    </td>
-                                    <td class="actions">
-                                        <a href="#">Cancel</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td class="distance">
-                                        15 km
-                                    </td>
-                                    <td class="actions">
-                                        <a href="#">Cancel</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td class="distance">
-                                        15 km
-                                    </td>
-                                    <td class="actions">
-                                        <a href="#">Cancel</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td class="distance">
-                                        15 km
-                                    </td>
-                                    <td class="actions">
-                                        <a href="#">Cancel</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td class="distance">
-                                        15 km
-                                    </td>
-                                    <td class="actions">
-                                        <a href="#">Cancel</a>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
+                    
                 </div>
             </div>
         </section>
@@ -371,6 +110,8 @@
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+    <script src="/js/SPTabination.js"></script>
+    <script src="/js/ServiceHistoryAjax.js"></script>
     <script>
         $(document).ready(function () {
             $("#mytable").DataTable();

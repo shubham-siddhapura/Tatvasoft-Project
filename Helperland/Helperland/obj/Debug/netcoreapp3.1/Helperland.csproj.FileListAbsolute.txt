@@ -179,3 +179,9 @@ D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Raz
 D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\CustomerDashbord.cshtml.g.cs
 D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\CustomerModals.cshtml.g.cs
 D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\CustomerMySetting.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ServiceProUpcomingService.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ServiceProMySetting.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ServiceProRatings.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ServiceProNewServiceRequest.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ServiceProServiceHistory.cshtml.g.cs
+D:\Tatvasoft\Tatvasoft Project\Helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ServiceProBlockCustomer.cshtml.g.cs

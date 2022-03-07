@@ -150,7 +150,7 @@ namespace Helperland.Controllers
             List<DetailService> Addresses = new List<DetailService>();
             int? Id = HttpContext.Session.GetInt32("userId");
             string postalcode = Request.Cookies["postalCode"];
-            var table = _db.UserAddresses.Where(x => x.UserId == Id && x.PostalCode == postalcode).ToList();
+            var table = _db.UserAddresses.Where(x => x.UserId == Id && x.PostalCode == postalcode && x.IsDeleted == false).ToList();
             
             foreach(var add in table)
             {

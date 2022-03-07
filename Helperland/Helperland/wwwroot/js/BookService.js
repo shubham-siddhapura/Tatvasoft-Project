@@ -460,11 +460,13 @@ function scheduleSubmit() {
     var data = $("#scheduleform").serialize();
     console.log(data);
 
-    var serviceDate = new Date($("#admin-sr-fdate").val() + " " + $("#startingtime").val()).getTime() / 1000;
-    var todayDate = new Date().getTime() / 1000;
+    var serviceDate = new Date($("#admin-sr-fdate").val());
+    var todayDate = new Date();
+    console.log($("#admin-sr-fdate").val() + " " + $("#startingtime").val());
 
     if (serviceDate <= todayDate) {
         $("#scheduleServiceAlert").removeClass("d-none").text("Please Select Valid Date and Time!");
+        $("#admin-sr-fdate").focus();
     }
     else {
         $.ajax({

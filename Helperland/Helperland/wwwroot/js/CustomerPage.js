@@ -306,24 +306,38 @@ document.getElementById("updateServiceRequest").addEventListener("click", functi
     data.startTime = serviceTime;
     data.serviceRequestId = serviceRequestId;
 
-    $.ajax({
-        type: 'POST',
-        url: '/CustomerPage/RescheduleServiceRequest',
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        data: data,
-        success: function (result) {
-            if (result.value == "true") {
-                window.location.reload();
-            }
-            else {
-                alert("fail");
-            }
-        },
-        error: function () {
-            alert("error");
-        }
-    });
 
+    var serviceDate = new Date(data.serviceStartDate);
+    var todayDate = new Date();
+
+    window.setTimeout(function () {
+        $('#scheduleServiceAlert').addClass('d-none');
+    }, 5000);
+
+    if (serviceDate <= todayDate) {
+        $("#scheduleServiceAlert").removeClass("d-none").text("Please Select Valid Date and Time!");
+        $("#admin-sr-fdate").focus();
+    }
+    else {
+
+        $.ajax({
+            type: 'POST',
+            url: '/CustomerPage/RescheduleServiceRequest',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: data,
+            success: function (result) {
+                if (result.value == "true") {
+                    window.location.reload();
+                }
+                else {
+                    alert("fail");
+                }
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
 });
 
 function getAllServiceDetails() {
