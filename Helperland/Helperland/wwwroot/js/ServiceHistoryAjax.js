@@ -1,5 +1,4 @@
 ﻿
-
 function getSPServiceHistory() {
 
     $.ajax({

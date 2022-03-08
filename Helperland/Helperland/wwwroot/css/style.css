@@ -2212,7 +2212,7 @@ table.dataTable thead .sorting_desc {
     display: none;
 }
 
-#mysetting .mysettingUl {
+.allmysetting .mysettingUl {
     list-style: none;
     gap: 0;
     width: 100%;
@@ -2221,7 +2221,7 @@ table.dataTable thead .sorting_desc {
     margin-bottom:15px;
 }
 
-    #mysetting .mysettingUl li {
+    .allmysetting .mysettingUl li {
         display: inline-block;
         width: 33%;
         font-weight: 700;
@@ -2235,12 +2235,12 @@ table.dataTable thead .sorting_desc {
         transition: all 0.5s ease;
     }
 
-        #mysetting .mysettingUl li:hover {
+        .allmysetting .mysettingUl li:hover {
             color: #1d7a8c;
             border-bottom-color: #1d7a8c;
         }
 
-        #mysetting .mysettingUl li.active {
+        .allmysetting .mysettingUl li.active {
             color: #1d7a8c;
             border-bottom-color: #1d7a8c;
         }
@@ -2263,11 +2263,11 @@ table.dataTable thead .sorting_desc {
     color: #646464;
 }
 
-#mysetting #myAddressMySetting p {
+.allmysetting #myAddressMySetting p {
     margin-bottom: 0;
 }
 
-#mysetting .myAddressButton {
+.allmysetting .myAddressButton {
     padding: 0;
     height: 24px;
     width: 24px;
@@ -2275,9 +2275,9 @@ table.dataTable thead .sorting_desc {
     background-color: transparent;
 }
 
-    #mysetting .myAddressButton svg {
-        color: #646464;
-    }
+.allmysetting .myAddressButton svg {
+    color: #646464;
+}
 
 #changePasswordMySetting p {
     margin-bottom: 0;
@@ -2285,38 +2285,38 @@ table.dataTable thead .sorting_desc {
     color: #646464;
 }
 
-#mysetting #changePasswordMySetting form {
+.allmysetting #changePasswordMySetting form {
     margin-top: 15px;
 }
 
-#mysetting #changePasswordMySetting div {
+.allmysetting #changePasswordMySetting div {
     margin: 0 15px 15px;
 }
 
-    #mysetting #changePasswordMySetting div input {
-        line-height: 40px;
-        border-radius: 5px;
-        padding: 0 10px;
-        width: 400px;
-    }
+.allmysetting #changePasswordMySetting div input {
+    line-height: 40px;
+    border-radius: 5px;
+    padding: 0 10px;
+    width: 400px;
+}
 
-#mysetting p.mySettingTitle {
+.allmysetting p.mySettingTitle {
     display: none;
     margin: 15px 0 0;
     padding: 0 20px 5px;
     border-bottom: 1px solid #e1e1e1;
 }
 
-#mysetting .mysettingTabImg {
+.allmysetting .mysettingTabImg {
     display: none;
 }
 
-#mysetting .mysettingTabImg svg {
-    height: 36px;
-    width: 36px;
-}
+    .allmysetting .mysettingTabImg svg {
+        height: 36px;
+        width: 36px;
+    }
 
-#mysetting .key {
+.allmysetting .key {
     transform: rotate(315deg);
 }
 
@@ -2339,8 +2339,6 @@ table.dataTable thead .sorting_desc {
     border: 1px solid #646464;
     margin: 15px 0 25px 10px;
 }
-
-.cancelBtn
 
 @media screen and (max-width: 768px) {
     #mysetting table td {
@@ -4021,7 +4019,7 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
 
 
 /* ======= Service Provider My setting =========== */
-#mysetting .mysettingUl.serviceProvider li {
+.allmysetting .mysettingUl.serviceProvider li {
     width: 50%;
 }
 

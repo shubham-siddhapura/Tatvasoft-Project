@@ -37,13 +37,10 @@ spBlockCustomerTab.addEventListener("click", function () {
 function showThisTab(id, id2) {
     for (var i = 0; i < allSPTables.length; i++) {
         allSPTables[i].classList.add("d-none");
-
     }
     for (var i = 0; i < spTabs.length; i++) {
         spTabs[i].classList.remove("active");
     }
-
-    
 
     document.getElementById(id2).classList.add("active");
     document.getElementById(id).classList.remove("d-none");

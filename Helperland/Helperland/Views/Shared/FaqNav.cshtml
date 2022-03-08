@@ -97,7 +97,7 @@
                     <a class="nav-link nav-padding" href="#">Block Customer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-padding" href="#">My Settings</a>
+                    <a class="nav-link nav-padding" asp-controller="ServicePro" asp-action="SPUpcomingService" asp-route-mySetting="true">My Settings</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-padding" asp-controller="Signup" asp-action="Logout">Logout</a>
@@ -166,8 +166,16 @@
                             <br />
                             <span id="UsernameNav">@TempData["name"]</span>
                         </li>
-                        <li><a class="dropdown-item" asp-controller="CustomerPage" asp-action="CustServiceHistory">My Dashbord</a></li>
-                        <li><a class="dropdown-item navMySettingLink" asp-controller="CustomerPage" asp-action="CustServiceHistory" asp-route-mySetting ="true">My Setting</a></li>
+                        @if (TempData["userType"] == "1")
+                        {
+                            <li><a class="dropdown-item" asp-controller="CustomerPage" asp-action="CustServiceHistory">My Dashbord</a></li>
+                            <li><a class="dropdown-item navMySettingLink" asp-controller="CustomerPage" asp-action="CustServiceHistory" asp-route-mySetting="true">My Setting</a></li>
+                        }
+                        else if (TempData["userType"] == "2")
+                        {
+                            <li><a class="dropdown-item" asp-controller="ServicePro" asp-action="SPUpcomingService">My Dashbord</a></li>
+                            <li><a class="dropdown-item navMySettingLink" asp-controller="ServicePro" asp-action="SPUpcomingService" asp-route-mySetting="true">My Setting</a></li>
+                        }
                         <li><a class="dropdown-item" asp-controller="Signup" asp-action="Logout">Logout</a></li>
                     </ul>
                 </li>

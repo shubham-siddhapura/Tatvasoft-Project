@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -19,6 +20,7 @@ namespace Helperland.Models
         public string Mobile { get; set; }
         public string Email { get; set; }
 
+        [JsonIgnore]
         public virtual User User { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-<div id="mysetting" class="allPageMain tableContents d-none">
+<div id="mySetting" class="allPageMain tableContents allmysetting d-none">
 
     <ul class="mysettingUl serviceProvider">
         <li class="mysettingTab active" id="myDetailsTab">
@@ -28,6 +28,9 @@
     <div id="mySettingDetails">
 
         <p class="mySettingTitle"><b>My Details</b></p>
+
+        <div class="alert alert-danger d-none mt-3" id="ms_myDetailsAlert" role="alert">
+        </div>
 
         <!-- account status -->
         <div class="mySettingAccountStatus">
@@ -62,22 +65,22 @@
                 <div class="row cover">
                     <div class="col-lg-4 mb-3">
                         <label for="mySettingMobile">Mobile Number</label>
-                        <div class="input-group" class="mobile-box">
+                        <div class="input-group mobile-box">
                             <span class="input-group-text">+49</span>
                             <input type="tel" class="form-control" placeholder="Mobile Number" aria-label="mobile" aria-describedby="basic-addon1" id="mySettingMobile" />
                         </div>
                     </div>
-                    <div class="col-lg-4 mb-3">
+                    <div class="col-lg-4 mb-3" id="mySettingDateDiv">
                         <label for="mySettingDob"> Date of Birth </label>
-                        <input type="date" class="form-control" name="birthdate" id="mySettingDob" />
+                        <input type="hidden" class="form-control" name="birthdate" id="mySettingDob" />
                     </div>
                     <div class="col-lg-4 mb-3">
                         <label for="mySettingNationality">Nationality</label>
                         <select id="mySettingNationality" class="form-select" aria-label="Default select example">
                             <option selected>Nationality</option>
-                            <option value="In">India</option>
-                            <option value="Uk">UK</option>
-                            <option value="Usa">USA</option>
+                            <option value="1">India</option>
+                            <option value="2">UK</option>
+                            <option value="3">USA</option>
                         </select>
                     </div>
                 </div>
@@ -85,17 +88,17 @@
                     <div class="mb-3">
                         <label for="" class="d-block">Gender</label>
 
-                        <input type="radio" name="gender" id="maleBtn">
+                        <input type="radio" name="gender" id="maleBtn" value="1">
                         <label class="form-check-label me-3" for="maleBtn">
                             Male
                         </label>
 
-                        <input type="radio" name="gender" id="femaleBtn">
+                        <input type="radio" name="gender" id="femaleBtn" value="2">
                         <label class="form-check-label me-3" for="femaleBtn">
                             Female
                         </label>
 
-                        <input type="radio" name="gender" id="ratherNotBtn">
+                        <input type="radio" name="gender" id="ratherNotBtn" value="3">
                         <label class="form-check-label" for="ratherNotBtn">
                             Rather not to say
                         </label>
@@ -108,32 +111,32 @@
 
                     <div class="mb-3 allAvatars">
 
-                        <input type="radio" name="avatar" id="cap" checked>
+                        <input type="radio" name="avatar" id="cap" value="cap.jpg" checked>
                         <label class="me-3" for="cap">
                             <img src="/img/cap.jpg" alt="">
                         </label>
 
-                        <input type="radio" name="avatar" id="female">
+                        <input type="radio" name="avatar" id="female" value="female.jpg">
                         <label class="form-check-label me-3" for="female">
                             <img src="/img/female.jpg" alt="">
                         </label>
 
-                        <input type="radio" name="avatar" id="car">
+                        <input type="radio" name="avatar" id="car" value="car.jpg">
                         <label class="form-check-label me-3" for="car">
                             <img src="/img/car.jpg" alt="">
                         </label>
 
-                        <input type="radio" name="avatar" id="male">
+                        <input type="radio" name="avatar" id="male" value="male.jpg">
                         <label class="form-check-label me-3" for="male">
                             <img src="/img/male.jpg" alt="">
                         </label>
 
-                        <input type="radio" name="avatar" id="iron">
+                        <input type="radio" name="avatar" id="iron" value="iron.jpg">
                         <label class="form-check-label me-3" for="iron">
                             <img src="/img/iron.jpg" alt="">
                         </label>
 
-                        <input type="radio" name="avatar" id="ship">
+                        <input type="radio" name="avatar" id="ship" value="ship.jpg">
                         <label class="form-check-label me-3" for="ship">
                             <img src="/img/ship.jpg" alt="">
                         </label>
@@ -149,7 +152,6 @@
         <!-- my address Details -->
         <div class="myAddressDetails">
             <p class="mySettingHeadings">My Address</p>
-
 
             <div class="container mt-3">
                 <div class="row">
@@ -172,9 +174,8 @@
                         <label for="mySettingCity">City</label>
                         <input type="text" class="form-control ReadOnly input" placeholder="City" id="mySettingCity" readonly />
                     </div>
-
+                    <input type="hidden" id="mySettingState" />
                 </div>
-
 
             </div>
 
@@ -187,22 +188,26 @@
     <div id="changePasswordMySetting" class="d-none">
 
         <p class="mySettingTitle"><b>Change Password</b></p>
+
+        <div class="alert alert-danger d-none mt-3" id="ms_changePasswordAlert" role="alert">
+        </div>
+
         <form action="">
             <div>
                 <p>Old Password</p>
-                <input type="text" placeholder="Current Password">
+                <input type="text" placeholder="Current Password" id="oldPassword">
             </div>
             <div>
                 <p>new Password</p>
-                <input type="text" placeholder="New Password">
+                <input type="text" placeholder="New Password" id="newPassword">
             </div>
             <div>
                 <p>Confirm Password</p>
-                <input type="text" placeholder="Confirm Password">
+                <input type="text" placeholder="Confirm Password" id="confirmPassword">
             </div>
 
             <div>
-                <button type="button" class="mySettingSave">Save</button>
+                <button type="button" class="mySettingSave" id="changePasswordBtn">Save</button>
             </div>
         </form>
 
