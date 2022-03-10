@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Helperland.ViewModels.NewServiceRequestTable>
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -15,6 +15,11 @@
         <div id="export-btn">
             <a href="#" role="button" id="export">Export</a>
         </div>
+    </div>
+
+    <div>
+        <input type="checkbox" id="havepetCheckbox" checked/>
+        <label for="havepetCheckbox">Including Pet at home</label>
     </div>
 
     <table id="newServiceRequestTable">
@@ -42,33 +47,56 @@
         </thead>
         <tbody>
 
-            <tr>
-                <td>
-                    323436
-                </td>
-                <td>
-                    <div>
-                        <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                        <span class="upcoming-date"><b>09/04/2018</b></span>
-                    </div>
-                    <div>
-                        <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                    </div>
-                </td>
-                <td>
-                    <div>David Bough</div>
-                    <div><span><img src="img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                </td>
-                <td>
-                    <span>15</span> &euro;
-                </td>
-                <td>
-                </td>
-                <td class="allPageActionButtons">
-                    <a href="#">Accept</a>
-                </td>
+            @if (Model.Count() > 0)
+            {
+                @foreach (var row in Model)
+                {
+                    <tr data-value="@row.ServiceRequestId">
+                        <td>
+                            @row.ServiceRequestId
+                        </td>
+                        <td>
+                            <div>
+                                <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
+                                <span class="upcoming-date"><b>@row.ServiceStartDate</b></span>
+                            </div>
+                            <div>
+                                <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">@row.StartTime-@row.EndTime</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>@row.CustomerName</div>
+                            <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">@row.AddressLine2, @row.AddressLine1<br>@row.City - @row.PostalCode</span> </div>
+                        </td>
+                        <td>
+                            <span>@row.TotalCost</span> &euro;
+                        </td>
+                        <td>
+                            @if (row.TimeConflict != 0)
+                            {
+                                <button type="button" data-value="@row.TimeConflict" class="btn timeConflict">Conflicted</button>
+                            }
+                            @if (row.HasPet == false)
+                            {
+                                <div class="d-none dontHavePet">dontHavePet</div>
+                            }
+                        </td>
+                        <td class="allPageActionButtons">
+                            @if (row.TimeConflict != 0)
+                            {
+                                <a href="#" class="btn disabled">Accept</a>
+                                    }
+                                    else
+                                    {
+                                        string myid = "newAcceptBtn" + row.ServiceRequestId;
+                                <a href="#" class="btn acceptService" id=@myid >Accept</a>
+                            }
+                        </td>
 
-            </tr>
+                    </tr>
+
+                }
+            }
 
 
         </tbody>

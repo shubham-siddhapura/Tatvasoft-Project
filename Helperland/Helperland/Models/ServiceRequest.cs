@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -9,6 +10,7 @@ namespace Helperland.Models
     {
         public ServiceRequest()
         {
+            
             Ratings = new HashSet<Rating>();
             ServiceRequestAddresses = new HashSet<ServiceRequestAddress>();
             ServiceRequestExtras = new HashSet<ServiceRequestExtra>();
@@ -43,6 +45,8 @@ namespace Helperland.Models
 
         public virtual User ServiceProvider { get; set; }
         public virtual User User { get; set; }
+
+
         public virtual ICollection<Rating> Ratings { get; set; }
         public virtual ICollection<ServiceRequestAddress> ServiceRequestAddresses { get; set; }
         public virtual ICollection<ServiceRequestExtra> ServiceRequestExtras { get; set; }

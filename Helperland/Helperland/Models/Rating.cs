@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -20,6 +21,7 @@ namespace Helperland.Models
 
         public virtual User RatingFromNavigation { get; set; }
         public virtual User RatingToNavigation { get; set; }
+
         public virtual ServiceRequest ServiceRequest { get; set; }
     }
 }

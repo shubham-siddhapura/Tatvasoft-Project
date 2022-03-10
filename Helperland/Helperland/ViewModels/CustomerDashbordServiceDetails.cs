@@ -39,7 +39,7 @@ namespace Helperland.ViewModels
 
         public decimal TotalCost { get; set; }
 
-        public String Address { get; set; }
+        public string Address { get; set; }
 
         public string PhoneNo { get; set; }
 
@@ -47,6 +47,10 @@ namespace Helperland.ViewModels
 
         public string Comments { get; set; }
 
+        public string CustomerName { get; set; }
         
+        public bool HasPet { get; set; }
+
+        public string ZipCode { get; set; }
     }
 }

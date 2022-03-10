@@ -31,12 +31,57 @@ namespace Helperland.Controllers
             if (id != null)
             {
                 
-                Models.User user = _db.Users.Find(id);
+                User user = _db.Users.Find(id);
                 TempData["Name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
                 if (user.UserTypeId == 2)
                 {
-                    return PartialView();
+
+                    List<ServiceRequest> requests = _db.ServiceRequests.Where(x => x.ZipCode == user.ZipCode && x.Status == 2 && x.ServiceProviderId == null).ToList();
+
+
+                    List<NewServiceRequestTable> table = new List<NewServiceRequestTable>();
+
+                    foreach(ServiceRequest row in requests)
+                    {
+                        NewServiceRequestTable tablerow = new NewServiceRequestTable();
+
+                        tablerow.ServiceRequestId = row.ServiceRequestId;
+                        tablerow.ServiceStartDate = row.ServiceStartDate.ToString("dd/MM/yyyy");
+                        tablerow.StartTime = row.ServiceStartDate.ToString("HH:mm");
+                        tablerow.EndTime = row.ServiceStartDate.AddHours((double)row.SubTotal).ToString("HH:mm tt");
+                        tablerow.TotalCost = row.TotalCost;
+                        tablerow.HasPet = row.HasPets;
+
+                        var obj = _db.ServiceRequests.FirstOrDefault(x => 
+                        (x.ServiceProviderId == id && x.ServiceStartDate <= row.ServiceStartDate && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= row.ServiceStartDate) ||  (x.ServiceProviderId == id && x.ServiceStartDate <= row.ServiceStartDate.AddHours((double)row.SubTotal+1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= row.ServiceStartDate.AddHours((double)row.SubTotal + 1)) ||
+                        (x.ServiceProviderId == id && x.ServiceStartDate >= row.ServiceStartDate.AddHours((double)row.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) <= row.ServiceStartDate.AddHours((double)row.SubTotal + 1))
+                        );
+                        if(obj!= null)
+                        {
+                            int conflict = obj.ServiceRequestId;
+                            
+                            tablerow.TimeConflict = conflict;
+                        }
+
+
+                        ServiceRequestAddress address = _db.ServiceRequestAddresses.FirstOrDefault(x => x.ServiceRequestId == row.ServiceRequestId);
+
+
+                        tablerow.AddressLine1 = address.AddressLine1;
+                        tablerow.AddressLine2 = address.AddressLine2;
+                        tablerow.City = address.City;
+                        tablerow.PostalCode = address.PostalCode;
+
+                        User customer = _db.Users.FirstOrDefault(x => x.UserId == row.UserId);
+
+                        tablerow.CustomerName = customer.FirstName + " " + customer.LastName;
+
+
+                        table.Add(tablerow);
+                    }
+
+                    return PartialView(table);
                 }
 
             }
@@ -190,6 +235,7 @@ namespace Helperland.Controllers
             return Ok(Json("false"));
         }
 
+        [HttpPost]
         public IActionResult ChangePassword(ChangePassword pwd)
         {
             int? Id = HttpContext.Session.GetInt32("userId");
@@ -210,6 +256,222 @@ namespace Helperland.Controllers
                 }
             }
             return Ok(Json("false"));
+        }
+
+        [HttpGet]
+        public IActionResult GetNewServiceRequests()
+        {
+
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id == null && Request.Cookies["userid"] != null)
+            {
+                HttpContext.Session.SetInt32("userId", Convert.ToInt32(Request.Cookies["userId"]));
+                Id = HttpContext.Session.GetInt32("userId");
+            }
+
+
+
+            return Ok(Json("false"));
+        } 
+
+
+        /* =============== Upcoming services ========================== */
+
+        [HttpGet]
+        public JsonResult GetUpcomingHistory()
+        {
+
+            int? Id = HttpContext.Session.GetInt32("userId");
+            
+            if (Id != null)
+            {
+                List<ServiceRequest> requests = _db.ServiceRequests.Where(x=>x.Status == 2 && x.ServiceProviderId == (int)Id).ToList();
+
+
+                List<NewServiceRequestTable> table = new List<NewServiceRequestTable>();
+
+                foreach (ServiceRequest row in requests)
+                {
+                    NewServiceRequestTable tablerow = new NewServiceRequestTable();
+
+                    tablerow.ServiceRequestId = row.ServiceRequestId;
+                    tablerow.ServiceStartDate = row.ServiceStartDate.ToString("dd/MM/yyyy");
+                    tablerow.StartTime = row.ServiceStartDate.ToString("HH:mm");
+                    tablerow.EndTime = row.ServiceStartDate.AddHours((double)row.SubTotal).ToString("HH:mm tt");
+
+                    tablerow.TotalCost = row.TotalCost;
+
+                    ServiceRequestAddress address = _db.ServiceRequestAddresses.FirstOrDefault(x => x.ServiceRequestId == row.ServiceRequestId);
+
+                    tablerow.AddressLine1 = address.AddressLine1;
+                    tablerow.AddressLine2 = address.AddressLine2;
+                    tablerow.City = address.City;
+                    tablerow.PostalCode = address.PostalCode;
+
+                    User customer = _db.Users.FirstOrDefault(x => x.UserId == row.UserId);
+
+                    tablerow.CustomerName = customer.FirstName + " " + customer.LastName;
+
+                    DateTime serviceDate = row.ServiceStartDate.AddHours((double)row.SubTotal);
+
+                    DateTime currentTime = DateTime.Now;
+                    if(serviceDate<= currentTime)
+                    {
+                        tablerow.Completed = true;
+                    }
+                    else
+                    {
+                        tablerow.Completed = false;
+                    }
+                     
+
+                    table.Add(tablerow);
+                }
+
+                
+                return new JsonResult(table);
+                
+            }
+            
+            return new JsonResult("false");
+        }
+
+
+        /*================ Rating =======================*/
+        [HttpGet]
+        public JsonResult GetMyRatings()
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null)
+            {
+                List<Rating> rating = _db.Ratings.Where(x=>x.RatingTo == Id).ToList();
+                
+                foreach(Rating row in rating)
+                {
+                    User user = _db.Users.FirstOrDefault(x => x.UserId == row.RatingTo);
+                    row.RatingToNavigation = user;
+
+                    ServiceRequest sr = _db.ServiceRequests.FirstOrDefault(x=>x.ServiceRequestId == row.ServiceRequestId);
+
+                    row.ServiceRequest = sr;
+                }
+
+                if(rating != null)
+                {
+                    return new JsonResult(rating);
+                }                
+
+            }
+            return new JsonResult(false);
+        }
+
+        [HttpGet]
+        public JsonResult DashbordServiceDetails(CustomerDashbord ID)
+        {
+
+            CustomerDashbordServiceDetails Details = new CustomerDashbordServiceDetails();
+
+            ServiceRequest sr = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == ID.ServiceRequestId);
+            Details.ServiceRequestId = ID.ServiceRequestId;
+            Details.Date = sr.ServiceStartDate.ToString("dd/MM/yyyy");
+            Details.StartTime = sr.ServiceStartDate.ToString("HH:mm");
+            Details.Duration = sr.SubTotal;
+            Details.EndTime = sr.ServiceStartDate.AddHours((double)sr.SubTotal).ToString("HH:mm");
+            Details.TotalCost = sr.TotalCost;
+            Details.Comments = sr.Comments;
+            Details.Status = sr.Status;
+            Details.HasPet = sr.HasPets;
+            Details.ZipCode = sr.ZipCode; 
+
+            List<ServiceRequestExtra> Extra = _db.ServiceRequestExtras.Where(x => x.ServiceRequestId == ID.ServiceRequestId).ToList();
+
+            foreach (ServiceRequestExtra row in Extra)
+            {
+                if (row.ServiceExtraId == 1)
+                {
+                    Details.Cabinet = true;
+                }
+                else if (row.ServiceExtraId == 2)
+                {
+                    Details.Oven = true;
+                }
+                else if (row.ServiceExtraId == 3)
+                {
+                    Details.Window = true;
+                }
+                else if (row.ServiceExtraId == 4)
+                {
+                    Details.Fridge = true;
+                }
+                else
+                {
+                    Details.Laundry = true;
+                }
+            }
+
+            ServiceRequestAddress Address = _db.ServiceRequestAddresses.FirstOrDefault(x => x.ServiceRequestId == ID.ServiceRequestId);
+
+            Details.Address = Address.AddressLine1 + ", " + Address.AddressLine2 + ", " + Address.City + " - " + Address.PostalCode;
+
+            Details.PhoneNo = Address.Mobile;
+            Details.Email = Address.Email;
+
+            User user = _db.Users.FirstOrDefault(x => x.UserId == sr.UserId);
+            Details.CustomerName = user.FirstName + " " + user.LastName;
+
+            return new JsonResult(Details);
+        }
+
+        [HttpPost]
+        public IActionResult AcceptServiceRequest(ServiceRequest sr)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null)
+            {
+                ServiceRequest updateSr = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == sr.ServiceRequestId);
+                if(updateSr.ServiceProviderId == null) {
+
+                    updateSr.ServiceProviderId = (int)Id;
+                    updateSr.SpacceptedDate = DateTime.Now;
+                    _db.ServiceRequests.Update(updateSr);
+                    _db.SaveChanges();
+
+                    return Ok(Json("true"));
+
+                }
+                else
+                {
+                    return Ok(Json("already"));
+                }
+                
+            }
+            return Ok(Json("false"));
+        }
+
+        /*============ Cancel Request ==================*/
+        [HttpPost]
+        public IActionResult CancelServiceRequest(ServiceRequest cancel)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null)
+            {
+
+                ServiceRequest cancelService = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == cancel.ServiceRequestId);
+                DateTime current = DateTime.Now;
+                if(cancelService.ServiceStartDate<= current)
+                {
+                    return Ok(Json("notPossible"));
+                }
+
+                var result = _db.ServiceRequests.Update(cancelService);
+                _db.SaveChanges();
+                if (result != null)
+                {
+                    return Ok(Json("true"));
+                }
+            }
+            return Ok(Json("false"));
+
         }
 
     }

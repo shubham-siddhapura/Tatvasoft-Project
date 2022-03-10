@@ -11,12 +11,17 @@ var allSPTables = document.getElementsByClassName("tableContents");
 
 var spTabs = document.getElementsByClassName("spTabs");
 
+window.onload = function () {
+   
+    dataTableNewServiceRequest();
+};
 
 spNewServiceRequestTab.addEventListener("click", function () {
     showThisTab("newServiceRequest", "spNewServiceRequestTab");
 });
 
 spUpcomingServiceTab.addEventListener("click", function () {
+    getSPUpcomingService();
     showThisTab("upcoming-table", "spUpcomingServiceTab");
 });
 
@@ -26,6 +31,7 @@ spServiceHistoryTab.addEventListener("click", function () {
 });
 
 spMyRatingsTab.addEventListener("click", function () {
+    getSPRatings();
     showThisTab("SPRatings", "spMyRatingsTab");
 });
 

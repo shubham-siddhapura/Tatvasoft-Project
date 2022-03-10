@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -58,6 +59,7 @@ namespace Helperland.Models
         public virtual ICollection<FavoriteAndBlocked> FavoriteAndBlockedTargetUsers { get; set; }
         public virtual ICollection<FavoriteAndBlocked> FavoriteAndBlockedUsers { get; set; }
         public virtual ICollection<Rating> RatingRatingFromNavigations { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Rating> RatingRatingToNavigations { get; set; }
         public virtual ICollection<ServiceRequest> ServiceRequestServiceProviders { get; set; }
         public virtual ICollection<ServiceRequest> ServiceRequestUsers { get; set; }

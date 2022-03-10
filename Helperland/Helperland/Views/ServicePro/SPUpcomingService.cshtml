@@ -28,6 +28,10 @@
             charset="utf8"
             src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin="" />
+
     <link rel="stylesheet" href="/css/style.css">
 
 
@@ -63,22 +67,22 @@
                         </ul>
 
                     </div>
-                    
+
                     @await Html.PartialAsync("ServiceProUpcomingService")
-                    
+
                     @await Html.PartialAsync("ServiceProMySetting")
-                    
+
                     @await Html.PartialAsync("ServiceProRatings")
 
                     @await Html.PartialAsync("ServiceProNewServiceRequest")
-                    
+
                     @await Html.PartialAsync("ServiceProServiceHistory")
 
                     @await Html.PartialAsync("ServiceProBlockCustomer")
 
 
 
-                    
+
                 </div>
             </div>
         </section>
@@ -89,6 +93,8 @@
     <!-- footer starts -->
     @await Html.PartialAsync("Footer")
     <!-- footer ends -->
+
+    @await Html.PartialAsync("ServiceProModals")
 
     <script>
         function dashbord() {
@@ -111,47 +117,44 @@
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
 
+    <!-- map js-->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+
+    <!--My Add map js-->
+    <script src="/js/addMap.js"></script>
+
     <script src="/js/CustomDate.min.js"></script>
 
     <!-- tabination js-->
     <script src="/js/SPTabination.js"></script>
-    
+
     <!--Service History js-->
     <script src="/js/ServiceHistoryAjax.js"></script>
+
+    <!-- New Service Request js-->
+    <script src="/js/NewServiceRequestsAjax.js"></script>
+
+    <!--upcoming js-->
+    <script src="/js/SPUpcomingServices.js"></script>
+
+    <!--SP ratings js-->
+    <script src="/js/SPRatings.js"></script>
 
     <!--My setting js-->
     <script src="/js/SPMySetting.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $("#mytable").DataTable();
-        });
-    </script>
+    <!--My Modals js-->
+    <script src="/js/SPModals.js"></script>
 
-    <script>
-        const dt = new DataTable("#mytable", {
-            dom: 't<"table-bottom d-flex justify-content-between paging"<"table-bottom-inner d-flex "li>p>',
-            responsive: true,
-            pagingType: "full_numbers",
-            language: {
-                paginate: {
-                    first: "<img src='/img/pagination-first.png' alt='first'/>",
-                    previous: "<img src='/img/pagination-left.png' alt='previous' />",
-                    next: '<img src="/img/pagination-left.png" alt="next" style="transform: rotate(180deg)" />',
-                    last: "<img src='/img/pagination-first.png' alt='first' style='transform: rotate(180deg) ' />",
-                },
-                info: "Total Record: _MAX_",
-                lengthMenu: "Show_MENU_Entries",
-            },
-            buttons: ["excel"],
-            columnDefs: [{ orderable: false, targets: 4 }],
-        });
-    </script>
+
+
     @*<script>
-        window.history.forward();
-        function noBack() {
             window.history.forward();
-        }
-    </script>*@
+            function noBack() {
+                window.history.forward();
+            }
+        </script>*@
 </body>
 </html>

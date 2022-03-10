@@ -34,7 +34,6 @@ namespace Helperland.Controllers
             if (id !=null)
             {
                 
-
                 User user = _db.Users.Find(id);
                 TempData["Name"] = user.FirstName;
                 TempData["userType"] = user.UserTypeId.ToString();
