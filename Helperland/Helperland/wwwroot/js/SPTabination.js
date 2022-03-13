@@ -11,11 +11,6 @@ var allSPTables = document.getElementsByClassName("tableContents");
 
 var spTabs = document.getElementsByClassName("spTabs");
 
-window.onload = function () {
-   
-    dataTableNewServiceRequest();
-};
-
 spNewServiceRequestTab.addEventListener("click", function () {
     showThisTab("newServiceRequest", "spNewServiceRequestTab");
 });
@@ -36,6 +31,7 @@ spMyRatingsTab.addEventListener("click", function () {
 });
 
 spBlockCustomerTab.addEventListener("click", function () {
+    getUsersForBlock();
     showThisTab("blockCustomer", "spBlockCustomerTab");
 });
 

@@ -36,13 +36,13 @@ function getSPUpcomingService() {
                
                 for (var i = 0; i < result.length; i++) {
 
-                    var cancelBtnClass = "";
-                    var completeBtnClass = "background-color: #1d7a8c;";
+                    // var cancelBtnClass = "";
+                    var completeBtnClass = "d-none";
                     if (result[i].completed == true) {
-                        cancelBtnClass = "display:none!important;";
+                        completeBtnClass = "";
                     }
                     else {
-                        completeBtnClass = "display:none!important; ";
+                        completeBtnClass = "d-none";
                     }
                     
                     $("#mytable tbody").append(
@@ -67,10 +67,13 @@ function getSPUpcomingService() {
                     15 km
                 </td>
                 <td class="actions">
-                    <a href="#" id="upcomingCancelBtn`+ result[i].serviceRequestId + `" style=` + cancelBtnClass + `>Cancel</a>
-                    <a href="#" id="upcomingCompleteBtn`+ result[i].serviceRequestId + `" style="` + completeBtnClass +`">Complete</a>
-                    
 
+                    <a href="#" class="upcomingCompleteBtns `+ completeBtnClass + `" style="background-color: #1d7a8c;" id="upcomingCompleteBtn` + result[i].serviceRequestId + `" >Complete</a>
+
+
+                    <a href="#" id="upcomingCancelBtn`+ result[i].serviceRequestId + `" >Cancel</a>
+                   
+                                   
                 </td>
             </tr>`
                     );
@@ -82,5 +85,57 @@ function getSPUpcomingService() {
             alert("error");
         }
     });
+
+}
+
+function cancelRequest(serviceRequestId) {
+    var data = {};
+    data.serviceRequestId = serviceRequestId;
+
+    $.ajax({
+        type: 'Post',
+        url: '/ServicePro/CancelServiceRequest',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            if (result == "false") {
+                alert("something went wrong");
+            }
+            else {
+                getSPUpcomingService()
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+
+
+}
+
+
+function completeRequest(serviceRequestId) {
+    var data = {};
+    data.serviceRequestId = serviceRequestId;
+
+    $.ajax({
+        type: 'Post',
+        url: '/ServicePro/CompleteServiceRequest',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            if (result == "false") {
+                alert("something went wrong");
+            }
+            else {
+                getSPUpcomingService();
+
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+
 
 }

@@ -37,24 +37,27 @@ $("#mytable").click(function (e) {
     if (serviceRequestId != null && (e.target.tagName != "A" && e.target.tagName != "a")) {
 
         document.getElementById("AcceptBtnModal").classList.add("d-none");
-
+        document.getElementById("CancelBtnModal").classList.remove("d-none");
         var completed = e.target.closest("tr").getAttribute("data-completed");
         if (completed == "true") {
-            document.getElementById("CancelBtnModal").classList.add("d-none");
             document.getElementById("CompleteBtnModal").classList.remove("d-none");
         }
         else {
-            document.getElementById("CancelBtnModal").classList.remove("d-none");
             document.getElementById("CompleteBtnModal").classList.add("d-none");
         }
 
         document.getElementById("serviceReqdetailsbtn").click();
     }
-    console.log(e.target.textContent);
+   
     if ((e.target.tagName == "A" || e.target.tagName == "a") && e.target.textContent == "Cancel") {
 
+        console.log("hello");
         $("#CancelRequestId").val(serviceRequestId);
-        $("#serviceRequestCancelModal").modal('show');
+        cancelRequest(serviceRequestId);
+        /*$("#serviceRequestCancelModal").modal('show');*/
+    }
+    else if ((e.target.tagName == "A" || e.target.tagName == "a") && e.target.textContent == "Complete") {
+        completeRequest(serviceRequestId);
     }
 
 });

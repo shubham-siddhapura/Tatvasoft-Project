@@ -20,6 +20,8 @@ namespace Helperland.Controllers
             _db = db;
         }
         [ResponseCache (Duration = 0)]
+        
+        [HttpPost]
         public IActionResult SPUpcomingService()
         {
             int? id = HttpContext.Session.GetInt32("userId");
@@ -194,21 +196,92 @@ namespace Helperland.Controllers
                 user.ModifiedDate = DateTime.Now;
                 user.ModifiedBy = (int)Id;
 
-                _db.Users.Update(user);
-                _db.SaveChanges();
-
+                
                 if(_db.UserAddresses.Where(x=>x.UserId == (int)Id).Count() > 0)
                 {
                     UserAddress address = _db.UserAddresses.FirstOrDefault(x => x.UserId == (int)Id);
+
+                    string oldZipcode = address.PostalCode;
+
 
                     address.AddressLine1 = data.UserAddresses.First().AddressLine1;
                     address.AddressLine2 = data.UserAddresses.First().AddressLine2;
                     address.City = data.UserAddresses.First().City;
                     address.PostalCode = data.UserAddresses.First().PostalCode;
                     address.State = data.UserAddresses.First().State;
+                    user.ZipCode = data.UserAddresses.First().PostalCode;
 
                     _db.UserAddresses.Update(address);
                     _db.SaveChanges();
+
+                    if(oldZipcode != address.PostalCode)
+                    {
+                        int otherUsesZip = _db.UserAddresses.Where(x => x.PostalCode == oldZipcode).Count();
+
+                        if (otherUsesZip==0)
+                        {
+                            Zipcode deleteZip = _db.Zipcodes.FirstOrDefault(x=>x.ZipcodeValue == oldZipcode);
+                            _db.Zipcodes.Remove(deleteZip);
+                            _db.SaveChanges();
+                        }
+
+                        Zipcode zipcodes = _db.Zipcodes.FirstOrDefault(x => x.ZipcodeValue == user.ZipCode);
+                        if (zipcodes == null)
+                        {
+                            State state = _db.States.FirstOrDefault(x => x.StateName == data.UserAddresses.First().State);
+
+                            if (state == null)
+                            {
+
+                                state.StateName = data.UserAddresses.First().State;
+                                var saveState = _db.States.Add(state);
+                                _db.SaveChanges();
+
+                                City city = new City();
+                                city.CityName = data.UserAddresses.First().City;
+                                city.StateId = saveState.Entity.Id;
+                                var saveCity = _db.Cities.Add(city);
+                                _db.SaveChanges();
+
+                                Zipcode zip = new Zipcode();
+                                zip.ZipcodeValue = data.UserAddresses.First().PostalCode;
+                                zip.CityId = saveCity.Entity.Id;
+                                _db.Zipcodes.Add(zip);
+                                _db.SaveChanges();
+                            }
+                            else
+                            {
+                                City city = _db.Cities.FirstOrDefault(x => x.CityName == data.UserAddresses.First().City);
+                                if (city == null)
+                                {
+                                    city.CityName = data.UserAddresses.First().City;
+                                    city.StateId = state.Id;
+
+                                    var saveCity = _db.Cities.Add(city);
+                                    _db.SaveChanges();
+
+                                    Zipcode zip = new Zipcode();
+                                    zip.ZipcodeValue = data.UserAddresses.First().PostalCode;
+                                    zip.CityId = saveCity.Entity.Id;
+                                    _db.Zipcodes.Add(zip);
+                                    _db.SaveChanges();
+                                }
+                                else
+                                {
+                                    Zipcode zip = new Zipcode();
+                                    zip.ZipcodeValue = data.UserAddresses.First().PostalCode;
+                                    zip.CityId = city.Id;
+                                    _db.Zipcodes.Add(zip);
+                                    _db.SaveChanges();
+                                }
+                            }
+
+                        }
+
+
+                    }
+
+                    
                 }
                 else
                 {
@@ -224,10 +297,68 @@ namespace Helperland.Controllers
                     address.UserId = data.UserId;
                     address.IsDefault = true;
                     address.IsDeleted = false;
-                    
+
+                    Zipcode zipcodes = _db.Zipcodes.FirstOrDefault(x => x.ZipcodeValue == user.ZipCode);
+                    if (zipcodes == null)
+                    {
+                        State state = _db.States.FirstOrDefault(x => x.StateName == data.UserAddresses.First().State);
+
+                        if (state == null)
+                        {
+
+                            state.StateName = data.UserAddresses.First().State;
+                            var saveState = _db.States.Add(state);
+                            _db.SaveChanges();
+
+                            City city = new City();
+                            city.CityName = data.UserAddresses.First().City;
+                            city.StateId = saveState.Entity.Id;
+                            var saveCity = _db.Cities.Add(city);
+                            _db.SaveChanges();
+
+                            Zipcode zip = new Zipcode();
+                            zip.ZipcodeValue = data.UserAddresses.First().PostalCode;
+                            zip.CityId = saveCity.Entity.Id;
+                            _db.Zipcodes.Add(zip);
+                            _db.SaveChanges();
+                        }
+                        else
+                        {
+                            City city = _db.Cities.FirstOrDefault(x => x.CityName == data.UserAddresses.First().City);
+                            if (city == null)
+                            {
+                                city.CityName = data.UserAddresses.First().City;
+                                city.StateId = state.Id;
+
+                                var saveCity = _db.Cities.Add(city);
+                                _db.SaveChanges();
+
+                                Zipcode zip = new Zipcode();
+                                zip.ZipcodeValue = data.UserAddresses.First().PostalCode;
+                                zip.CityId = saveCity.Entity.Id;
+                                _db.Zipcodes.Add(zip);
+                                _db.SaveChanges();
+                            }
+                            else
+                            {
+                                Zipcode zip = new Zipcode();
+                                zip.ZipcodeValue = data.UserAddresses.First().PostalCode;
+                                zip.CityId = city.Id;
+                                _db.Zipcodes.Add(zip);
+                                _db.SaveChanges();
+                            }
+                        }
+
+                    }
+
+
                     _db.UserAddresses.Add(address);
                     _db.SaveChanges();
                 }
+
+                _db.Users.Update(user);
+                _db.SaveChanges();
+
                 return Ok(Json("true"));
  
             }
@@ -458,9 +589,16 @@ namespace Helperland.Controllers
 
                 ServiceRequest cancelService = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == cancel.ServiceRequestId);
                 DateTime current = DateTime.Now;
-                if(cancelService.ServiceStartDate<= current)
+
+                cancelService.ServiceProviderId = null;
+                cancelService.SpacceptedDate = null;
+                cancelService.ModifiedDate = DateTime.Now;
+                cancelService.ModifiedBy = Id;
+                if (cancelService.ServiceStartDate.AddHours((double)cancelService.SubTotal)<= current)
                 {
-                    return Ok(Json("notPossible"));
+                    // status 1 is for cancel requests
+                    cancelService.Status = 1;
+                    
                 }
 
                 var result = _db.ServiceRequests.Update(cancelService);
@@ -474,5 +612,102 @@ namespace Helperland.Controllers
 
         }
 
+        [HttpPost]
+        public IActionResult CompleteServiceRequest(ServiceRequest complete)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null)
+            {
+
+                ServiceRequest completeService = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == complete.ServiceRequestId);
+                DateTime current = DateTime.Now;
+
+                if (completeService.ServiceStartDate.AddHours((double)completeService.SubTotal) <= current)
+                {
+                    // status 0 is for complete requests
+                    completeService.Status = 0;
+
+                    completeService.ModifiedDate = DateTime.Now;
+                    completeService.ModifiedBy = Id;
+
+                }
+                else
+                {
+                    return Ok(Json("notPossible"));
+                }
+
+                var result = _db.ServiceRequests.Update(completeService);
+                _db.SaveChanges();
+                if (result != null)
+                {
+                    return Ok(Json("true"));
+                }
+            }
+            return Ok(Json("false"));
+
+        }
+
+        [HttpGet]
+        public JsonResult GetUsersForBlock()
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id!= null)
+            {
+                List<int> users = _db.ServiceRequests.Where(x => x.ServiceProviderId == (int)Id && x.Status == 0).Select(x=>x.UserId).Distinct().ToList();
+
+                List<FavoriteAndBlocked> result = new List<FavoriteAndBlocked>();
+                foreach(int userId in users)
+                {
+                    FavoriteAndBlocked fav = _db.FavoriteAndBlockeds.Where(x=>x.UserId == (int)Id && x.TargetUserId == userId).FirstOrDefault();
+
+                    if(fav == null)
+                    {
+                        fav = new FavoriteAndBlocked();
+                    }
+                    fav.TargetUser = _db.Users.Where(x => x.UserId == userId).FirstOrDefault();
+
+                    result.Add(fav);
+
+                }
+
+                return new JsonResult(result);
+            }
+
+            return new JsonResult("false");
+        }
+
+        [HttpPost]
+        public IActionResult BlockOrUnblockCustomer(FavoriteAndBlocked user)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null) {
+                FavoriteAndBlocked fav = _db.FavoriteAndBlockeds.FirstOrDefault(x => x.UserId == (int)Id && x.TargetUserId == user.TargetUserId);
+                if (fav == null)
+                {
+                    FavoriteAndBlocked add = new FavoriteAndBlocked();
+                    add.UserId = (int)Id;
+                    add.TargetUserId = user.TargetUserId;
+                    add.IsBlocked = true;
+
+                    _db.FavoriteAndBlockeds.Add(add);
+                    _db.SaveChanges();
+                }
+                else {
+
+                    if (fav.IsBlocked == true)
+                    {
+                        fav.IsBlocked = false;
+                    }
+                    else
+                    {
+                        fav.IsBlocked = true;
+                    }
+                    _db.FavoriteAndBlockeds.Update(fav);
+                    _db.SaveChanges();
+                }
+                return Ok(Json("true"));
+            }
+            return Ok(Json("false"));
+        }
     }
 }

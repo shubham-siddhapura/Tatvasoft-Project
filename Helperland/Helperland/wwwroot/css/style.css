@@ -2095,21 +2095,24 @@ a.paginate_button.current {
 #mytable_length label,
 #SPRatingsTable_length label,
 #newServiceRequestTable_length label,
-#SPServiceHistoryTable_length label {
+#SPServiceHistoryTable_length label,
+#blockCustomerTable_length label{
     margin-top: 15px;
 }
 
     #mytable_length label select,
     #SPRatingsTable_length select,
     #newServiceRequestTable_length select,
-    #SPServiceHistoryTable_length select{
+    #SPServiceHistoryTable_length select,
+    #blockCustomerTable_length select{
         margin: 0 5px;
     }
 
 #mytable_info,
 #SPRatingsTable_info,
 #newServiceRequestTable_info,
-#SPServiceHistoryTable_info {
+#SPServiceHistoryTable_info,
+#blockCustomerTable_info{
     margin-top: 7px;
     margin-left: 7px;
 }
@@ -4242,3 +4245,46 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     color: #646464;
     font-size: 18px;
 }
+
+/*============= block Customer ================*/
+#blockCustomerTable{
+    border-collapse: separate;
+    border: 0;
+   
+}
+
+#blockCustomerTable tbody{
+    display:flex;
+    justify-content:flex-start;
+}
+
+#blockCustomerTable tbody tr{
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    margin: 15px;
+    padding: 15px;
+    text-align:center;
+    width: 260px;
+}
+
+#blockCustomerTable tbody td{
+    display:block;
+}
+
+    #blockCustomerTable tbody td img {
+        border-radius: 50%;
+        border: 2px solid #9c9c9c;
+    }
+
+        #blockCustomerTable tbody td b{
+            font-size:18px;
+        }
+
+        #blockCustomerTable tbody td button {
+            padding: 0 15px;
+            line-height: 36px;
+            border: 0;
+            background-color: #1d7a8c;
+            border-radius: 18px;
+            color: white;
+        }

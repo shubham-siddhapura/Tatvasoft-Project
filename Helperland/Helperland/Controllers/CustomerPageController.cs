@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -279,10 +280,38 @@ namespace Helperland.Controllers
            
             if(result != null && srAddrResult != null)
             {
+
+                List<User> ServiceProviders = _db.Users.Where(x => x.UserTypeId == 2 && x.ZipCode == complete.PostalCode).ToList();
+
+                string url = Url.ActionLink("SPUpcomingService", "ServicePro");
+
+                Task thread = Task.Run(() => SendMail(ServiceProviders, url));
+
                 return Ok(Json(result.Entity.ServiceRequestId));
             }
 
             return Ok(Json("false"));
+        }
+
+        private static void SendMail(List<User> SPList, string url)
+        {
+            SmtpClient client = new SmtpClient("smtp.gmail.com");
+            client.Port = 587;
+            client.UseDefaultCredentials = true;
+            client.EnableSsl = true;
+            client.Credentials = new System.Net.NetworkCredential("siddshubham123456789@gmail.com", "Shubham@123");
+
+            MailMessage message = new MailMessage();
+            message.Subject = "New Service Request in your area";
+            message.Body = "<p>New Service Request on the bord, go to New Service Request page by clicking below link</p>" + "<a href=" + url + ">Click Here</a>";
+            message.From = new MailAddress("siddshubham123456789@gmail.com");
+            message.IsBodyHtml = true;
+
+            foreach (User user in SPList)
+            {
+                message.To.Add(user.Email);
+            }
+            client.Send(message);
         }
 
         [HttpPost]
@@ -471,6 +500,7 @@ namespace Helperland.Controllers
         }
 
         /*----- Add User Address -----*/
+        [HttpPost]
         public IActionResult AddUserAddress(UserAddress addr)
         {
             int? Id = HttpContext.Session.GetInt32("userId");
@@ -502,6 +532,7 @@ namespace Helperland.Controllers
             return new JsonResult(false);
         }
 
+        [HttpPost]
         public IActionResult EditUserAddress(UserAddress addr)
         {
             int? Id = HttpContext.Session.GetInt32("userId");
@@ -520,7 +551,7 @@ namespace Helperland.Controllers
         }
 
         /*-- change password --*/
-
+        [HttpPost]
         public IActionResult ChangePassword(ChangePassword pwd)
         {
             int? Id = HttpContext.Session.GetInt32("userId");
@@ -544,6 +575,7 @@ namespace Helperland.Controllers
         }
 
         /*---------- reschedule service ---- */
+        [HttpGet]
         public JsonResult GetDateforReschedule(ServiceRequest req)
         {
             int? Id = HttpContext.Session.GetInt32("userId");
@@ -557,6 +589,7 @@ namespace Helperland.Controllers
         }
 
         /*====== Service History ===========*/
+        [HttpGet]
         public JsonResult GetServiceHistoryTable()
         {
             int? Id = HttpContext.Session.GetInt32("userId");
@@ -618,6 +651,7 @@ namespace Helperland.Controllers
             return new JsonResult(false);
         }
 
+        [HttpPost]
         public IActionResult RateServiceProvider(Rating rating)
         {
             int? Id = HttpContext.Session.GetInt32("userId");
