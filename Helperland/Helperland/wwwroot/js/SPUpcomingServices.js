@@ -15,6 +15,8 @@
             lengthMenu: "Show_MENU_Entries",
         },
         buttons: ["excel"],
+        "ordering": true,
+        "order": [0, 'desc'],
         columnDefs: [{ orderable: false, targets: 4 }],
     });
 }

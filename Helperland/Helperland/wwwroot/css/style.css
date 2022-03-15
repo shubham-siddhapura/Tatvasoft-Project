@@ -2462,16 +2462,17 @@ table.dataTable thead .sorting_desc {
                 color: #646464;
             }
 
-#admin-um-div {
+.adminMainDiv{
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px 22px;
     width: 80vw;
     background-color: #EFEFEF;
+
 }
 
-#admin-title-outer {
+.adminTitleOuter {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -2502,7 +2503,7 @@ table.dataTable thead .sorting_desc {
         margin-right: 10px;
     }
 
-#admin-um-search {
+.adminSearch {
     background-color: #FFFFFF;
     border: 1px solid #E1E1E1;
     padding: 20px 7.5px;
@@ -2573,14 +2574,14 @@ table.dataTable thead .sorting_desc {
     line-height: 44px;
 }
 
-#admin-um-tablediv {
+.adminTableDiv {
     width: 100%;
     margin-top: 20px;
-    overflow: auto;
+
 }
 
-    #admin-um-tablediv table {
-        width: 100%;
+    .adminTableDiv table {
+        width: 100%!important;
         font-size: 16px;
         background-color: #ffffff;
         border-spacing: 0;
@@ -2589,11 +2590,11 @@ table.dataTable thead .sorting_desc {
         color: #646464;
     }
 
-        #admin-um-tablediv table thead {
+        .adminTableDiv table thead {
             background-color: #F9F9F9;
         }
 
-        #admin-um-tablediv table th, #admin-um-tablediv table td {
+        .adminTableDiv table th, .adminTableDiv table td {
             text-align: left;
             padding: 15px;
             border: 0;
@@ -2609,11 +2610,11 @@ table.dataTable thead .sorting_desc {
     position: relative;
 }
 
-.admin-table-actionbtn {
-    border: 0;
-    background-color: #ffffff00;
-    padding: 4px 10px;
-}
+    .admin-table-actionbtn {
+        border: 0;
+        background-color: #ffffff00;
+        padding: 4px 10px;
+    }
 
     .admin-table-actionbtn:hover {
         border-radius: 50%;
@@ -2681,22 +2682,22 @@ table.dataTable thead .sorting_desc {
     border-radius: 0;
 }
 
-#admin-um-tablediv .dataTables_wrapper .dataTables_paginate .paginate_button {
+.adminTableDiv .dataTables_wrapper .dataTables_paginate .paginate_button {
     color: #777777 !important;
 }
 
-    #admin-um-tablediv .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    .adminTableDiv .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
         background: #56565655 !important;
         color: white !important;
     }
 
-    #admin-um-tablediv .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    .adminTableDiv .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
         color: white !important;
     }
 
 
 
-#admin-um-tablediv .paginate_button {
+.adminTableDiv .paginate_button {
     padding: 8px 15px !important;
     border: 1px solid #AAAAAA !important;
     border-radius: 0 !important;
@@ -2704,7 +2705,7 @@ table.dataTable thead .sorting_desc {
     color: #777777 !important;
 }
 
-#admin-um-tablediv a.paginate_button.current {
+.adminTableDiv a.paginate_button.current {
     background-color: #565656 !important;
     border: 0;
 }
@@ -2727,13 +2728,13 @@ table.dataTable thead .sorting_desc {
     color: #1FB6FF;
 }
 
-#admin-um-exportdiv {
+.adminExportDiv {
     width: 100%;
     text-align: right;
     margin-top: 20px;
 }
 
-    #admin-um-exportdiv #export {
+    .adminExportDiv #export {
         padding: 14px 17px;
         background-color: #1FB6FF;
         color: #ffffff;
@@ -2940,7 +2941,7 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     width: calc(100% - 30px);
 }
 
-.admin-sr-table .admin-table-action-menu::before {
+.admin-table-action-menu::before {
     right: 22px;
 }
 

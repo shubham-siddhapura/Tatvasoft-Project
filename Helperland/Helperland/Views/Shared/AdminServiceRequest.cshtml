@@ -1,0 +1,137 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<!-- service Request div starts -->
+<div id="adminServiceReq" class="adminMainDiv">
+
+    <!-- admin title starts -->
+    <div id="admin-title-outer" class="adminTitleOuter">
+        <div id="admin-title">
+            <h1>Service Requests</h1>
+        </div>
+    </div>
+    <!-- admin title ends -->
+    <!-- admin um search starts  -->
+    <div id="admin-um-search" class="adminSearch">
+        <form action="" id="admin-um-form">
+            <input type="text" name="serviceid" id="admin-serviceid" placeholder="Service ID">
+            <select name="customer" id="admin-sr-form-customer">
+                <option value="#">Customer</option>
+                <option value="shubham">Shubham</option>
+                <option value="kripal">Kripal</option>
+                <option value="naimish">Naimish</option>
+            </select>
+            <select name="serviceprovider" id="admin-sr-form-sp">
+                <option value="#">Service Provider</option>
+                <option value="shubham">Lyum Watson</option>
+                <option value="kripal">Captain</option>
+                <option value="naimish">Iron Man</option>
+            </select>
+            <select name="servicestatus" id="admin-sr-status">
+                <option value="#">Status</option>
+                <option value="naimish">New</option>
+                <option value="shubham">Active</option>
+                <option value="kripal">Inactive</option>
+                <option value="naimish">Pending</option>
+            </select>
+            <div id="fdate">
+                <input type="date" id="admin-sr-fdatepicker" name="fromdate" onchange="writefDate();">
+                <input type="text" name="fromdate" id="admin-sr-fdate" placeholder="From Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
+            </div>
+
+            <div id="tdate">
+                <input type="date" id="admin-sr-tdatepicker" name="fromdate" onchange="writetDate();">
+                <input type="text" name="fromdate" id="admin-sr-tdate" placeholder="To Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
+            </div>
+
+            <button type="submit" id="admin-um-form-searchbtn">Search</button>
+            <button type="reset" id="admin-um-form-clearbtn">Clear</button>
+        </form>
+    </div>
+    <!-- admin um search ends -->
+
+    <div id="admin-um-exportdiv" class="adminExportDiv">
+        <button type="button" id="export">Export</button>
+    </div>
+
+    <!-- admin Service Request table table div starts -->
+    <div id="adminServiceReqTableDiv" class="adminTableDiv">
+
+        <table id="adminServiceReqTable">
+            <thead>
+                <tr>
+                    <th>Service ID</th>
+                    <th>Service Date</th>
+                    <th>Customer Details</th>
+                    <th>Service Provider</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        323436
+                    </td>
+                    <td>
+                        <div>
+                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
+                            <span class="upcoming-date"><b>09/04/2018</b></span>
+                        </div>
+                        <div>
+                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div>David Bough</div>
+                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
+                    </td>
+                    <td>
+                        <div class="customer-sh-SP">
+                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
+                            <div class="sp-detail">
+                                <p class="SP-name">Lyum Watson</p>
+                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
+                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
+                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
+                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
+                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
+                                <span class="SP-stars">4</span>
+
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="admin-sr-status yellow-status">new</p>
+                    </td>
+
+                    <td class="admin-table-action dropdown">
+                        <button type="button" class="admin-table-actionbtn" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                        </button>
+                        <div class="admin-table-action-menu dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <ul>
+                                <li><a href="">Edit & Reschedule</a> </li>
+                                <!--<li><a href="">Refund</a></li>-->
+                                <li><a href="">Cancel</a></li>
+                                <li><a href="">Change SP</a></li>
+                                <!--<li><a href="">Escalate</a></li>
+    <li><a href="">History Log</a></li>
+    <li><a href="">Download Invoice</a></li>-->
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+    <!-- admin um table div ends -->
+
+    <div id="admin-um-footer">
+        <p>&copy;2018 Helperland. All rights reserved.</p>
+    </div>
+</div>
+<!-- service Request div -->

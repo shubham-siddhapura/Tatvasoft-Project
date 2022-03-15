@@ -1,15 +1,7 @@
-﻿var count = 0;
-var map = {};
+﻿var map = L.map("locationMap");
 async function getlon_len(zipcode) {
 
-    if (count > 0) {
-        map.off();
-        map.remove();
-    }
-
-    count++;
-
-    map = L.map("locationMap").setView([0, 0], 1);
+    map.setView([0, 0], 1);
 
     console.log(map);
 

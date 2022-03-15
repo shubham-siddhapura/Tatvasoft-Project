@@ -100,42 +100,46 @@ namespace Helperland.Controllers
         {
             if (ModelState.IsValid)
             {
-                string password = _db.Users.FirstOrDefault(x => x.Email == loginUser.Email).Password;
+                User userLogin = _db.Users.FirstOrDefault(x => x.Email == loginUser.Email);
+                if(userLogin != null)
+                {
+
+                    string password = userLogin.Password;
                 
-                bool pass = BCrypt.Net.BCrypt.Verify(loginUser.Password, password);
-                if (_db.Users.Where(x => x.Email == loginUser.Email && pass).Count() > 0)
-                {
-                    var user = _db.Users.FirstOrDefault(x => x.Email == loginUser.Email);
-
-                    if(loginUser.Remember == true)
+                    bool pass = BCrypt.Net.BCrypt.Verify(loginUser.Password, password);
+                    if (_db.Users.Where(x => x.Email == loginUser.Email && pass).Count() > 0)
                     {
-                        CookieOptions cookieRemember = new CookieOptions();
-                        cookieRemember.Expires = DateTime.Now.AddMinutes(60);
-                        Response.Cookies.Append("userId", Convert.ToString(user.UserId), cookieRemember);
+                        var user = _db.Users.FirstOrDefault(x => x.Email == loginUser.Email);
 
-                    }
+                        if (loginUser.Remember == true)
+                        {
+                            CookieOptions cookieRemember = new CookieOptions();
+                            cookieRemember.Expires = DateTime.Now.AddMinutes(60);
+                            Response.Cookies.Append("userId", Convert.ToString(user.UserId), cookieRemember);
 
-                    HttpContext.Session.SetInt32("userId", user.UserId);
+                        }
 
-                    if (user.UserTypeId == 1) {
-                        return RedirectToAction("CustServiceHistory", "CustomerPage");
-                    }
-                    else if(user.UserTypeId == 2)
-                    {
-                        return RedirectToAction("SPUpcomingService", "ServicePro");
-                    }
-                    else if(user.UserTypeId == 3)
-                    {
-                        return RedirectToAction("ServiceRequest", "Admin");
-                    }
-                   
+                        HttpContext.Session.SetInt32("userId", user.UserId);
+
+                        if (user.UserTypeId == 1)
+                        {
+                            return RedirectToAction("CustServiceHistory", "CustomerPage");
+                        }
+                        else if (user.UserTypeId == 2)
+                        {
+                            return RedirectToAction("SPUpcomingService", "ServicePro");
+                        }
+                        else if (user.UserTypeId == 3)
+                        {
+                            return RedirectToAction("ServiceRequest", "Admin");
+                        }
+                    }   
                 }
-                else
-                {
+               
                     TempData["showAlert"] = "show alert";
                     TempData["loginFail"] = "Username and Password are invalid.";
                     return RedirectToAction("Index", "Home", new { loginFail = "true" });
-                }
+                
             }
             
             return PartialView();

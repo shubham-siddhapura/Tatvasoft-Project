@@ -1,0 +1,106 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<!-- modal div -->
+<div class="modal" tabindex="-1" id="admin-sr-edit-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h2>Edit Service Requests</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div id="modal-form">
+                        <div id="modal-datetime">
+                            <div>
+                                <label for="modal-date">Date</label>
+                                <div id="mdate">
+                                    <input type="date" id="admin-sr-mdatepicker" name="modaldate" onchange="writemDate();">
+                                    <input type="text" name="modaldate" id="admin-sr-mdate" placeholder="Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="modal-time">Time</label>
+                                <select name="modal-time" id="modal-time">
+                                    <option value="12:30">12:30</option>
+                                    <option value="1:00">01:00</option>
+                                    <option value="1:30">01:30</option>
+                                    <option value="2:00">02:00</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <h3>Service Address</h3>
+                        <div id="modal-service">
+                            <div>
+                                <label for="modal-street">Street Name</label>
+                                <input type="text" name="modal-street" id="modal-street">
+                            </div>
+                            <div>
+                                <label for="modal-house">House No.</label>
+                                <input type="text" name="modal-house" id="modal-house">
+                            </div>
+                            <div>
+                                <label for="modal-postal">Postal Code</label>
+                                <input type="text" name="modal-postal" id="modal-postal">
+                            </div>
+                            <div>
+                                <label for="modal-city">City</label>
+                                <select name="modal-city" id="modal-city">
+                                    <option value="">City</option>
+                                    <option value="bvn">Bhavnagar</option>
+                                    <option value="amd">Ahemdabad</option>
+                                    <option value="brd">Baroda</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <h3>Invoice Address</h3>
+                        <div id="modal-invoice">
+                            <div>
+                                <label for="modal-street-invoice">Street Name</label>
+                                <input type="text" name="modal-street-invoice" id="modal-street-invoice">
+                            </div>
+                            <div>
+                                <label for="modal-house-invoice">House No.</label>
+                                <input type="text" name="modal-house-invoice" id="modal-house-invoice">
+                            </div>
+                            <div>
+                                <label for="modal-postal-invoice">Postal Code</label>
+                                <input type="text" name="modal-postal-invoice" id="modal-postal-invoice">
+                            </div>
+                            <div>
+                                <label for="modal-city-invoice">City</label>
+                                <select name="modal-city-invoice" id="modal-city-invoice">
+                                    <option value="">City</option>
+                                    <option value="bvn">Bhavnagar</option>
+                                    <option value="amd">Ahemdabad</option>
+                                    <option value="brd">Baroda</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <h3>Why do you want to reschedule service request?</h3>
+                        <textarea name="modal-why-edit" id="modal-why-edit" cols="30" rows="10" placeholder="Why do you want to reschedule service request?"></textarea>
+
+                        <h3>Call center EMP Notes</h3>
+                        <textarea name="modal-emp" id="modal-emp" cols="30" rows="10" placeholder="Enter Notes"></textarea>
+
+                        <button type="submit" data-bs-dismiss="modal" id="admin-sr-updatebtn">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<!-- modal div ends -->

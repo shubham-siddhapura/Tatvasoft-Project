@@ -59,14 +59,14 @@
                         <li>
                             Escalation Management
                         </li>
-                        <li class="active">
+                        <li class="active" id="serviceReqTab">
                             Service Requests
                         </li>
                         <li>
                             Service Providers
                         </li>
-                        <li>
-                            <a href="admin-userManagement.html">User Management</a>
+                        <li id="userManagementTab">
+                            User Management
                         </li>
                         <li>
                             Finance Module
@@ -80,878 +80,21 @@
                         <li>
                             Inquiry Management
                         </li>
-                        <li>
-                            Newsletter Management
-                        </li>
-                        <li>
-                            Content Management
-                        </li>
+
                     </ul>
                 </div>
                 <!-- admin-um menu ends -->
-                <!-- admin-um div starts -->
-                <div id="admin-um-div">
+                <!--Service Request div-->
+                @await Html.PartialAsync("AdminServiceRequest")
 
-                    <!-- admin title starts -->
-                    <div id="admin-title-outer">
-                        <div id="admin-title">
-                            <h1>Service Requests</h1>
-                        </div>
-                    </div>
-                    <!-- admin title ends -->
-                    <!-- admin um search starts  -->
-                    <div id="admin-um-search">
-                        <form action="" id="admin-um-form">
-                            <input type="text" name="serviceid" id="admin-serviceid" placeholder="Service ID">
-                            <select name="customer" id="admin-sr-form-customer">
-                                <option value="#">Customer</option>
-                                <option value="shubham">Shubham</option>
-                                <option value="kripal">Kripal</option>
-                                <option value="naimish">Naimish</option>
-                            </select>
-                            <select name="serviceprovider" id="admin-sr-form-sp">
-                                <option value="#">Service Provider</option>
-                                <option value="shubham">Lyum Watson</option>
-                                <option value="kripal">Captain</option>
-                                <option value="naimish">Iron Man</option>
-                            </select>
-                            <select name="servicestatus" id="admin-sr-status">
-                                <option value="#">Status</option>
-                                <option value="naimish">New</option>
-                                <option value="shubham">Active</option>
-                                <option value="kripal">Inactive</option>
-                                <option value="naimish">Pending</option>
-                            </select>
-                            <div id="fdate">
-                                <input type="date" id="admin-sr-fdatepicker" name="fromdate" onchange="writefDate();">
-                                <input type="text" name="fromdate" id="admin-sr-fdate" placeholder="From Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
-                            </div>
+                <!--User management div-->
+                @await Html.PartialAsync("AdminUserManagement")
 
-                            <div id="tdate">
-                                <input type="date" id="admin-sr-tdatepicker" name="fromdate" onchange="writetDate();">
-                                <input type="text" name="fromdate" id="admin-sr-tdate" placeholder="To Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
-                            </div>
-
-                            <button type="submit" id="admin-um-form-searchbtn">Search</button>
-                            <button type="reset" id="admin-um-form-clearbtn">Clear</button>
-                        </form>
-                    </div>
-                    <!-- admin um search ends -->
-
-                    <div id="admin-um-exportdiv">
-                        <button type="button" id="export">Export</button>
-                    </div>
-
-                    <!-- admin um table div starts -->
-                    <div id="admin-um-tablediv">
-
-                        <table id="admin-um-table" class="admin-sr-table">
-                            <thead>
-                                <tr>
-                                    <th>Service ID</th>
-                                    <th>Service Date</th>
-                                    <th>Customer Details</th>
-                                    <th>Service Provider</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status yellow-status">new</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu">
-                                            <ul>
-                                                <li><a href="">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status yellow-status">new</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu">
-                                            <ul>
-                                                <li><a href="">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status yellow-status">new</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu">
-                                            <ul>
-                                                <li><a href="">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status yellow-status">new</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu">
-                                            <ul>
-                                                <li><a href="">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status yellow-status">new</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu">
-                                            <ul>
-                                                <li><a href="">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status yellow-status">new</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu">
-                                            <ul>
-                                                <li><a href="">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status yellow-status">new</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu">
-                                            <ul>
-                                                <li><a href="">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status green-status">Completed</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu">
-                                            <ul>
-                                                <li><a href="">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status yellow-status">new</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu">
-                                            <ul>
-                                                <li><a href="">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status orange-status">Cancelled</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn" id="admin-sr-actionbtn" onclick="admin_action();">
-
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu" id="admin-sr-action-menu">
-                                            <ul>
-                                                <li><a href="" role="button" data-bs-toggle="modal" data-bs-target="#admin-sr-edit-modal">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status green-status">Completed</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu">
-                                            <ul>
-                                                <li><a href="">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
-
-
-                                <tr>
-                                    <td>
-                                        323436
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <span><img src="/img/upcomingService/calendar2.png" alt=""></span>
-                                            <span class="upcoming-date"><b>09/04/2018</b></span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/img/upcomingService/timer.png" alt=""></span> <span class="upcoming-time">12:00-18:00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>David Bough</div>
-                                        <div><span><img src="/img/upcomingService/home.png" alt=""></span> <span class="upcoming-address">Mustrestrabe 5, 12345 Bonn</span> </div>
-                                    </td>
-                                    <td>
-                                        <div class="customer-sh-SP">
-                                            <div><span class="cap-span"><img src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
-                                            <div class="sp-detail">
-                                                <p class="SP-name">Lyum Watson</p>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star1"></span>
-                                                <span></span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star2"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star3"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" alt="" class="customer-sh-SP-star4"></span>
-                                                <span><img src="/img/customer-serviceHistory/star1.png" class="customer-sh-SP-star5" alt=""></span>
-                                                <span class="SP-stars">4</span>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="admin-sr-status blue-status">Pending</p>
-                                    </td>
-
-                                    <td class="admin-table-action">
-                                        <button type="button" class="admin-table-actionbtn">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-                                        </button>
-                                        <div class="admin-table-action-menu">
-                                            <ul>
-                                                <li><a href="">Edit & Reschedule</a> </li>
-                                                <li><a href="">Refund</a></li>
-                                                <li><a href="">Cancel</a></li>
-                                                <li><a href="">Change SP</a></li>
-                                                <li><a href="">Escalate</a></li>
-                                                <li><a href="">History Log</a></li>
-                                                <li><a href="">Download Invoice</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <!-- admin um table div ends -->
-
-                    <div id="admin-um-footer">
-                        <p>&copy;2018 Helperland. All rights reserved.</p>
-                    </div>
-                </div>
-                <!-- admin-um div -->
-            </div>
-
-            <!-- modal div -->
-            <div class="modal" tabindex="-1" id="admin-sr-edit-modal">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-
-                        <div class="modal-header">
-                            <h2>Edit Service Requests</h2>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="">
-                                <div id="modal-form">
-                                    <div id="modal-datetime">
-                                        <div>
-                                            <label for="modal-date">Date</label>
-                                            <div id="mdate">
-                                                <input type="date" id="admin-sr-mdatepicker" name="modaldate" onchange="writemDate();">
-                                                <input type="text" name="modaldate" id="admin-sr-mdate" placeholder="Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label for="modal-time">Time</label>
-                                            <select name="modal-time" id="modal-time">
-                                                <option value="12:30">12:30</option>
-                                                <option value="1:00">01:00</option>
-                                                <option value="1:30">01:30</option>
-                                                <option value="2:00">02:00</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-                                    <h3>Service Address</h3>
-                                    <div id="modal-service">
-                                        <div>
-                                            <label for="modal-street">Street Name</label>
-                                            <input type="text" name="modal-street" id="modal-street">
-                                        </div>
-                                        <div>
-                                            <label for="modal-house">House No.</label>
-                                            <input type="text" name="modal-house" id="modal-house">
-                                        </div>
-                                        <div>
-                                            <label for="modal-postal">Postal Code</label>
-                                            <input type="text" name="modal-postal" id="modal-postal">
-                                        </div>
-                                        <div>
-                                            <label for="modal-city">City</label>
-                                            <select name="modal-city" id="modal-city">
-                                                <option value="">City</option>
-                                                <option value="bvn">Bhavnagar</option>
-                                                <option value="amd">Ahemdabad</option>
-                                                <option value="brd">Baroda</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
-
-                                    <h3>Invoice Address</h3>
-                                    <div id="modal-invoice">
-                                        <div>
-                                            <label for="modal-street-invoice">Street Name</label>
-                                            <input type="text" name="modal-street-invoice" id="modal-street-invoice">
-                                        </div>
-                                        <div>
-                                            <label for="modal-house-invoice">House No.</label>
-                                            <input type="text" name="modal-house-invoice" id="modal-house-invoice">
-                                        </div>
-                                        <div>
-                                            <label for="modal-postal-invoice">Postal Code</label>
-                                            <input type="text" name="modal-postal-invoice" id="modal-postal-invoice">
-                                        </div>
-                                        <div>
-                                            <label for="modal-city-invoice">City</label>
-                                            <select name="modal-city-invoice" id="modal-city-invoice">
-                                                <option value="">City</option>
-                                                <option value="bvn">Bhavnagar</option>
-                                                <option value="amd">Ahemdabad</option>
-                                                <option value="brd">Baroda</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
-
-                                    <h3>Why do you want to reschedule service request?</h3>
-                                    <textarea name="modal-why-edit" id="modal-why-edit" cols="30" rows="10" placeholder="Why do you want to reschedule service request?"></textarea>
-
-                                    <h3>Call center EMP Notes</h3>
-                                    <textarea name="modal-emp" id="modal-emp" cols="30" rows="10" placeholder="Enter Notes"></textarea>
-
-                                    <button type="submit" data-bs-dismiss="modal" id="admin-sr-updatebtn">Update</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-
-                </div>
 
             </div>
 
-            <!-- modal div ends -->
+            <!--Edit Service REquest modal-->
+            @await Html.PartialAsync("AdminEditModal")
 
         </section>
         <!-- main section ends -->
@@ -967,38 +110,21 @@
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+
+
+    <!--Admin service request js-->
+    <script src="~/js/adminServiceReq.js"></script>
+
+    <!--Admin service request js-->
+    <script src="~/js/AdminUserManagement.js"></script>
+
     <script>
-      $(document).ready(function () {
-        $("#admin-um-table").DataTable();
-      });
-
-      const dt = new DataTable("#admin-um-table", {
-        dom: 't<"table-bottom paging d-flex justify-content-between"<"table-bottom-inner d-flex"li>p>',
-        responsive: true,
-        pagingType: "full_numbers",
-        language: {
-          paginate: {
-
-            previous: '<img  src="/img/pagination-left.png" alt="previous" />',
-            next: '<img src="/img/pagination-left.png" alt="next" style="transform: rotate(180deg)" />',
-          },
-          info: "Total Record: _MAX_",
-          lengthMenu: "Show_MENU_Entries",
-        },
-        buttons: ["excel"],
-        columnDefs: [{ orderable: false, targets: 5 }],
-      });
     </script>
 
     <script>
-          function admin_action(){
-              if(document.getElementById("admin-sr-action-menu").classList.contains("showmenu")){
-                document.getElementById("admin-sr-action-menu").classList.remove("showmenu");
-              }
-              else{
-                document.getElementById("admin-sr-action-menu").classList.add("showmenu");
-              }
-          }
+        function admin_action() {
+            document.getElementById("admin-sr-action-menu").classList.toggle("showmenu");
+        }
     </script>
 
 
@@ -1006,11 +132,10 @@
 
 
     <script>
-        function html_table_to_excel(type)
-        {
+        function html_table_to_excel(type) {
             var data = document.getElementById('admin-um-table');
 
-            var file = XLSX.utils.table_to_book(data, {sheet: "sheet1"});
+            var file = XLSX.utils.table_to_book(data, { sheet: "sheet1" });
 
             XLSX.write(file, { bookType: type, bookSST: true, type: 'base64' });
 
@@ -1019,29 +144,57 @@
 
         const export_button = document.getElementById('export');
 
-        export_button.addEventListener('click', () =>  {
+        export_button.addEventListener('click', () => {
             html_table_to_excel('xlsx');
         });
     </script>
 
     <script>
 
-        function writefDate(){
-            document.getElementById("admin-sr-fdate").value=document.getElementById("admin-sr-fdatepicker").value;
+        function writefDate() {
+            document.getElementById("admin-sr-fdate").value = document.getElementById("admin-sr-fdatepicker").value;
         }
 
-        function writetDate(){
-            document.getElementById("admin-sr-tdate").value=document.getElementById("admin-sr-tdatepicker").value;
+        function writetDate() {
+            document.getElementById("admin-sr-tdate").value = document.getElementById("admin-sr-tdatepicker").value;
         }
 
-        function writemDate(){
-            document.getElementById("admin-sr-mdate").value=document.getElementById("admin-sr-mdatepicker").value;
+        function writemDate() {
+            document.getElementById("admin-sr-mdate").value = document.getElementById("admin-sr-mdatepicker").value;
         }
 
     </script>
-
+    <!--
     <script>
         var myModal = new bootstrap.Modal(document.getElementById('admin-sr-edit-modal'), options);
+    </script>
+        -->
+    <script>
+        var serviceReqTab = document.getElementById("serviceReqTab");
+        var userManagementTab = document.getElementById("userManagementTab");
+        var adminUserManagement = document.getElementById("adminUserManagement");
+        var adminServiceReq = document.getElementById("adminServiceReq");
+
+        serviceReqTab.addEventListener("click", function () {
+
+            adminServiceReq.classList.remove("d-none");
+            adminUserManagement.classList.add("d-none");
+
+            serviceReqTab.classList.add("active");
+            userManagementTab.classList.remove("active");
+
+        });
+        userManagementTab.addEventListener("click", function () {
+
+            adminServiceReq.classList.add("d-none");
+            adminUserManagement.classList.remove("d-none");
+
+            serviceReqTab.classList.remove("active");
+            userManagementTab.classList.add("active");
+
+        });
+
+
     </script>
 
 </body>

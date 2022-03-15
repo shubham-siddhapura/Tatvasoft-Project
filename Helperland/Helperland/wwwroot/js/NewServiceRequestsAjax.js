@@ -1,6 +1,7 @@
 ﻿var newService = $("#newServiceRequestTable").DataTable({
         dom: 't<"table-bottom d-flex justify-content-between paging"<"table-bottom-inner d-flex "li>p>',
-        responsive: true,
+    responsive: true,
+
         retrieve: true,
         pagingType: "full_numbers",
         language: {
@@ -13,7 +14,9 @@
             info: "Total Record: _MAX_",
             lengthMenu: "Show_MENU_Entries",
         },
-        buttons: ["excel"],
+    buttons: ["excel"],
+    "ordering": true,
+    "order": [0, 'desc'],
         columnDefs: [{ orderable: false, targets: 4 }],
     });
 

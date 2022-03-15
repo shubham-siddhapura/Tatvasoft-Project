@@ -21,7 +21,7 @@ namespace Helperland.Controllers
         }
         [ResponseCache (Duration = 0)]
         
-        [HttpPost]
+        [HttpGet]
         public IActionResult SPUpcomingService()
         {
             int? id = HttpContext.Session.GetInt32("userId");
@@ -196,13 +196,11 @@ namespace Helperland.Controllers
                 user.ModifiedDate = DateTime.Now;
                 user.ModifiedBy = (int)Id;
 
-                
                 if(_db.UserAddresses.Where(x=>x.UserId == (int)Id).Count() > 0)
                 {
                     UserAddress address = _db.UserAddresses.FirstOrDefault(x => x.UserId == (int)Id);
 
                     string oldZipcode = address.PostalCode;
-
 
                     address.AddressLine1 = data.UserAddresses.First().AddressLine1;
                     address.AddressLine2 = data.UserAddresses.First().AddressLine2;
@@ -232,9 +230,9 @@ namespace Helperland.Controllers
 
                             if (state == null)
                             {
-
-                                state.StateName = data.UserAddresses.First().State;
-                                var saveState = _db.States.Add(state);
+                                State newState = new State();
+                                newState.StateName = data.UserAddresses.First().State;
+                                var saveState = _db.States.Add(newState);
                                 _db.SaveChanges();
 
                                 City city = new City();
@@ -254,10 +252,11 @@ namespace Helperland.Controllers
                                 City city = _db.Cities.FirstOrDefault(x => x.CityName == data.UserAddresses.First().City);
                                 if (city == null)
                                 {
-                                    city.CityName = data.UserAddresses.First().City;
-                                    city.StateId = state.Id;
+                                    City newCity = new City();
+                                    newCity.CityName = data.UserAddresses.First().City;
+                                    newCity.StateId = state.Id;
 
-                                    var saveCity = _db.Cities.Add(city);
+                                    var saveCity = _db.Cities.Add(newCity);
                                     _db.SaveChanges();
 
                                     Zipcode zip = new Zipcode();
@@ -294,20 +293,26 @@ namespace Helperland.Controllers
                     address.State = data.UserAddresses.First().State;
 
                     address.Mobile = data.Mobile;
-                    address.UserId = data.UserId;
+                    address.UserId = (int)Id;
                     address.IsDefault = true;
                     address.IsDeleted = false;
 
-                    Zipcode zipcodes = _db.Zipcodes.FirstOrDefault(x => x.ZipcodeValue == user.ZipCode);
+                    user.ZipCode = data.UserAddresses.First().PostalCode;
+
+
+                    _db.UserAddresses.Add(address);
+                    _db.SaveChanges();
+
+                    Zipcode zipcodes = _db.Zipcodes.FirstOrDefault(x => x.ZipcodeValue == data.UserAddresses.First().PostalCode);
                     if (zipcodes == null)
                     {
                         State state = _db.States.FirstOrDefault(x => x.StateName == data.UserAddresses.First().State);
 
                         if (state == null)
                         {
-
-                            state.StateName = data.UserAddresses.First().State;
-                            var saveState = _db.States.Add(state);
+                            State newState = new State();
+                            newState.StateName = data.UserAddresses.First().State;
+                            var saveState = _db.States.Add(newState);
                             _db.SaveChanges();
 
                             City city = new City();
@@ -327,12 +332,14 @@ namespace Helperland.Controllers
                             City city = _db.Cities.FirstOrDefault(x => x.CityName == data.UserAddresses.First().City);
                             if (city == null)
                             {
-                                city.CityName = data.UserAddresses.First().City;
-                                city.StateId = state.Id;
+                                City newCity = new City();
+                                newCity.CityName = data.UserAddresses.First().City;
+                                newCity.StateId = state.Id;
 
-                                var saveCity = _db.Cities.Add(city);
+                                var saveCity = _db.Cities.Add(newCity);
                                 _db.SaveChanges();
-
+                               
+                                
                                 Zipcode zip = new Zipcode();
                                 zip.ZipcodeValue = data.UserAddresses.First().PostalCode;
                                 zip.CityId = saveCity.Entity.Id;
@@ -341,6 +348,7 @@ namespace Helperland.Controllers
                             }
                             else
                             {
+                                
                                 Zipcode zip = new Zipcode();
                                 zip.ZipcodeValue = data.UserAddresses.First().PostalCode;
                                 zip.CityId = city.Id;
@@ -352,8 +360,6 @@ namespace Helperland.Controllers
                     }
 
 
-                    _db.UserAddresses.Add(address);
-                    _db.SaveChanges();
                 }
 
                 _db.Users.Update(user);
