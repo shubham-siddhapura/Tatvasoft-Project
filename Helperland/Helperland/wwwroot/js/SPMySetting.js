@@ -237,7 +237,6 @@ function getCityFromPostalCode(zip) {
         success: function (result) {
             if (result[0].status == "Error" || result[0].status == "404") {
                 $("#ms_myDetailsAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Enter Valid PostalCode.");
-
             }
             else {
                 console.log(result);

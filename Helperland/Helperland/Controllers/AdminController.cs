@@ -41,13 +41,182 @@ namespace Helperland.Controllers
             return RedirectToAction("Index", "Home", new { loginModal = "true" });
         }
 
-        
+        [HttpPost]
+        public IActionResult GetServiceRequests(AdminServiceRequests myData)
+        {
+
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null)
+            {
+                var draw = Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();
+                var length = Request.Form["length"].FirstOrDefault();
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+                var serviceRequests = (from sr in _db.ServiceRequests select sr);
+
+                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+                {
+                    if (sortColumnDirection == "asc")
+                    {
+                        switch (sortColumn)
+                        {
+                            case "ServiceId":
+                                serviceRequests = from x in serviceRequests orderby x.ServiceRequestId ascending select x;
+                                break;
+
+                            case "Customer":
+                                serviceRequests = from x in serviceRequests orderby x.User.FirstName ascending select x;
+                                break;
+
+                            case "ServiceProvider":
+                                serviceRequests = from x in serviceRequests orderby x.ServiceProvider.FirstName ascending select x;
+                                break;
+
+                            case "Date":
+                                serviceRequests = from x in serviceRequests orderby x.ServiceStartDate ascending select x;
+                                break;
+
+                            case "Status":
+                                serviceRequests = serviceRequests.OrderBy(x => x.Status).ThenBy(x => x.ServiceProviderId);
+                                break;
+
+
+                            default:
+                                serviceRequests = from x in serviceRequests orderby x.UserId ascending select x;
+                                break;
+                        }
+                    }
+                    else if (sortColumnDirection == "desc")
+                    {
+                        switch (sortColumn)
+                        {
+                            case "ServiceId":
+                                serviceRequests = from x in serviceRequests orderby x.ServiceRequestId descending select x;
+                                break;
+
+                            case "Customer":
+                                serviceRequests = from x in serviceRequests orderby x.User.FirstName descending select x;
+                                break;
+
+                            case "ServiceProvider":
+                                serviceRequests = from x in serviceRequests orderby x.ServiceProvider.FirstName descending select x;
+                                break;
+
+                            case "Date":
+                                serviceRequests = from x in serviceRequests orderby x.ServiceStartDate descending select x;
+                                break;
+
+                            case "Status":
+                                serviceRequests = serviceRequests.OrderByDescending(x => x.Status).ThenByDescending(x => x.ServiceProviderId);
+                                break;
+
+
+                            default:
+                                serviceRequests = from x in serviceRequests orderby x.UserId descending select x;
+                                break;
+
+                        }
+                    }
+                }
+
+                if(myData.ServiceId != null)
+                {
+                    serviceRequests = serviceRequests.Where(x => x.ServiceRequestId == myData.ServiceId);
+                }
+
+                if (myData.CustomerName != null)
+                {
+                    serviceRequests = serviceRequests.Where(x => x.User.FirstName.Contains(myData.CustomerName) || x.User.LastName.Contains(myData.CustomerName));
+                }
+
+                if(myData.SPName != null)
+                {
+                    serviceRequests = serviceRequests.Where(x => x.ServiceProvider.FirstName.Contains(myData.SPName) || x.ServiceProvider.LastName.Contains(myData.SPName));
+                }
+
+                if (myData.Status != null)
+                {
+                    if(myData.Status == 2)
+                    {
+                        serviceRequests = serviceRequests.Where(x => x.Status == 2 && x.ServiceProviderId != null);
+                    }
+                    else if (myData.Status == 3)
+                    {
+                        serviceRequests = serviceRequests.Where(x => x.Status == 2 && x.ServiceProviderId == null);
+                    }
+                    else if (myData.Status != null)
+                    {
+                        serviceRequests = serviceRequests.Where(x => x.Status == myData.Status);
+                    }
+                    
+                }
+
+                if (myData.FromDate != null)
+                {
+                    serviceRequests = serviceRequests.Where(x => x.ServiceStartDate >= myData.FromDate);
+                }
+
+                if (myData.ToDate != null)
+                {
+                    serviceRequests = serviceRequests.Where(x => x.ServiceStartDate <= myData.ToDate);
+                }
+
+                recordsTotal = serviceRequests.Count();
+                var Tempdata = serviceRequests.Skip(skip).Take(pageSize).ToList();
+                List<AdminServiceRequests> data = new List<AdminServiceRequests>();
+                for (int i = 0; i < Tempdata.Count(); i++)
+                {
+                    AdminServiceRequests service = new AdminServiceRequests();
+                    UserAddress uaddr = _db.UserAddresses.FirstOrDefault(x => x.UserId == Tempdata[i].UserId);
+
+                    service.ServiceId = Tempdata[i].ServiceRequestId;
+
+                    service.ServiceStartDate = Tempdata[i].ServiceStartDate.ToString("dd/MM/yyyy");
+
+                    service.StartTime = Tempdata[i].ServiceStartDate.ToString("HH:mm");
+
+                    service.EndTime = Tempdata[i].ServiceStartDate.AddHours((double)Tempdata[i].SubTotal).ToString("HH:mm");
+
+                    User Customer = _db.Users.FirstOrDefault(x=>x.UserId == Tempdata[i].UserId);
+
+                    service.CustomerName = Customer.FirstName + " " + Customer.LastName;
+
+                    ServiceRequestAddress srAddr = _db.ServiceRequestAddresses.FirstOrDefault(x => x.ServiceRequestId == Tempdata[i].ServiceRequestId);
+
+                    service.CustomerAddress = srAddr.AddressLine2 + ", " + srAddr.AddressLine1 + ", " + srAddr.City + " - " + srAddr.PostalCode;
+
+                    if (Tempdata[i].ServiceProviderId != null)
+                    {
+                        User ServiceProvider = _db.Users.FirstOrDefault(x => x.UserId == Tempdata[i].ServiceProviderId);
+
+                        service.SPName = ServiceProvider.FirstName + " " + ServiceProvider.LastName;
+
+                        var sRating = _db.Ratings.Where(x => x.RatingTo == Tempdata[i].ServiceProviderId);
+
+                        if (sRating.Count() > 0)
+                        {
+                            service.Rating = sRating.Average(x => x.Ratings);
+                        }
+
+                    }
+                    service.Status = Tempdata[i].Status;
+
+                    data.Add(service);
+                }
+                var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+                return Ok(jsonData);
+            }
+            return Ok(Json("false"));
+        }
 
         [HttpPost]
         public IActionResult GetUsers(AdminUserMng myData)
         {
 
-            
             int? Id = HttpContext.Session.GetInt32("userId");
             if (Id != null)
             {
@@ -62,10 +231,67 @@ namespace Helperland.Controllers
                 int recordsTotal = 0;
                 var customerData = (from users in _db.Users select users);
 
-                /*  if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                   {
-                      customerData = customerData.OrderBy(sortColumn + " " + sortColumnDirection);
-                  }*/
+                    if (sortColumnDirection == "asc")
+                    {
+                        switch (sortColumn) {
+                            case "UserName":
+                                customerData = from x in customerData orderby x.FirstName ascending select x;
+                                break;
+
+                            case "UserTypeId":
+                                customerData = from x in customerData orderby x.UserTypeId ascending select x;
+                                break;
+
+                            case "ZipCode":
+                                customerData = from x in customerData orderby x.ZipCode ascending select x;
+                                break;
+
+                            case "Mobile":
+                                customerData = from x in customerData orderby x.Mobile ascending select x;
+                                break;
+
+                            case "Date":
+                                customerData = from x in customerData orderby x.CreatedDate ascending select x;
+                                break;
+
+                            case "Status":
+                                customerData = from x in customerData orderby x.Status ascending select x;
+                            break;
+
+
+                            default:
+                                customerData = from x in customerData orderby x.UserId ascending select x;
+                                break;
+                        }
+                    }
+                    else if (sortColumnDirection == "desc")
+                    {
+                        switch (sortColumn) {
+                            case "UserName":
+                                customerData = from x in customerData orderby x.FirstName descending select x;
+                                break;
+
+                            case "UserTypeId":
+                                customerData = from x in customerData orderby x.UserTypeId descending select x;
+                                break;
+
+                            case "ZipCode":
+                                customerData = from x in customerData orderby x.ZipCode descending select x;
+                                break;
+
+                            case "Mobile":
+                                customerData = from x in customerData orderby x.Mobile descending select x;
+                                break;
+
+
+                            default:
+                                    customerData = from x in customerData orderby x.UserId descending select x;
+                                break;
+                        }
+                    }
+                }
 
                 
                 if (myData.UserName != null)

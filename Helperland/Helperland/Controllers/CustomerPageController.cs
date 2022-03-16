@@ -299,7 +299,7 @@ namespace Helperland.Controllers
             client.Port = 587;
             client.UseDefaultCredentials = true;
             client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential("siddshubham123456789@gmail.com", "Shubham@123");
+            client.Credentials = new System.Net.NetworkCredential("Id", "Pwd");
 
             MailMessage message = new MailMessage();
             message.Subject = "New Service Request in your area";

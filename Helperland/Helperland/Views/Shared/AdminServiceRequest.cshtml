@@ -16,24 +16,22 @@
     <div id="admin-um-search" class="adminSearch">
         <form action="" id="admin-um-form">
             <input type="text" name="serviceid" id="admin-serviceid" placeholder="Service ID">
-            <select name="customer" id="admin-sr-form-customer">
-                <option value="#">Customer</option>
-                <option value="shubham">Shubham</option>
-                <option value="kripal">Kripal</option>
-                <option value="naimish">Naimish</option>
-            </select>
-            <select name="serviceprovider" id="admin-sr-form-sp">
-                <option value="#">Service Provider</option>
-                <option value="shubham">Lyum Watson</option>
-                <option value="kripal">Captain</option>
-                <option value="naimish">Iron Man</option>
-            </select>
+
+            <input type="text" name="postalCode" id="admin-serviceid" placeholder="Service ID">
+
+            <input type="text" name="email" id="admin-serviceid" placeholder="Service ID">
+
+
+            <input type="text" name="customer" placeholder="Customer" id="admin-sr-form-customer">
+
+            <input type="text" name="serviceprovider" placeholder="Service Provider" id="admin-sr-form-sp">
+
             <select name="servicestatus" id="admin-sr-status">
-                <option value="#">Status</option>
-                <option value="naimish">New</option>
-                <option value="shubham">Active</option>
-                <option value="kripal">Inactive</option>
-                <option value="naimish">Pending</option>
+                <option value="">Status</option>
+                <option value="3">New</option>
+                <option value="0">Completed</option>
+                <option value="1">Cancelled</option>
+                <option value="2">Pending</option>
             </select>
             <div id="fdate">
                 <input type="date" id="admin-sr-fdatepicker" name="fromdate" onchange="writefDate();">
@@ -45,7 +43,7 @@
                 <input type="text" name="fromdate" id="admin-sr-tdate" placeholder="To Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
             </div>
 
-            <button type="submit" id="admin-um-form-searchbtn">Search</button>
+            <button type="button" id="admin-um-form-searchbtn">Search</button>
             <button type="reset" id="admin-um-form-clearbtn">Clear</button>
         </form>
     </div>

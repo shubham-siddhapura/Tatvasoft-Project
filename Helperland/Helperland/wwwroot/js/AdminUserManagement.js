@@ -26,19 +26,21 @@
             "searchable": false
         }],
         "columns": [
-            { "data": "userName", },
+            { "data": "userName", "name":"UserName" },
             {
-                "data": {},
+                "data": "regDate",
+                "name": "Date",
                 "render": (data, now) => {
-                    return `<img src="/img/upcomingService/calendar2.png" > <span>` + data.regDate + `</span>`;
+                    return `<img src="/img/upcomingService/calendar2.png" > <span>` + data + `</span>`;
                 }
             },
-            { "data": "userType" },
-            { "data": "phoneNo" },
-            { "data": "zipCode" },
+            { "data": "userType", "name": "UserTypeId" },
+            { "data": "phoneNo", "name": "Mobile" },
+            { "data": "zipCode", "name": "ZipCode"},
 
             {
                 "data": {},
+                "name": "Status",
                 "render": (data, row) => {
 
                     if (data.Status == true) {
@@ -78,13 +80,11 @@
             lengthMenu: "Show_MENU_Entries",
         },
         buttons: ["excel"],
-        columnDefs: [{ orderable: false, targets: 5 }],
+        columnDefs: [{ orderable: false, targets: 6 }],
+
     });
-
-
 
 
 document.getElementById("adminFilterBtn").addEventListener("click", function () {
     dt.ajax.reload();
-
 });
