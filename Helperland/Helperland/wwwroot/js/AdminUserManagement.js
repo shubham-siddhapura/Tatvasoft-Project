@@ -43,31 +43,40 @@
                 "name": "Status",
                 "render": (data, row) => {
 
-                    if (data.Status == true) {
-                        return `<p style="background-color: #67b644; width:fit-content; margin:0 auto; color: white; padding: 6px 10px;">active</p>`;
+                    if (data.status == true) {
+                        return `<p style="background-color: #67b644; width:fit-content; margin:0 auto; color: white; padding: 6px 10px;">Active</p>`;
                     } else {
-                        return `<p class="inactive-label text-center" style="background-color: #ff6b6b; width:fit-content; margin:0 auto; color: white; padding: 6px 10px;">inactive</p>`;
+                        return `<p class="text-center" style="background-color: #ff6b6b; width:fit-content; margin:0 auto; color: white; padding: 6px 10px;">Inactive</p>`;
                     }
                 }
             },
             {
                 "data": {},
                 "render": function (data, row) {
+                    var btntext = "";
+                    if (data.status == true) {
+                        btntext = "Deactive";
+                    }
+                    else {
+                        btntext = "Active";
+                    }
                     return `<div class="dropdown text-center">
                     <button class="admin-table-actionbtn" type="button" id = "dropdownMenuButton`+ data.userId + `"
                 data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464" class="text-center"></i>
                             </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton`+ data.userId + `">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
+        <li><a class="dropdown-item umAction" role="button" data-value="`+ data.userId + `">` + btntext +`</a></li>
+        
     </ul>
                         </div>`;
                 }
             },
+            
         ],
-
+        'createdRow': function (row, data, dataIndex) {
+            $(row).attr('data-value', data.userId);
+        },
 
         pagingType: "full_numbers",
         language: {
@@ -88,3 +97,36 @@
 document.getElementById("adminFilterBtn").addEventListener("click", function () {
     dt.ajax.reload();
 });
+
+
+$("#admin-um-table").on("click", ".umAction", function(e) {
+
+    console.log(e.target.dataset.value);
+
+    changeUserStatus(e.target.dataset.value);
+
+});
+
+function changeUserStatus(userId) {
+    var data = {};
+    data.userId = userId;
+    console.log("inside");
+    $.ajax({
+        type: 'POST',
+        url: '/Admin/ChangeUserStatus',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            console.log(result);
+            if (result.value = "true") {
+                dt.ajax.reload();
+            }
+            else {
+                alert("something went wrong");
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+}

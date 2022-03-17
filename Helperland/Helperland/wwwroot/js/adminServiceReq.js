@@ -108,15 +108,24 @@ const SRDatatable = $("#adminServiceReqTable").DataTable({
         {
             "data": {},
             "render": function (data, row) {
+
+                var listItems = `<li><a class="dropdown-item srEdit" data-value="` + data.serviceId + `" role="button">Edit & Reschedule</a></li>
+        <li><a class="dropdown-item srCancel" data-value="`+ data.serviceId +`" role="button">Cancel</a></li>`;
+
+                if (data.status == 0) {
+                    listItems = `<li class="p-2 ps-3 pe-3">Service request is already Completed</li>`;
+                }
+                else if (data.status == 1) {
+                    listItems = `<li class="p-2 ps-3 pe-3">Service request is Cancelled</li>`;
+                }
+
                 return `<div class="dropdown text-center">
                     <button class="admin-table-actionbtn" type="button" id = "dropdownMenuButton`+ data.userId + `"
                 data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464" class="text-center"></i>
                             </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton`+ data.userId + `">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
+        `+ listItems +`
     </ul>
                         </div>`;
             }
@@ -143,3 +152,213 @@ document.getElementById("admin-um-form-searchbtn").addEventListener("click", fun
     SRDatatable.ajax.reload();
 });
 
+/*================ Edit Service Request ================*/
+
+$("#adminServiceReqTable").on("click", ".srEdit", function (e) {
+
+    console.log(e.target.dataset.value);
+
+    getServiceDetails(e.target.dataset.value);
+
+});
+
+function getServiceDetails(serviceId) {
+    var data = {};
+    data.serviceRequestId = serviceId;
+    
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/GetServiceDetails',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            console.log(result);
+            if (result != "false") {
+                putToModal(result);
+            }
+            else {
+                alert("something went wrong");
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+}
+
+function putToModal(result) {
+    $("#admin-sr-mdate").attr("type","date");
+    $("#admin-sr-mdate").val(result.serviceStartDate.split("T")[0]);
+    $("#modal-time").val(result.serviceStartDate.split("T")[1])
+
+    $("#modal-street").val(result.serviceRequestAddresses[0].addressLine2);
+
+    $("#modal-house").val(result.serviceRequestAddresses[0].addressLine1);
+
+    $("#modal-postal").val(result.serviceRequestAddresses[0].postalCode);
+
+    $("#modal-city").val(result.serviceRequestAddresses[0].city);
+
+
+    $("#modal-street-invoice").val(result.serviceRequestAddresses[0].addressLine2);
+
+    $("#modal-house-invoice").val(result.serviceRequestAddresses[0].addressLine1);
+
+    $("#modal-postal-invoice").val(result.serviceRequestAddresses[0].postalCode);
+
+    $("#modal-city-invoice").val(result.serviceRequestAddresses[0].city);
+
+    $("#adminSRIdModal").val(result.serviceRequestId);
+   
+    $("#admin-sr-edit-modal").modal("show");
+}
+
+document.getElementById("admin-sr-updatebtn").addEventListener("click", function () {
+    updateServiceRequest();
+});
+
+function updateServiceRequest() {
+
+    var date = $("#admin-sr-mdate").val() + "T" + $("#modal-time").val();
+    console.log(date);
+
+    var data = {
+        serviceRequestAddresses: [
+            {},
+            {}
+        ],
+    };
+
+    data.serviceRequestId = $("#adminSRIdModal").val();
+    
+
+    data.serviceStartDate = date;
+
+    data.serviceRequestAddresses[0].addressLine2 = $("#modal-street").val().trim();
+
+    data.serviceRequestAddresses[0].addressLine1 = $("#modal-house").val().trim();
+
+    data.serviceRequestAddresses[0].postalCode = $("#modal-postal").val().trim();
+
+    data.serviceRequestAddresses[0].city = $("#modal-city").val().trim();
+
+
+    data.serviceRequestAddresses[1].addressLine2 = $("#modal-street-invoice").val().trim();
+
+    data.serviceRequestAddresses[1].addressLine1 = $("#modal-house-invoice").val().trim();
+
+    data.serviceRequestAddresses[1].postalCode = $("#modal-postal-invoice").val().trim();
+
+    data.serviceRequestAddresses[1].city = $("#modal-city-invoice").val().trim();
+
+    data.comments = $("#modal-why-edit").val().trim();
+
+    var todayDate = new Date();
+    var srDate = new Date($("#admin-sr-mdate").val())
+    console.log(" date = " + srDate);
+    console.log(" today = " + todayDate);
+
+    if ($("#admin-sr-mdate").val() == null) {
+        $("#editModalAlert").removeClass("d-none").text("Date can not be empty!");
+        $("#admin-sr-mdate").focus();
+    }
+    else if (srDate <= todayDate) {
+        $("#editModalAlert").removeClass("d-none").text("Please choose date wisely!");
+        $("#admin-sr-mdate").focus();
+    }
+    else if ($("#modal-house").val().trim() == "") {
+        $("#editModalAlert").removeClass("d-none").text("House number can not empty!");
+        $("#modal-house").focus();
+    }
+    else if ($("#modal-street").val().trim() == "") {
+        $("#editModalAlert").removeClass("d-none").text("Street can not empty!");
+        $("#modal-street").focus();
+    }
+    else if ($("#modal-postal").val().trim() == "") {
+        $("#editModalAlert").removeClass("d-none").text("Postalcode can not empty!");
+        $("#modal-postal").focus();
+    }
+    else if ($("#modal-city").val().trim() == "") {
+        $("#editModalAlert").removeClass("d-none").text("City can not empty!");
+        $("#modal-city").focus();
+    }
+    else if (data.serviceRequestAddresses[1].addressLine1 == "") {
+        $("#editModalAlert").removeClass("d-none").text("House number can not empty!");
+        $("#modal-house-invoice").focus();
+    }
+    else if ($("#modal-street-invoice").val().trim() == "") {
+        $("#editModalAlert").removeClass("d-none").text("Street can not empty!");
+        $("#modal-street-invoice").focus();
+    }
+    else if ($("#modal-postal-invoice").val().trim() == "") {
+        $("#editModalAlert").removeClass("d-none").text("Postalcode can not empty!");
+        $("#modal-postal-invoice").focus();
+    }
+    else if ($("#modal-city-invoice").val().trim() == "") {
+        $("#editModalAlert").removeClass("d-none").text("City can not empty!");
+        $("#modal-city-invoice").focus();
+    }
+    else if ($("#modal-why-edit").val().trim() == "") {
+        $("#editModalAlert").removeClass("d-none").text("You must say, why do you want to edit request?");
+        $("#modal-why-edit").focus();
+    }
+    else {
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/EditServiceRequest',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: data,
+            success: function (result) {
+                console.log(result);
+                if (result == "conflict"){
+                    $("#editModalAlert").removeClass("d-none").text("Your Service Provider Already Booked for this date, please change date!");
+                    $("#admin-sr-mdate").focus();
+                }
+                else if (result == "true") {
+                    SRDatatable.ajax.reload();
+                    $("#admin-sr-edit-modal").modal("hide");
+                }
+                else  {
+                    alert("something went wrong");
+                }
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+}
+
+/*================ Cancel Service Request=================*/
+
+$("#adminServiceReqTable").on("click", ".srCancel", function (e) {
+
+    console.log(e.target.dataset.value);
+
+    cancelServiceRequest(e.target.dataset.value);
+
+});
+
+function cancelServiceRequest(serviceId) {
+    var data = {};
+    data.serviceRequestId = serviceId;
+
+    $.ajax({
+        type: 'POST',
+        url: '/Admin/ChangeUserStatus',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            console.log(result);
+            if (result.value = "true") {
+                SRDatatable.ajax.reload();
+            }
+            else {
+                alert("something went wrong");
+            }
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+}

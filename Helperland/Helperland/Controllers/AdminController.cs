@@ -362,5 +362,101 @@ namespace Helperland.Controllers
             }
             return Ok(Json("false"));
         }
+
+
+        /*============== Change user Status ================*/
+        [HttpPost]
+        public IActionResult ChangeUserStatus(User data)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null)
+            {
+                User user = _db.Users.FirstOrDefault(x => x.UserId == data.UserId);
+                if(user != null)
+                {
+                    if(user.IsActive == true)
+                    {
+                        user.IsActive = false;
+                    }
+                    else
+                    {
+                        user.IsActive = true;
+                    }
+
+                    _db.Users.Update(user);
+                    _db.SaveChanges();
+                    return Ok(Json("true"));
+                }
+            }
+            return Ok(Json("false"));
+        }
+
+        /*======Get Service Details for edit========*/
+        public JsonResult GetServiceDetails(ServiceRequest data)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null)
+            {
+                ServiceRequest sr = _db.ServiceRequests.FirstOrDefault(x=>x.ServiceRequestId == data.ServiceRequestId);
+
+                ServiceRequestAddress addr = _db.ServiceRequestAddresses.FirstOrDefault(x => x.ServiceRequestId == data.ServiceRequestId);
+
+                sr.ServiceRequestAddresses.Add(addr);
+
+                return new JsonResult(sr);
+            }
+            return new JsonResult("false");
+        }
+
+        [HttpPost]
+        public IActionResult EditServiceRequest(ServiceRequest data)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id!= null)
+            {
+                ServiceRequest sr = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == data.ServiceRequestId);
+
+                if(sr != null && sr.Status == 2)
+                {
+                    if(sr.ServiceProviderId != null)
+                    {
+                        data.SubTotal = sr.SubTotal;
+                        int id =(int)sr.ServiceProviderId;
+                        var obj = _db.ServiceRequests.FirstOrDefault(x => x.ServiceProviderId == id && x.Status==2 && ((x.ServiceStartDate <= data.ServiceStartDate && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= data.ServiceStartDate) || (x.ServiceStartDate <=data.ServiceStartDate.AddHours((double)data.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= data.ServiceStartDate.AddHours((double)data.SubTotal + 1)) ||
+                (x.ServiceStartDate >=data.ServiceStartDate.AddHours((double)data.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) <= data.ServiceStartDate.AddHours((double)data.SubTotal + 1)))
+                        );
+
+                        if (obj != null)
+                        {
+                            return Ok(Json("conflict"));
+                        }
+                    }
+
+                    sr.ServiceStartDate = data.ServiceStartDate;
+
+                    ServiceRequestAddress srAddr = _db.ServiceRequestAddresses.FirstOrDefault(x=>x.ServiceRequestId == sr.ServiceRequestId);
+
+                    srAddr.AddressLine1 = data.ServiceRequestAddresses.First().AddressLine1;
+
+                    srAddr.AddressLine2 = data.ServiceRequestAddresses.First().AddressLine2;
+
+                    srAddr.PostalCode = data.ServiceRequestAddresses.First().PostalCode;
+
+                    srAddr.City = data.ServiceRequestAddresses.First().City;
+
+                    _db.ServiceRequestAddresses.Update(srAddr);
+
+                    _db.ServiceRequests.Update(sr);
+
+                    _db.SaveChanges();
+
+                    return Ok("true");
+
+                }
+
+                
+            }
+            return Ok(Json("false"));
+        }
     }
 }

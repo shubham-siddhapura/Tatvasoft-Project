@@ -56,9 +56,9 @@ namespace Helperland.Controllers
                         tablerow.HasPet = row.HasPets;
 
                         var obj = _db.ServiceRequests.FirstOrDefault(x => 
-                        (x.ServiceProviderId == id && x.ServiceStartDate <= row.ServiceStartDate && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= row.ServiceStartDate) ||  (x.ServiceProviderId == id && x.ServiceStartDate <= row.ServiceStartDate.AddHours((double)row.SubTotal+1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= row.ServiceStartDate.AddHours((double)row.SubTotal + 1)) ||
-                        (x.ServiceProviderId == id && x.ServiceStartDate >= row.ServiceStartDate.AddHours((double)row.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) <= row.ServiceStartDate.AddHours((double)row.SubTotal + 1))
-                        );
+                        x.ServiceProviderId == id && x.Status == 2 && ((x.ServiceStartDate <= row.ServiceStartDate && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= row.ServiceStartDate) ||  (x.ServiceStartDate <= row.ServiceStartDate.AddHours((double)row.SubTotal+1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= row.ServiceStartDate.AddHours((double)row.SubTotal + 1)) ||
+                ( x.ServiceStartDate >= row.ServiceStartDate.AddHours((double)row.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) <= row.ServiceStartDate.AddHours((double)row.SubTotal + 1))
+                        ));
                         if(obj!= null)
                         {
                             int conflict = obj.ServiceRequestId;

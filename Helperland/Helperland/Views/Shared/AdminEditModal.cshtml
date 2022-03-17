@@ -12,23 +12,73 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+
+                <div class="alert alert-danger d-none mt-3" id="editModalAlert" role="alert">
+                </div>
+
                 <form action="">
                     <div id="modal-form">
                         <div id="modal-datetime">
                             <div>
                                 <label for="modal-date">Date</label>
                                 <div id="mdate">
-                                    <input type="date" id="admin-sr-mdatepicker" name="modaldate" onchange="writemDate();">
+                                    <span><img src="~/img/admin-calendar-blue.png"></span>
                                     <input type="text" name="modaldate" id="admin-sr-mdate" placeholder="Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
                                 </div>
                             </div>
                             <div>
                                 <label for="modal-time">Time</label>
                                 <select name="modal-time" id="modal-time">
-                                    <option value="12:30">12:30</option>
-                                    <option value="1:00">01:00</option>
-                                    <option value="1:30">01:30</option>
-                                    <option value="2:00">02:00</option>
+                                    <option value="00:30:00">00:30</option>
+                                    <option value="01:00:00">01:00</option>
+                                    <option value="01:30:00">01:30</option>
+                                    <option value="02:00:00">02:00</option>
+                                    <option value="02:30:00">02:30</option>
+                                    <option value="03:00:00">03:00</option>
+                                    <option value="03:30:00">03:30</option>
+                                    <option value="04:00:00">04:00</option>
+                                    <option value="04:30:00">04:30</option>
+                                    <option value="05:00:00">05:00</option>
+                                    <option value="05:30:00">05:30</option>
+                                    <option value="06:00:00">06:00</option>
+                                    <option value="06:30:00">06:30</option>
+                                    <option value="07:00:00">07:00</option>
+                                    <option value="07:30:00">07:30</option>
+                                    <option value="08:00:00">08:00</option>
+                                    <option value="08:30:00">08:30</option>
+                                    <option value="09:00:00">09:00</option>
+                                    <option value="09:30:00">09:30</option>
+                                    <option value="10:00:00">10:00</option>
+                                    <option value="10:30:00">10:30</option>
+                                    <option value="11:00:00">11:00</option>
+                                    <option value="11:30:00">11:30</option>
+                                    <option value="12:00:00">12:00</option>
+
+                                    <option value="12:30:00">12:30</option>
+                                    <option value="13:00:00">13:00</option>
+                                    <option value="13:30:00">13:30</option>
+                                    <option value="14:00:00">14:00</option>
+                                    <option value="14:30:00">14:30</option>
+                                    <option value="15:00:00">15:00</option>
+                                    <option value="15:30:00">15:30</option>
+                                    <option value="16:00:00">16:00</option>
+                                    <option value="16:30:00">16:30</option>
+                                    <option value="17:00:00">17:00</option>
+                                    <option value="17:30:00">17:30</option>
+                                    <option value="18:00:00">18:00</option>
+                                    <option value="18:30:00">18:30</option>
+                                    <option value="19:00:00">19:00</option>
+                                    <option value="19:30:00">19:30</option>
+                                    <option value="20:00:00">20:00</option>
+                                    <option value="20:30:00">20:30</option>
+                                    <option value="21:00:00">21:00</option>
+                                    <option value="21:30:00">21:30</option>
+                                    <option value="22:00:00">22:00</option>
+                                    <option value="22:30:00">22:30</option>
+                                    <option value="23:00:00">23:00</option>
+                                    <option value="23:30:00">23:30</option>
+                                    <option value="00:00:00">00:00</option>
+
                                 </select>
                             </div>
                         </div>
@@ -50,12 +100,8 @@
                             </div>
                             <div>
                                 <label for="modal-city">City</label>
-                                <select name="modal-city" id="modal-city">
-                                    <option value="">City</option>
-                                    <option value="bvn">Bhavnagar</option>
-                                    <option value="amd">Ahemdabad</option>
-                                    <option value="brd">Baroda</option>
-                                </select>
+                                <input type="text" name="modal-city" id="modal-city" disabled>
+
                             </div>
 
                         </div>
@@ -76,12 +122,8 @@
                             </div>
                             <div>
                                 <label for="modal-city-invoice">City</label>
-                                <select name="modal-city-invoice" id="modal-city-invoice">
-                                    <option value="">City</option>
-                                    <option value="bvn">Bhavnagar</option>
-                                    <option value="amd">Ahemdabad</option>
-                                    <option value="brd">Baroda</option>
-                                </select>
+                                <input type="text" name="modal-city-invoice" id="modal-city-invoice">
+
                             </div>
 
                         </div>
@@ -89,10 +131,9 @@
                         <h3>Why do you want to reschedule service request?</h3>
                         <textarea name="modal-why-edit" id="modal-why-edit" cols="30" rows="10" placeholder="Why do you want to reschedule service request?"></textarea>
 
-                        <h3>Call center EMP Notes</h3>
-                        <textarea name="modal-emp" id="modal-emp" cols="30" rows="10" placeholder="Enter Notes"></textarea>
-
-                        <button type="submit" data-bs-dismiss="modal" id="admin-sr-updatebtn">Update</button>
+                        <input type="hidden" id="adminSRIdModal" />
+                        
+                        <button type="button" id="admin-sr-updatebtn">Update</button>
                     </div>
                 </form>
             </div>
