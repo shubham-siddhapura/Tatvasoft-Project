@@ -9,6 +9,10 @@ namespace Helperland.ViewModels
     {
         public int? ServiceId { get; set; }
 
+        public string PostalCode { get; set; }
+
+        public string Email { get; set; }
+
         public string ServiceStartDate { get; set; }
 
         public string StartTime { get; set; }

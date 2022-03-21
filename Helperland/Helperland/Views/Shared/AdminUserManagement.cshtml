@@ -21,91 +21,126 @@
     <!-- admin title ends -->
     <!-- admin um search starts  -->
     <div id="admin-um-search" class="adminSearch">
+
+        <!--<form action="" id="admin-um-form">
+        <select name="username" id="adminUsernameFilter">
+            <option value="">User name</option>
+            <option value="shubham">Shubham</option>
+            <option value="kripal">Kripal</option>
+            <option value="naimish">Naimish</option>
+        </select>
+        <select name="userrole" id="adminUserTypeFilter" placeholder="User role">
+            <option value="">User role</option>
+            <option value="customer">Customer</option>
+            <option value="admin">Admin</option>
+            <option value="sp">Service Provider</option>
+        </select>
+        <span id="admin-um-ctrcode">+49</span><span><input type="text" name="mobile" placeholder="Phone number" id="adminMobileFilter"></span>
+        <input type="text" name="zipcode" id="adminZipcodeFilter" placeholder="Zipcode">
+        <button type="button" id="adminFilterBtn">Search</button>
+        <button type="reset" id="admin-um-form-clearbtn">Clear</button>
+    </form> -->
+
         <form action="" id="admin-um-form">
-            <select name="username" id="adminUsernameFilter">
-                <option value="">User name</option>
-                <option value="shubham">Shubham</option>
-                <option value="kripal">Kripal</option>
-                <option value="naimish">Naimish</option>
-            </select>
-            <select name="userrole" id="adminUserTypeFilter" placeholder="User role">
-                <option value="">User role</option>
-                <option value="customer">Customer</option>
+
+            <input type="text" name="customer" placeholder="Customer" id="adminUsernameFilter" class="form-control">
+
+            <input type="text" name="postalCode" id="adminZipcodeFilter" placeholder="Postal Code" class="form-control">
+
+            <input type="text" name="email" id="adminEmailFilter" placeholder="Email" class="form-control">
+
+            <div class="input-group">
+                <div class="input-group-text">+91</div>
+                <input type="text" class="form-control" id="adminMobileFilter" placeholder="Mobile">
+            </div>
+
+            <select name="servicestatus" id="adminUserTypeFilter" class="form-select">
+                <option value="">User Type</option>
                 <option value="admin">Admin</option>
+                <option value="customer">Customer</option>
                 <option value="sp">Service Provider</option>
             </select>
-            <span id="admin-um-ctrcode">+49</span><span><input type="text" name="mobile" placeholder="Phone number" id="adminMobileFilter"></span>
-            <input type="text" name="zipcode" id="adminZipcodeFilter" placeholder="Zipcode">
-            <button type="button" id="adminFilterBtn">Search</button>
-            <button type="reset" id="admin-um-form-clearbtn">Clear</button>
+            <div id="fdate">
+                <span><img src="~/img/admin-calendar-blue.png"></span>
+                <input class="form-control" type="text" name="fromdate" id="adminFromDate" placeholder="From Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
+            </div>
+
+            <div id="tdate">
+                <span><img src="~/img/admin-calendar-blue.png"></span>
+                <input type="text" class="form-control" name="fromdate" id="adminToDate" placeholder="To Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
+            </div>
+
+            <button type="button" id="adminFilterBtn" class="form-control">Search</button>
+            <button type="reset" id="admin-um-form-clearbtn" class="form-control">Clear</button>
         </form>
+
     </div>
     <!-- admin um search ends -->
 
-    <div id="admin-um-exportdiv" class="adminExportDiv">
-        <button type="button" id="export">Export</button>
+        <div id="admin-um-exportdiv" class="adminExportDiv">
+            <button type="button" id="export">Export</button>
+        </div>
+
+        <!-- admin um table div starts -->
+        <div id="admin-um-tablediv" class="adminTableDiv">
+
+            <table id="admin-um-table">
+                <thead>
+                    <tr>
+                        <th>User Name </th>
+                        <th>Date of Registration</th>
+                        <th>User Type</th>
+                        <th>Phone</th>
+                        <th>Postal Code</th>
+                        <th class="text-center">Status </th>
+                        <th id="admin-table-hAction">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--<tr>
+                    <td>
+                        Shubham Sid
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <span><img src="img/upcomingService/calendar2.png" alt=""></span>
+                        <span>19/04/2020</span>
+                    </td>
+                    <td>
+                        Customer
+                    </td>
+                    <td>
+                        9876543210
+                    </td>
+                    <td>
+                        364002
+                    </td>
+                    <td>
+                        <span class="admin-table-status">Active</span>
+                    </td>
+                    <td class="admin-table-action">
+                        <button type="button" class="admin-table-actionbtn" id="row1btn" onclick="admin_action();">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
+                        </button>
+                        <div class="admin-table-action-menu" id="adminrow">
+                            <ul>
+                                <li><a href="">Edit</a> </li>
+                                <li><a href="">Deactivate</a></li>
+                                <li><a href="">Service History</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>-->
+
+                </tbody>
+            </table>
+
+        </div>
+        <!-- admin um table div ends -->
+
+        <div id="admin-um-footer">
+            <p>&copy;2018 Helperland. All rights reserved.</p>
+        </div>
     </div>
-
-    <!-- admin um table div starts -->
-    <div id="admin-um-tablediv" class="adminTableDiv">
-
-        <table id="admin-um-table">
-            <thead>
-                <tr>
-                    <th>User Name </th>
-                    <th>Date of Registration</th>
-                    <th>User Type</th>
-                    <th>Phone</th>
-                    <th>Postal Code</th>
-                    <th class="text-center">Status </th>
-                    <th id="admin-table-hAction">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--<tr>
-        <td>
-            Shubham Sid
-        </td>
-        <td>
-        </td>
-        <td>
-            <span><img src="img/upcomingService/calendar2.png" alt=""></span>
-            <span>19/04/2020</span>
-        </td>
-        <td>
-            Customer
-        </td>
-        <td>
-            9876543210
-        </td>
-        <td>
-            364002
-        </td>
-        <td>
-            <span class="admin-table-status">Active</span>
-        </td>
-        <td class="admin-table-action">
-            <button type="button" class="admin-table-actionbtn" id="row1btn" onclick="admin_action();">
-                <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464"></i>
-            </button>
-            <div class="admin-table-action-menu" id="adminrow">
-                <ul>
-                    <li><a href="">Edit</a> </li>
-                    <li><a href="">Deactivate</a></li>
-                    <li><a href="">Service History</a></li>
-                </ul>
-            </div>
-        </td>
-    </tr>-->
-
-            </tbody>
-        </table>
-
-    </div>
-    <!-- admin um table div ends -->
-
-                <div id="admin-um-footer">
-                    <p>&copy;2018 Helperland. All rights reserved.</p>
-                </div>
-</div>
 <!-- user management div-->

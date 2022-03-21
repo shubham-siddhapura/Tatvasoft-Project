@@ -1,6 +1,4 @@
-﻿$(document).ready(function () {
-    // $("#admin-um-table").DataTable();
-});
+﻿
 
     const dt = $("#admin-um-table").DataTable({
         dom: 't<"table-bottom paging d-flex justify-content-between"<"table-bottom-inner d-flex"li>p>',
@@ -18,6 +16,11 @@
                 filterObj.phoneNo = $("#adminMobileFilter").val();
                 filterObj.zipCode = $("#adminZipcodeFilter").val();
                 filterObj.userType = $("#adminUserTypeFilter").val();
+                filterObj.email = $("#adminEmailFilter").val();
+
+                filterObj.fromDate = $("#adminFromDate").val();
+
+                filterObj.toDate = $("#adminToDate").val();
             },
         },
         "columnDefs": [{
@@ -96,6 +99,7 @@
 
 document.getElementById("adminFilterBtn").addEventListener("click", function () {
     dt.ajax.reload();
+    console.log("search");
 });
 
 

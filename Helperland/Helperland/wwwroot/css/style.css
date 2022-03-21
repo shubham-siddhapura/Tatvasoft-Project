@@ -2096,7 +2096,8 @@ a.paginate_button.current {
 #SPRatingsTable_length label,
 #newServiceRequestTable_length label,
 #SPServiceHistoryTable_length label,
-#blockCustomerTable_length label{
+#blockCustomerTable_length label,
+#adminServiceReqTable_length label{
     margin-top: 15px;
 }
 
@@ -2104,7 +2105,8 @@ a.paginate_button.current {
     #SPRatingsTable_length select,
     #newServiceRequestTable_length select,
     #SPServiceHistoryTable_length select,
-    #blockCustomerTable_length select{
+    #blockCustomerTable_length select,
+    #adminServiceReqTable_length select{
         margin: 0 5px;
     }
 
@@ -2112,7 +2114,8 @@ a.paginate_button.current {
 #SPRatingsTable_info,
 #newServiceRequestTable_info,
 #SPServiceHistoryTable_info,
-#blockCustomerTable_info{
+#blockCustomerTable_info,
+#adminServiceReqTable_info{
     margin-top: 7px;
     margin-left: 7px;
 }
@@ -2506,13 +2509,13 @@ table.dataTable thead .sorting_desc {
 .adminSearch {
     background-color: #FFFFFF;
     border: 1px solid #E1E1E1;
-    padding: 20px 7.5px;
+    padding: 10px 7.5px;
     width: calc(100% - 15px);
     text-align: center;
 }
 
 
-#admin-um-form select {
+/*#admin-um-form select {
     color: #A0A0A0;
     font-size: 16px;
     padding: 13px 10px;
@@ -2553,10 +2556,10 @@ table.dataTable thead .sorting_desc {
 }
 
 #admin-um-form button {
-    width: 84px;
+    width: 84px;*/
     /* padding: 14px 15px; */
-    border-radius: 4px;
-}
+    /*border-radius: 4px;
+}*/
 
 #admin-um-form-searchbtn {
     background-color: #1FB6FF;
@@ -2577,7 +2580,6 @@ table.dataTable thead .sorting_desc {
 .adminTableDiv {
     width: 100%;
     margin-top: 20px;
-
 }
 
     .adminTableDiv table {
@@ -2743,7 +2745,34 @@ table.dataTable thead .sorting_desc {
         margin-bottom: -10px;
     }
 
-/* =========================== Admin service Request ============================= */
+/* ============== Admin service Request =================== */
+
+#admin-um-form{
+    display: flex;
+    flex-wrap: wrap;
+}
+#admin-um-form .form-control, #admin-um-form .form-select{
+    max-width: 200px;
+    line-height: 46px;
+    margin: 10px;
+    padding: 0 10px;
+}
+
+    #admin-um-form #adminMobileFilter{
+        margin:0;
+    }
+
+    #admin-um-form .input-group{
+        display: flex;
+        margin: 10px;
+        width:200px;
+    }
+
+    #admin-um-form #adminFilterBtn{
+        background-color: #1FB6FF;
+        color: white;
+    }
+    /*
 #admin-serviceid {
     width: 110px;
     padding: 14px 10px;
@@ -2763,14 +2792,30 @@ table.dataTable thead .sorting_desc {
     border-radius: 4px;
     margin: 0 5px;
 }
+*/
+    #fdate, #tdate, #mdate {
+        display: inline-flex;
+        vertical-align: middle;
+        margin: 0 5px;
+    }
 
-#fdate, #tdate, #mdate {
-    display: inline-flex;
-    vertical-align: middle;
-    margin: 0 5px;
+#fdate input, #tdate input{
+    padding: 0!important;
+    width:130px;
+    border-left: 0;
+    border-radius: 0 4px 4px 0;
+    margin: 0!important;
+    line-height:initial;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator, input[type="date"]::-moz-calendar-picker-indicator {
+#fdate, #tdate{
+    margin: 10px;
+}
+
+#admin-um-form button{
+    width: fit-content;
+}
+/*input[type="date"]::-webkit-calendar-picker-indicator, input[type="date"]::-moz-calendar-picker-indicator {
     position: absolute;
     left: -15px;
     color: rgba(0, 0, 0, 0);
@@ -2779,35 +2824,35 @@ input[type="date"]::-webkit-calendar-picker-indicator, input[type="date"]::-moz-
     background: url('../img/admin-calendar-blue.png') no-repeat;
     width: 20px;
     height: 20px;
-}
+}*/
 
-#admin-sr-fdatepicker::-webkit-datetime-edit, #admin-sr-tdatepicker::-webkit-datetime-edit,
+/*#admin-sr-fdatepicker::-webkit-datetime-edit, #admin-sr-tdatepicker::-webkit-datetime-edit,
 #admin-sr-mdatepicker::-webkit-datetime-edit, #admin-sr-fdatepicker::-moz-datetime-edit, #admin-sr-tdatepicker::-moz-datetime-edit,
 #admin-sr-mdatepicker::-moz-datetime-edit {
     display: none;
 }
-
-#admin-sr-fdate::-webkit-calendar-picker-indicator, #admin-sr-tdate::-webkit-calendar-picker-indicator,
+*/
+/*#admin-sr-fdate::-webkit-calendar-picker-indicator, #admin-sr-tdate::-webkit-calendar-picker-indicator,
 #admin-sr-mdate::-webkit-calendar-picker-indicator, #admin-sr-fdate::-moz-calendar-picker-indicator, #admin-sr-tdate::-moz-calendar-picker-indicator,
 #admin-sr-mdate::-moz-calendar-picker-indicator {
     display: none;
 }
-
-input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wrapper {
+*/
+/*input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wrapper {
     position: relative;
     left: 0px;
 }
-
-#admin-sr-fdatepicker, #admin-sr-tdatepicker, #admin-sr-mdatepicker {
+*/
+/*#admin-sr-fdatepicker, #admin-sr-tdatepicker, #admin-sr-mdatepicker {
     border: 1px solid #E1E1E1;
     border-right: 0;
     border-radius: 4px 0 0 4px;
     width: 30px;
     height: 46px;
     position: relative;
-}
+}*/
 
-#admin-sr-fdate, #admin-sr-tdate, #admin-sr-mdate {
+#admin-sr-mdate {
     padding: 0 10px;
     height: 46px;
     color: #A0A0A0;
@@ -2885,7 +2930,7 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
         width: 47%;
         margin-bottom: 10px;
     }
-    #modal-datetime div span{
+    #modal-datetime div span, #tdate span, #fdate span{
         padding: 0 15px;
         line-height: 40px;
         border: 1px solid #e1e1e1;
@@ -2900,7 +2945,7 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
             color: #646464;
         }
 
-            #modal-datetime div input{
+            #modal-datetime div input, #fdate input, #tdate input{
                 padding-left:0;
             }
             #modal-datetime div select {
@@ -3806,7 +3851,7 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
     left: 35px;
 }
 
-#serviceRequestDetailsModal .modal-body div {
+#serviceRequestDetailsModal .modal-body .main > div {
     border-bottom: 1px solid #e1e1e1;
     padding: 10px 0;
 }
@@ -4303,3 +4348,56 @@ input::-webkit-datetime-edit-fields-wrapper, input::-moz-datetime-edit-fields-wr
             border-radius: 18px;
             color: white;
         }
+
+/* ====== admin Refund modal ========== */
+#RefundModal p {
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+#RefundModal .modal-body {
+    padding-bottom: 0;
+}
+
+    #RefundModal .modal-body .flexDivs {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    #RefundModal .modal-body .rInput {
+        width: 100px;
+        line-height: 46px;
+        padding: 0 10px;
+        height: 46px;
+        margin: -2px;
+        border: 1px solid #e1e1e1;
+    }
+
+    #RefundModal .modal-body Select.rInput {
+        border-left: 0;
+        width: 125px;
+        background-color: #EFEFEF;
+    }
+
+    #RefundModal .modal-body button.rInput {
+        border-right: 0;
+    }
+
+    #RefundModal .modal-body textarea {
+        width: 100%;
+    }
+
+#RefundModal .modal-footer {
+    border: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+    #RefundModal .modal-footer button {
+        width: 100%;
+        line-height: 40px;
+        margin-bottom: 15px;
+        background-color: #1FB6FF;
+    }

@@ -128,14 +128,44 @@ namespace Helperland.Controllers
                     serviceRequests = serviceRequests.Where(x => x.ServiceRequestId == myData.ServiceId);
                 }
 
+                if(myData.PostalCode != null)
+                {
+                    serviceRequests = serviceRequests.Where(x => x.ZipCode.Contains(myData.PostalCode));
+                }
+
+                if(myData.Email != null)
+                {
+                    serviceRequests = serviceRequests.Where(x => x.User.Email.Contains(myData.Email) || x.ServiceProvider.Email.Contains(myData.Email));
+                }
+
                 if (myData.CustomerName != null)
                 {
-                    serviceRequests = serviceRequests.Where(x => x.User.FirstName.Contains(myData.CustomerName) || x.User.LastName.Contains(myData.CustomerName));
+                    var names = myData.CustomerName.Split(" ");
+                    if (names.Length > 1)
+                    {
+                        serviceRequests = serviceRequests.Where(x =>  (x.User.FirstName.Contains(names[0]) &&  x.User.LastName.Contains(names[1])) || (x.User.FirstName.Contains(names[1]) && x.User.LastName.Contains(names[0])));
+                    }
+                    else {
+
+                        serviceRequests = serviceRequests.Where(x => x.User.FirstName.Contains(myData.CustomerName) || x.User.LastName.Contains(myData.CustomerName));
+
+                    }
+                    
+
                 }
 
                 if(myData.SPName != null)
                 {
-                    serviceRequests = serviceRequests.Where(x => x.ServiceProvider.FirstName.Contains(myData.SPName) || x.ServiceProvider.LastName.Contains(myData.SPName));
+                    var names = myData.SPName.Split(" ");
+                    if(names.Length > 1)
+                    {
+                        serviceRequests = serviceRequests.Where(x => (x.ServiceProvider.FirstName.Contains(names[0]) && x.ServiceProvider.LastName.Contains(names[1])) || (x.ServiceProvider.FirstName.Contains(names[1]) && x.ServiceProvider.LastName.Contains(names[0])));
+                    }
+                    else
+                    {
+                        serviceRequests = serviceRequests.Where(x => x.ServiceProvider.FirstName.Contains(myData.SPName) || x.ServiceProvider.LastName.Contains(myData.SPName));
+                    }
+                    
                 }
 
                 if (myData.Status != null)
@@ -325,6 +355,21 @@ namespace Helperland.Controllers
                     customerData = customerData.Where(x => x.ZipCode.Contains(myData.ZipCode));
                 }
 
+                if(myData.Email != null)
+                {
+                    customerData = customerData.Where(x => x.Email.Contains(myData.Email));
+                }
+
+                if(myData.FromDate != null)
+                {
+                    customerData = customerData.Where(x => x.CreatedDate >= myData.FromDate);
+                }
+
+                if (myData.ToDate != null)
+                {
+                    customerData = customerData.Where(x => x.CreatedDate <= myData.ToDate.Value.AddDays(1));
+                }
+
                 recordsTotal = customerData.Count();
                 var Tempdata = customerData.Skip(skip).Take(pageSize).ToList();
                 List<AdminUserMng> data = new List<AdminUserMng>();
@@ -416,14 +461,14 @@ namespace Helperland.Controllers
             {
                 ServiceRequest sr = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == data.ServiceRequestId);
 
-                if(sr != null && sr.Status == 2)
+                if (sr != null && sr.Status == 2)
                 {
-                    if(sr.ServiceProviderId != null)
+                    if (sr.ServiceProviderId != null)
                     {
                         data.SubTotal = sr.SubTotal;
-                        int id =(int)sr.ServiceProviderId;
-                        var obj = _db.ServiceRequests.FirstOrDefault(x => x.ServiceProviderId == id && x.Status==2 && ((x.ServiceStartDate <= data.ServiceStartDate && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= data.ServiceStartDate) || (x.ServiceStartDate <=data.ServiceStartDate.AddHours((double)data.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= data.ServiceStartDate.AddHours((double)data.SubTotal + 1)) ||
-                (x.ServiceStartDate >=data.ServiceStartDate.AddHours((double)data.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) <= data.ServiceStartDate.AddHours((double)data.SubTotal + 1)))
+                        int id = (int)sr.ServiceProviderId;
+                        var obj = _db.ServiceRequests.FirstOrDefault(x => x.ServiceProviderId == id && x.Status == 2 && ((x.ServiceStartDate <= data.ServiceStartDate && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= data.ServiceStartDate) || (x.ServiceStartDate <= data.ServiceStartDate.AddHours((double)data.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= data.ServiceStartDate.AddHours((double)data.SubTotal + 1)) ||
+                (x.ServiceStartDate >= data.ServiceStartDate.AddHours((double)data.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) <= data.ServiceStartDate.AddHours((double)data.SubTotal + 1)))
                         );
 
                         if (obj != null)
@@ -434,7 +479,7 @@ namespace Helperland.Controllers
 
                     sr.ServiceStartDate = data.ServiceStartDate;
 
-                    ServiceRequestAddress srAddr = _db.ServiceRequestAddresses.FirstOrDefault(x=>x.ServiceRequestId == sr.ServiceRequestId);
+                    ServiceRequestAddress srAddr = _db.ServiceRequestAddresses.FirstOrDefault(x => x.ServiceRequestId == sr.ServiceRequestId);
 
                     srAddr.AddressLine1 = data.ServiceRequestAddresses.First().AddressLine1;
 
@@ -450,7 +495,7 @@ namespace Helperland.Controllers
 
                     _db.SaveChanges();
 
-                    return Ok("true");
+                    return Ok(Json("true"));
 
                 }
 
@@ -458,5 +503,86 @@ namespace Helperland.Controllers
             }
             return Ok(Json("false"));
         }
+
+
+
+        /*===== Cancel Service Request =========*/
+        public IActionResult CancelServiceRequest(ServiceRequest data)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null && data.ServiceRequestId != 0)
+            {
+                ServiceRequest sr = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == data.ServiceRequestId);
+                if(sr != null)
+                {
+                    // status 1 is for cancel service request
+                    sr.Status = 1;
+                    _db.ServiceRequests.Update(sr);
+                    _db.SaveChanges();
+                    return Ok(Json("true"));
+                }
+            }
+            return Ok(Json("false"));
+        }
+
+        [HttpPost]
+        public IActionResult RefundAmount(RefundAmount data)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                ServiceRequest sr = _db.ServiceRequests.FirstOrDefault(x=> x.ServiceRequestId == data.ServiceRequestId);
+                if(sr != null)
+                {
+                    if (sr.RefundedAmount != null)
+                    {
+                        return Ok(Json("alreadyRefunded"));
+                    }
+
+                    double finalAmount = 0.0;
+                    if(data.PercentOrFix == "percentage")
+                    {
+                        finalAmount = ((double)sr.TotalCost) * data.Amount / 100;
+
+                    }
+                    else
+                    {
+                        finalAmount = data.Amount;
+                    }
+
+                    if(finalAmount > (double)sr.TotalCost)
+                    {
+                        return Ok(Json("higher"));
+                    }
+
+                    sr.RefundedAmount = (decimal)finalAmount;
+
+                    sr.ModifiedBy = Id;
+
+                    sr.ModifiedDate = DateTime.Now;
+
+                    _db.ServiceRequests.Update(sr);
+                    _db.SaveChanges();
+
+                    return Ok(Json("true"));
+                }
+
+            }
+            return Ok(Json("false"));
+        }
+
+        [HttpGet]
+        public JsonResult GetRefundInfo(ServiceRequest data)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                ServiceRequest sr = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == data.ServiceRequestId);
+
+                return new JsonResult(sr);
+            }
+            return new JsonResult("false");
+        }
     }
 }
+ 

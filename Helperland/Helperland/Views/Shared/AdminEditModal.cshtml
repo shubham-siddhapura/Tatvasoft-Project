@@ -132,7 +132,7 @@
                         <textarea name="modal-why-edit" id="modal-why-edit" cols="30" rows="10" placeholder="Why do you want to reschedule service request?"></textarea>
 
                         <input type="hidden" id="adminSRIdModal" />
-                        
+
                         <button type="button" id="admin-sr-updatebtn">Update</button>
                     </div>
                 </form>
@@ -145,3 +145,136 @@
 </div>
 
 <!-- modal div ends -->
+<!--Details-->
+<div class="modal" tabindex="-1" id="serviceRequestDetailsModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Service Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="main">
+                    <div>
+                        <h4 id="CDDetailsDateTime">05/10/2021 08:00 - 11:30</h4>
+                        <p><b>Duration: </b><span id="CDDetailsDuration"></span> hrs</p>
+                    </div>
+                    <div>
+                        <p><b>Service Id: </b><span id="CDDetailsId"></span></p>
+                        <div class="d-flex border border-0">
+                            <p><b>Extras: </b> </p>
+                            <div id="CDDetailsExtra" class="border border-0 p-0 ps-1"></div>
+                        </div>
+                        <p><b>Net Amount:</b><span class="amount" id="CDDetailsAmount">8750 &euro;</span></p>
+                    </div>
+                    <div>
+                        <p><b>Service Address: </b> <span class="customerModalServiceAddress" id="CDDetailsAddress"></span></p>
+                        <p><b>Billing Address: </b><span>Same as Service Address</span></p>
+                        <p><b>Phone: </b><span>+91</span><span class="customerModalPhone" id="CDDetailsPhone"></span></p>
+                        <p><b>Email: </b><span class="customerModalEmail" id="CDDetailsEmail"> </span></p>
+                    </div>
+                    <div>
+                        <p><b>Comments: </b><span class="customerModalComments" id="CDDetailsComment"></span></p>
+                        <!--<p><img src="" alt="" class="cusomerModalPetImg"> <span class="cusomerModalPet">I don't have pets at home.</span></p>-->
+                    </div>
+                </div>
+                <!-- service provider details -->
+                <div id="serviceProviderDetailsInModal" class="serviceProvidersDetails d-none">
+                    <div><h5>Service Provider Details</h5></div>
+                    <div class="customer-sh-SP">
+
+                        <div><span class="cap-span"><img id="ratingModalSPAvtar" src="/img/customer-serviceHistory/cap.png" class="cap" alt=""></span></div>
+                        <div class="sp-detail">
+                            <p class="SP-name" id="CDDetails_SPName">Lyum Watson</p>
+                            <div class="d-flex p-0">
+                                <div class="spStars spRatingDetailsModal p-0">
+
+                                    <span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span>
+                                </div>
+
+                                <div class="p-0"><span class="ms-2" id="CDDetailsRating"></span></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <p><span id="totalCompletedServices">15</span> Cleanings</p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="serviceReqdetailsbtn" data-bs-toggle="modal" data-bs-target="#serviceRequestDetailsModal" class="d-none">details</button>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#RefundModal">
+    refund
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="RefundModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Refund Amount</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger d-none mt-3" id="refundModalAlert" role="alert">
+                </div>
+
+                <p id="alreadyRefunded" class="d-none" style="color: #ff000099"><b>This Service Request is already refunded.</b></p>
+                <div class="refundInfo flexDivs">
+                    <div>
+                        <p>Paid Amount</p>
+                        <p><span id="paidAmountModal">0</span>&euro;</p>
+                    </div>
+                    <div>
+                        <p>Refunded Amount</p>
+                        <p><span id="refundedAmountModal">0</span>&euro;</p>
+                    </div>
+                    <div>
+                        <p>In Balance Amount</p>
+                        <p><span id="balancedAmountModal">0</span>&euro;</p>
+                    </div>
+                </div>
+
+                <div class="rCalculations flexDivs">
+                    <div>
+                        <p><b>Amount</b></p>
+                        <div>
+                            <input type="text" id="rAmount" class="rInput">
+                            <select name="" id="rSelect" class="rInput">
+                                <option value="percentage" selected>Percentage</option>
+                                <option value="fixed">Fixed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <p><b>Calculate</b></p>
+                        <div>
+                            <button type="button" id="rCalculate" class="rInput">Calculate</button>
+                            <input id="rFinal" class="rInput" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rReasondiv">
+                    <p><b>Why do you want to refund amount?</b></p>
+                    <textarea name="rReason" id="rReason" cols="30" rows="10"></textarea>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="refundButton">Refund</button>
+            </div>
+        </div>
+    </div>
+</div>

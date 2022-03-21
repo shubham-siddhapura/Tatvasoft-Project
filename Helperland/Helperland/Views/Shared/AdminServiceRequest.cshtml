@@ -15,18 +15,17 @@
     <!-- admin um search starts  -->
     <div id="admin-um-search" class="adminSearch">
         <form action="" id="admin-um-form">
-            <input type="text" name="serviceid" id="admin-serviceid" placeholder="Service ID">
+            <input type="text" name="serviceid" id="admin-serviceid" placeholder="Service ID" class="form-control">
 
-            <input type="text" name="postalCode" id="admin-serviceid" placeholder="Service ID">
+            <input type="text" name="postalCode" id="adminSearchPostal" placeholder="Postal Code" class="form-control">
 
-            <input type="text" name="email" id="admin-serviceid" placeholder="Service ID">
+            <input type="text" name="email" id="adminSearchEmail" placeholder="Email" class="form-control">
 
+            <input type="text" name="customer" placeholder="Customer" id="admin-sr-form-customer" class="form-control">
 
-            <input type="text" name="customer" placeholder="Customer" id="admin-sr-form-customer">
+            <input type="text" name="serviceprovider" placeholder="Service Provider" id="admin-sr-form-sp" class="form-control">
 
-            <input type="text" name="serviceprovider" placeholder="Service Provider" id="admin-sr-form-sp">
-
-            <select name="servicestatus" id="admin-sr-status">
+            <select name="servicestatus" id="admin-sr-status" class="form-select">
                 <option value="">Status</option>
                 <option value="3">New</option>
                 <option value="0">Completed</option>
@@ -34,17 +33,17 @@
                 <option value="2">Pending</option>
             </select>
             <div id="fdate">
-                <input type="date" id="admin-sr-fdatepicker" name="fromdate" onchange="writefDate();">
-                <input type="text" name="fromdate" id="admin-sr-fdate" placeholder="From Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
+                <span><img src="~/img/admin-calendar-blue.png"></span>
+                <input class="form-control" type="text" name="fromdate" id="admin-sr-fdate" placeholder="From Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
             </div>
 
             <div id="tdate">
-                <input type="date" id="admin-sr-tdatepicker" name="fromdate" onchange="writetDate();">
-                <input type="text" name="fromdate" id="admin-sr-tdate" placeholder="To Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
+                <span><img src="~/img/admin-calendar-blue.png"></span>
+                <input type="text" class="form-control" name="fromdate" id="admin-sr-tdate" placeholder="To Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'">
             </div>
 
-            <button type="button" id="admin-um-form-searchbtn">Search</button>
-            <button type="reset" id="admin-um-form-clearbtn">Clear</button>
+            <button type="button" id="admin-um-form-searchbtn" class="form-control">Search</button>
+            <button type="reset" id="admin-um-form-clearbtn" class="form-control">Clear</button>
         </form>
     </div>
     <!-- admin um search ends -->

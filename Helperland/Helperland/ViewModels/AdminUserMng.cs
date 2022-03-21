@@ -23,5 +23,11 @@ namespace Helperland.ViewModels
 
         public bool? Status { get; set; }
 
+        public string Email { get; set; }
+
+        public DateTime? FromDate { get; set; }
+
+        public DateTime? ToDate { get; set; }
+
     }
 }

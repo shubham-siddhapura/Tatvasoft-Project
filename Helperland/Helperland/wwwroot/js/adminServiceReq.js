@@ -13,6 +13,8 @@ const SRDatatable = $("#adminServiceReqTable").DataTable({
         dataType: "json",
         data: function (filterObj) {
             filterObj.serviceId = $("#admin-serviceid").val();
+            filterObj.postalCode = $("#adminSearchPostal").val();
+            filterObj.email = $("#adminSearchEmail").val();
             filterObj.customerName = $("#admin-sr-form-customer").val();
             filterObj.spName = $("#admin-sr-form-sp").val();
             filterObj.fromDate = $("#admin-sr-fdate").val();
@@ -109,18 +111,16 @@ const SRDatatable = $("#adminServiceReqTable").DataTable({
             "data": {},
             "render": function (data, row) {
 
-                var listItems = `<li><a class="dropdown-item srEdit" data-value="` + data.serviceId + `" role="button">Edit & Reschedule</a></li>
-        <li><a class="dropdown-item srCancel" data-value="`+ data.serviceId +`" role="button">Cancel</a></li>`;
-
-                if (data.status == 0) {
-                    listItems = `<li class="p-2 ps-3 pe-3">Service request is already Completed</li>`;
+                var listItems = `<li><a class="dropdown-item srEdit clickedBtns" data-value="` + data.serviceId + `" role="button">Edit & Reschedule</a></li>
+        <li><a class="dropdown-item srCancel clickedBtns" data-value="`+ data.serviceId +`" role="button">Cancel</a></li>`;
+                
+                if (data.status == 0 || data.status ==1) {
+                    listItems = `<li><a class="dropdown-item clickedBtns refundAction" data-value="` + data.serviceId + `" role="button">Refund</a></li>`;
                 }
-                else if (data.status == 1) {
-                    listItems = `<li class="p-2 ps-3 pe-3">Service request is Cancelled</li>`;
-                }
+                
 
                 return `<div class="dropdown text-center">
-                    <button class="admin-table-actionbtn" type="button" id = "dropdownMenuButton`+ data.userId + `"
+                    <button class="admin-table-actionbtn clickedBtns" type="button" id = "dropdownMenuButton`+ data.userId + `"
                 data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:#646464" class="text-center"></i>
                             </button>
@@ -131,8 +131,10 @@ const SRDatatable = $("#adminServiceReqTable").DataTable({
             }
         },
     ],
-
-
+    'createdRow': function (row, data, dataIndex) {
+        $(row).attr('data-value', data.serviceId);
+    },
+    
     pagingType: "full_numbers",
     language: {
         paginate: {
@@ -155,7 +157,6 @@ document.getElementById("admin-um-form-searchbtn").addEventListener("click", fun
 /*================ Edit Service Request ================*/
 
 $("#adminServiceReqTable").on("click", ".srEdit", function (e) {
-
     console.log(e.target.dataset.value);
 
     getServiceDetails(e.target.dataset.value);
@@ -217,6 +218,7 @@ document.getElementById("admin-sr-updatebtn").addEventListener("click", function
     updateServiceRequest();
 });
 
+
 function updateServiceRequest() {
 
     var date = $("#admin-sr-mdate").val() + "T" + $("#modal-time").val();
@@ -257,6 +259,12 @@ function updateServiceRequest() {
     var srDate = new Date($("#admin-sr-mdate").val())
     console.log(" date = " + srDate);
     console.log(" today = " + todayDate);
+
+    /*=== Remove Alert after 5 seconds ===*/
+    window.setTimeout(function () {
+        $('#editModalAlert').addClass('d-none');
+    }, 5000);
+
 
     if ($("#admin-sr-mdate").val() == null) {
         $("#editModalAlert").removeClass("d-none").text("Date can not be empty!");
@@ -310,11 +318,11 @@ function updateServiceRequest() {
             data: data,
             success: function (result) {
                 console.log(result);
-                if (result == "conflict"){
-                    $("#editModalAlert").removeClass("d-none").text("Your Service Provider Already Booked for this date, please change date!");
+                if (result.value == "conflict"){
+                    $("#editModalAlert").removeClass("d-none").text("Your Service Provider is Already Booked for this date, please change date!");
                     $("#admin-sr-mdate").focus();
                 }
-                else if (result == "true") {
+                else if (result.value == "true") {
                     SRDatatable.ajax.reload();
                     $("#admin-sr-edit-modal").modal("hide");
                 }
@@ -345,7 +353,7 @@ function cancelServiceRequest(serviceId) {
 
     $.ajax({
         type: 'POST',
-        url: '/Admin/ChangeUserStatus',
+        url: '/Admin/CancelServiceRequest',
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         data: data,
         success: function (result) {
@@ -361,4 +369,271 @@ function cancelServiceRequest(serviceId) {
             alert("error");
         }
     });
+}
+
+
+/*====== service Request Details modal ======*/
+var serviceRequestId = 0;
+
+$("#adminServiceReqTable").click(function (e) {
+
+    serviceRequestId = e.target.closest("tr").getAttribute("data-value");
+
+    
+    if (serviceRequestId != null && !e.target.classList.contains("clickedBtns") && ! e.target.classList.contains("fa")) {
+        
+        getAllServiceDetails();
+
+        $("#serviceReqdetailsbtn").click();
+    }
+});
+
+    
+function getAllServiceDetails() {
+    var data = {};
+    data.ServiceRequestId = parseInt(serviceRequestId);
+    $.ajax({
+        type: 'GET',
+        url: '/CustomerPage/DashbordServiceDetails',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            console.log(result);
+            if (result != null) {
+                showAllServiceRequestDetails(result);
+            }
+            else {
+                alert("result is null");
+            }
+
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+}
+    
+function showAllServiceRequestDetails(result) {
+    var dateTime = document.getElementById("CDDetailsDateTime");
+    var duration = document.getElementById("CDDetailsDuration");
+    document.getElementById("CDDetailsId").innerHTML = serviceRequestId;
+    var extra = document.getElementById("CDDetailsExtra");
+    var amount = document.getElementById("CDDetailsAmount");
+    var address = document.getElementById("CDDetailsAddress");
+    var phone = document.getElementById("CDDetailsPhone");
+    var email = document.getElementById("CDDetailsEmail");
+    var comment = document.getElementById("CDDetailsComment");
+
+
+    if (result.serviceProvider != null) {
+        $("#serviceProviderDetailsInModal").removeClass("d-none");
+        $("#CDDetails_SPName").text(result.serviceProvider);
+        $("#CDDetailsRating").text(result.spRatings);
+        $("#totalCompletedServices").text(result.completedService);
+        console.table(result.status);
+        if (result.status != 0) {
+            $("#modalRateSPBtn").addClass("disabled");
+        }
+        else {
+            $("#modalRateSPBtn").removeClass("disabled");
+
+        }
+    }
+    else {
+        $("#serviceProviderDetailsInModal").addClass("d-none");
+    }
+
+    if (result.status != 0) {
+        $("#modalRateSPBtn").addClass("disabled");
+    }
+    else {
+        $("#modalRateSPBtn").removeClass("disabled");
+
+    }
+
+    dateTime.innerHTML = result.date.substring(0, 10) + " " + result.startTime + " - " + result.endTime;
+    duration.innerHTML = result.duration;
+    extra.innerHTML = "";
+    if (result.cabinet == true) {
+        extra.innerHTML += "<p>Inside Cabinet</p>";
+    }
+    if (result.laundry == true) {
+        extra.innerHTML += "<p>Laundry Wash & dry</p>";
+    }
+    if (result.oven == true) {
+        extra.innerHTML += "<p>Inside Oven</p>";
+    }
+    if (result.fridge == true) {
+        extra.innerHTML += "<p>Inside Fridge</p>";
+    }
+    if (result.window == true) {
+        extra.innerHTML += "<p>Interior Window</p>";
+    }
+    amount.innerHTML = result.totalCost + " &euro;";
+    address.innerHTML = result.address;
+    phone.innerHTML = result.phoneNo;
+    email.innerHTML = result.email;
+    comment.innerHTML = "";
+    if (result.comments != null) {
+        comment.innerHTML = result.comments;
+    }
+
+    starAsperRating(result.spRatings, ".spRatingDetailsModal");
+
+}
+
+
+/* ======= star as per rating ======= */
+
+function starAsperRating(rate, id) {
+
+    console.log(id);
+
+    var rate = Math.ceil(rate * 2);
+
+    var starDiv = document.querySelector(id);
+
+    var stars = starDiv.querySelectorAll(".stars");
+    for (var i = 0; i < rate; i++) {
+        stars[i].classList.add("yellowStars");
+    }
+    for (var i = rate; i < 10; i++) {
+        stars[i].classList.remove("yellowStars");
+    }
+}
+
+/*==== Refund Service ===============*/
+
+$("#adminServiceReqTable").on("click", ".refundAction", function (e) {
+
+    console.log(e.target.dataset.value);
+    serviceRequestId = e.target.dataset.value;
+    GetRefundInfo(e.target.dataset.value);
+    $("#RefundModal").modal("show");
+});
+
+var paidAmount = 0;
+
+function GetRefundInfo(serviceId) {
+    var data = {};
+    data.serviceRequestId = serviceId;
+
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/GetRefundInfo',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: data,
+        success: function (result) {
+            console.log(result);
+            if (result != "false") {
+                $("#paidAmountModal").text(result.totalCost);
+
+                paidAmount = result.totalCost;
+
+                if (result.refundedAmount != null) {
+                    $("#refundedAmountModal").text(result.refundedAmount);
+                    $("#refundButton").addClass("d-none");
+                    $("#alreadyRefunded").removeClass("d-none");
+                }
+                else {
+                    $("#alreadyRefunded").addClass("d-none");
+                    $("#refundButton").removeClass("d-none");
+                }
+                $("#balancedAmountModal").text(result.totalCost);
+
+            }
+            else {
+                alert("result is null");
+            }
+
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+}
+
+$("#rCalculate").click(function () {
+
+    var finalAmount = 0;
+    if ($("#rSelect").val() == "percentage") {
+        finalAmount = paidAmount * $("#rAmount").val() / 100;
+    }
+    else {
+        finalAmount = parseFloat($("#rAmount").val());
+    }
+
+    if (finalAmount > paidAmount) {
+        $("#refundModalAlert").removeClass("d-none").text("refund amount cannot be higher than paid amount").fadeIn().fadeOut(5000);
+        $("#rReason").focus();
+    }
+    else {
+        $("#rFinal").val(finalAmount);
+    }
+
+});
+
+$("#refundButton").click(function () {
+
+    refundAmount(serviceRequestId);
+
+});
+
+function refundAmount(serviceId) {
+
+    var data = {};
+    data.serviceRequestId = serviceId;
+    data.amount = $("#rAmount").val().trim();
+    data.comment = $("#rReason").val().trim();
+    data.percentOrFix = $("#rSelect").val();
+    if ($("#rAmount").val().trim() == "") {
+        $("#refundModalAlert").removeClass("d-none").text("Enter the amount").fadeIn().fadeOut(5000);
+        $("#rAmount").focus();
+    }
+    else if ($("#rReason").val().trim() == ""){
+        $("#refundModalAlert").removeClass("d-none").text("Say Reason about Refund").fadeIn().fadeOut(5000);
+        $("#rReason").focus();
+    }
+    else if ($("#rFinal").val() == "") {
+        $("#refundModalAlert").removeClass("d-none").text("Calculate the amount").fadeIn().fadeOut(5000);
+        
+    }
+    else {
+
+        $.ajax({
+            type: 'Post',
+            url: '/Admin/RefundAmount',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: data,
+            success: function (result) {
+                console.log(result);
+                if (result.value == "higher") {
+                    $("#refundModalAlert").removeClass("d-none").text("refund amount cannot be higher than paid amount").fadeIn().fadeOut(5000);
+                }
+                else if (result.value == "true") {
+
+                    SRDatatable.ajax.reload();
+
+                    $("#RefundModal").modal("hide");
+                    clearRefundModal();
+                }
+                else if (result.value == "alreadyRefunded") {
+                    $("#refundModalAlert").removeClass("d-none").text("This Service is Already Rated.")
+                }
+                else {
+                    alert("Something went wrong");
+                }
+
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+}
+
+function clearRefundModal() {
+    document.getElementById("rAmount").value = "";
+    document.getElementById("rReason").value = "";
+    document.getElementById("rFinal").value = "";
 }
