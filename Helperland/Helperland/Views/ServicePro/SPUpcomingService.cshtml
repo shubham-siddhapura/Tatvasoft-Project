@@ -32,8 +32,9 @@
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin="" />
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css">
 
+    <link rel="stylesheet" href="/css/style.css">
 
 </head>
 <body>
@@ -80,7 +81,7 @@
 
                     @await Html.PartialAsync("ServiceProBlockCustomer")
 
-
+                    @await Html.PartialAsync("ServiceSchedule")
 
 
                 </div>
@@ -117,10 +118,15 @@
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
+
+
     <!-- map js-->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
+
+
 
     <!--My Add map js-->
     <script src="/js/addMap.js"></script>
@@ -151,6 +157,7 @@
     <!--SP Block Customer js-->
     <script src="/js/SPBlockCustomer.js"></script>
 
+    <script src="/js/SPScheduleService.js"></script>
 
     @*<script>
             window.history.forward();

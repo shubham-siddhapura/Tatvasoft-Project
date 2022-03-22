@@ -68,14 +68,13 @@ function getSPUpcomingService() {
                 <td class="distance">
                     15 km
                 </td>
-                <td class="actions">
+                <td class="actions" style="min-width:max-content;">
 
                     <a href="#" class="upcomingCompleteBtns `+ completeBtnClass + `" style="background-color: #1d7a8c;" id="upcomingCompleteBtn` + result[i].serviceRequestId + `" >Complete</a>
 
 
                     <a href="#" id="upcomingCancelBtn`+ result[i].serviceRequestId + `" >Cancel</a>
                    
-                                   
                 </td>
             </tr>`
                     );
@@ -89,7 +88,7 @@ function getSPUpcomingService() {
     });
 
 }
-
+/*
 function cancelRequest(serviceRequestId) {
     var data = {};
     data.serviceRequestId = serviceRequestId;
@@ -104,7 +103,7 @@ function cancelRequest(serviceRequestId) {
                 alert("something went wrong");
             }
             else {
-                getSPUpcomingService()
+                getSPUpcomingService();
             }
         },
         error: function () {
@@ -114,7 +113,7 @@ function cancelRequest(serviceRequestId) {
 
 
 }
-
+*/
 
 function completeRequest(serviceRequestId) {
     var data = {};

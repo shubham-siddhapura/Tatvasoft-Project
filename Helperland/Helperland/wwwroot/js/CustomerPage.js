@@ -77,8 +77,13 @@ export_button.addEventListener('click', () => {
 var myDashbord = document.getElementById("dashbord");
 var myServiceHistory = document.getElementById("serviceHistory");
 var mysetting = document.getElementById("mysetting");
+var ServiceSchedule = document.getElementById("ServiceSchedule")
+
+var favourite = document.getElementById("FavouriteProns");
 var dashbordTab = document.getElementById("dashbordTab");
 var serviceHistoryTab = document.getElementById("serviceHistoryTab");
+var favouriteProsTab = document.getElementById("favouriteProsTab");
+var ServiceScheduleTab = document.getElementById("ServiceScheduleTab");
 
 myServiceHistory.style.display = "none";
 
@@ -88,17 +93,28 @@ function dashbord() {
     mysetting.style.display = "none";
     dashbordTab.classList.add("active");
     serviceHistoryTab.classList.remove("active");
+    favouriteProsTab.classList.remove("active");
+    favourite.style.display = "none";
+
+    ServiceSchedule.style.display = "none";
+    ServiceScheduleTab.classList.remove("active");
 }
 
 function serviceHistory() {
 
     getServiceHistoryTable();
-
     myDashbord.style.display = "none";
     myServiceHistory.style.display = "block";
     mysetting.style.display = "none";
     dashbordTab.classList.remove("active");
     serviceHistoryTab.classList.add("active");
+    favouriteProsTab.classList.remove("active");
+    favourite.style.display = "none";
+
+
+    ServiceSchedule.style.display = "none";
+    ServiceScheduleTab.classList.remove("active");
+
 }
 
 function mySetting() {
@@ -107,8 +123,44 @@ function mySetting() {
     mysetting.style.display = "block";
     dashbordTab.classList.remove("active");
     serviceHistoryTab.classList.remove("active");
+    favouriteProsTab.classList.remove("active");
+    favourite.style.display = "none";
     getUserData();
+
+    ServiceSchedule.style.display = "none";
+    ServiceScheduleTab.classList.remove("active");
+
 }
+
+$("#favouriteProsTab").click(function () {
+    myDashbord.style.display = "none";
+    myServiceHistory.style.display = "none";
+    mysetting.style.display = "none";
+    dashbordTab.classList.remove("active");
+    serviceHistoryTab.classList.remove("active");
+    favouriteProsTab.classList.add("active");
+    favourite.style.display = "block";
+
+    ServiceSchedule.style.display = "none";
+    ServiceScheduleTab.classList.remove("active");
+
+});
+
+$("#ServiceScheduleTab").click(function () {
+
+    myDashbord.style.display = "none";
+    myServiceHistory.style.display = "none";
+    mysetting.style.display = "none";
+    dashbordTab.classList.remove("active");
+    serviceHistoryTab.classList.remove("active");
+    favouriteProsTab.classList.remove("active");
+    favourite.style.display = "none";
+
+    ServiceSchedule.style.display = "block";
+    ServiceScheduleTab.classList.add("active");
+
+    addServiceSchedule();
+});
 
 const url = new URLSearchParams(window.location.search);
 
@@ -116,9 +168,7 @@ if (url == "mySetting=true") {
     mySetting();
 }
 
-
 /*============= my setting ===========*/
-
 var myDetailsTab = document.getElementById("myDetailsTab");
 var myAddressTab = document.getElementById("myAddressTab");
 var changePasswordTab = document.getElementById("changePasswordTab");
@@ -340,9 +390,11 @@ document.getElementById("updateServiceRequest").addEventListener("click", functi
     }
 });
 
-function getAllServiceDetails() {
+function getAllServiceDetails(id) {
     var data = {};
-    data.ServiceRequestId = parseInt(serviceRequestId);
+    data.serviceRequestId = id;
+    console.log(id);
+    console.log("srId" + data.serviceRequestId);
     $.ajax({
         type: 'GET',
         url: '/CustomerPage/DashbordServiceDetails',
@@ -433,7 +485,7 @@ function showAllServiceRequestDetails(result) {
 }
 
 document.getElementById("serviceReqdetailsbtn").addEventListener("click", function () {
-    getAllServiceDetails();
+    getAllServiceDetails(serviceRequestId);
 });
 
 /*==================== MY SETTING ========================*/

@@ -1,4 +1,5 @@
-﻿
+﻿var serviceRequestId = 0;
+
 
 const SRDatatable = $("#adminServiceReqTable").DataTable({
     dom: 't<"table-bottom paging d-flex justify-content-between"<"table-bottom-inner d-flex"li>p>',
@@ -342,9 +343,14 @@ function updateServiceRequest() {
 $("#adminServiceReqTable").on("click", ".srCancel", function (e) {
 
     console.log(e.target.dataset.value);
+    serviceRequestId = e.target.dataset.value;
+    $("#MySettingDeleteAddressModal").modal("show");
+    /*cancelServiceRequest(e.target.dataset.value);*/
 
-    cancelServiceRequest(e.target.dataset.value);
+});
 
+$("#MySettingDeleteAddress").click(function () {
+    cancelServiceRequest(serviceRequestId);
 });
 
 function cancelServiceRequest(serviceId) {
@@ -373,7 +379,6 @@ function cancelServiceRequest(serviceId) {
 
 
 /*====== service Request Details modal ======*/
-var serviceRequestId = 0;
 
 $("#adminServiceReqTable").click(function (e) {
 

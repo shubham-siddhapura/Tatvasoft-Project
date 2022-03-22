@@ -5,12 +5,10 @@ async function getlon_len(zipcode) {
 
     console.log(map);
 
-
     const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
     const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tiles = L.tileLayer(tileUrl, { attribution });
     tiles.addTo(map);
-
 
     const response = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=india,' + zipcode);
         const data = await response.json();
@@ -20,9 +18,4 @@ async function getlon_len(zipcode) {
 
     console.log(lat);
 
-
-  }
-
-
-
-
+}

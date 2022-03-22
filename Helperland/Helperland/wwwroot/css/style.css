@@ -1756,17 +1756,23 @@ table.dataTable.no-footer, table.dataTable thead th {
     margin: 30px 0;
 }
 
-.allPageMain {
+.allPageMain, #ServiceSchedule {
     margin: 0px 15px;
     width: 75%;
 }
 
-    .allPageMain table {
-        font-size: 16px;
-        border: 1px solid #e1e1e1;
-        min-width: 740px;
-        width: 100% !important;
+    #ServiceSchedule{
+        display:none;
+        position:relative;
     }
+
+
+.allPageMain table {
+    font-size: 16px;
+    border: 1px solid #e1e1e1;
+    min-width: 740px;
+    width: 100% !important;
+}
 
     .allPageMain tr {
         color: #646464;
@@ -4401,3 +4407,69 @@ table.dataTable thead .sorting_desc {
         margin-bottom: 15px;
         background-color: #1FB6FF;
     }
+
+
+/*===== Service Schedule ====*/
+
+.fc-toolbar-chunk {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.fc-toolbar-title {
+    color: #646464;
+    font-weight: normal;
+}
+
+
+.fc-daygrid-day-number {
+    color: #646464;
+    text-decoration: none;
+}
+
+.fc-button-primary {
+    background-color: #fff !important;
+    border: 1px solid #646464 !important;
+    color: #646464 !important;
+}
+
+.fc-col-header-cell-cushion {
+    color: #646464;
+    text-decoration: none;
+}
+
+.ScheduleServiceLabels {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    gap: 10px;
+    color: #646464;
+}
+
+.GrayLabel {
+    width: 15px;
+    height: 15px;
+    background-color: #777777;
+    border: 1px solid #e1e1e1;
+    margin: auto;
+}
+
+.GreenLabel {
+    width: 15px;
+    height: 15px;
+    background-color: #146371;
+    border: 1px solid #e1e1e1;
+    margin: auto;
+    padding: 4px;
+}
+
+.ScheduleLabel {
+    display: flex;
+    align-content: center;
+    gap: 5px;
+}

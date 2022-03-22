@@ -53,8 +53,8 @@ $("#mytable").click(function (e) {
 
         console.log("hello");
         $("#CancelRequestId").val(serviceRequestId);
-        cancelRequest(serviceRequestId);
-        /*$("#serviceRequestCancelModal").modal('show');*/
+        /*cancelRequest(serviceRequestId);*/
+        $("#serviceRequestCancelModal").modal('show');
     }
     else if ((e.target.tagName == "A" || e.target.tagName == "a") && e.target.textContent == "Complete") {
         completeRequest(serviceRequestId);
@@ -181,7 +181,9 @@ document.getElementById("SPCancelRequestBtn").addEventListener("click", function
         data: data,
         success: function (result) {
             if (result.value == "true") {
-                window.location.reload();
+
+                $("#serviceRequestCancelModal").modal("hide");
+                getSPUpcomingService();
             }
             else {
                 alert("fail");

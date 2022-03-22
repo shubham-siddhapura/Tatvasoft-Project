@@ -715,5 +715,36 @@ namespace Helperland.Controllers
             }
             return Ok(Json("false"));
         }
+
+        /*===== Service Schedule =====*/
+        [HttpGet]
+        public JsonResult GetServiceSchedule()
+        {
+
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null)
+            {
+                List<CustomerDashbord> dashbord = new List<CustomerDashbord>();
+
+                var table = _db.ServiceRequests.Where(x => x.ServiceProviderId == Id && x.Status != 1).ToList();
+
+                foreach (var data in table)
+                {
+                    CustomerDashbord sr = new CustomerDashbord();
+                    sr.ServiceRequestId = data.ServiceRequestId;
+
+                    sr.ServiceStartDate = data.ServiceStartDate.ToString("yyyy-MM-dd");
+                    sr.StartTime = data.ServiceStartDate.ToString("HH:mm");
+                    sr.EndTime = data.ServiceStartDate.AddHours((double)data.SubTotal).ToString("HH:mm");
+
+                    sr.Status = data.Status;
+
+                    dashbord.Add(sr);
+                }
+
+                return new JsonResult(dashbord);
+            }
+            return new JsonResult("false");
+        }
     }
 }
