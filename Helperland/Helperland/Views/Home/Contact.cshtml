@@ -98,7 +98,7 @@
                 <div id="form-elements">
                     <div>
                         <input type="text" asp-for="FirstName" id="fname" placeholder="First name" required>
-                        
+
                         <input type="text" asp-for="LastName" id="lname" placeholder="Last name" required>
                     </div>
                     <div>
@@ -155,6 +155,7 @@
 
     @await Html.PartialAsync("MyModals")
 
+    @await Html.PartialAsync("LoadingAnimation")
     <script>
         // Initialize and add the map
         function initMap() {

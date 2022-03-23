@@ -3559,7 +3559,8 @@ table.dataTable thead .sorting_desc {
 }
 
 #favSPDiv img {
-    padding: 25px 20px;
+    
+    margin-bottom: 15px;
     border-radius: 50%;
     border: 1px solid #c8c8c8;
 }
@@ -3792,7 +3793,7 @@ table.dataTable thead .sorting_desc {
 
 /*============================ progess loading  ===================================*/
 
-#postalProgess {
+#loadingAnimation {
     position: fixed;
     top: 0;
     left: 0;
@@ -3800,9 +3801,10 @@ table.dataTable thead .sorting_desc {
     width: 100%;
     background-color: #000;
     opacity: 0.7;
+    z-index: 1000;
 }
 
-    #postalProgess div {
+    #loadingAnimation div {
         position: fixed;
         top: 50%;
         bottom: 50%;
@@ -4006,6 +4008,7 @@ table.dataTable thead .sorting_desc {
         color: #64646466;
         font-size: 24px;
         width: fit-content;
+        left:0;
     }
 
 .yellowStars::before {
@@ -4330,7 +4333,7 @@ table.dataTable thead .sorting_desc {
     margin: 15px;
     padding: 15px;
     text-align:center;
-    width: 260px;
+    width: 265px;
 }
 
 #blockCustomerTable tbody td{

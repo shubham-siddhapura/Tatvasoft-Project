@@ -61,7 +61,18 @@ function getUsersForBlock() {
         },
         error: function () {
             alert("error");
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 
     
@@ -97,7 +108,18 @@ function blockAndUnblockCustomer(id) {
         },
         error: function () {
             alert("error");
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 
 

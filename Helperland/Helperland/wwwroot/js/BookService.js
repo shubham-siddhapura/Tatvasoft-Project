@@ -255,6 +255,7 @@ function form3() {
     step4.style.pointerEvents = "none";
 
     loadAddress();
+    getFavSP();
 }
 
 function form4() {
@@ -416,7 +417,6 @@ function postalSubmit() {
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             data: data,
             success: function (result) {
-                $("#postalProgess").addClass("d-none");
                 if (result.value == "true") {
                     $("#postalcodeAlert").addClass("d-none");
                     var cookie = document.cookie;
@@ -435,19 +435,29 @@ function postalSubmit() {
                     $("#postalcodeAlert").removeClass("d-none").text("Sorry, Service is not available for your area!");
                 }
             },
-            xhr: function () {
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+                
+             },
+            /*xhr: function () {
                 var xhr = $.ajaxSettings.xhr();
                 xhr.upload.onprogress = function (event) {
-                    $("#postalProgess").removeClass("d-none");
                     console.log('progress', event.loaded / event.total * 100);
                 }
                 xhr.upload.onload = function () {
 
-                    $("#postalProgess").removeClass("d-none");
+                    $("#loadingAnimation").removeClass("d-none");
                     console.log('DONE!');
                 };
                 return xhr;
-            },
+            },*/
             error: function () {
                 alert('Failed to receive the Data');
                 console.log('Failed ');
@@ -486,7 +496,18 @@ function scheduleSubmit() {
             error: function () {
                 alert('Failed to receive the Data');
                 console.log('Failed ');
-            }
+            },
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+
+            },
         });
     }
 }
@@ -514,7 +535,18 @@ function loadAddress() {
         error: function () {
             alert('Failed to receive the Data');
             console.log('Failed ');
-        }
+        },
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+
+        },
     });
 }
 
@@ -559,7 +591,17 @@ function saveAddress() {
             error: function () {
                 alert('Failed to receive the Data');
                 console.log('Failed ');
-            }
+            },
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+            },
         });
     }
 }
@@ -629,6 +671,125 @@ function completeBookService() {
         error: function () {
             alert('Failed to receive the Data');
             console.log('Failed ');
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
-}  
+}
+
+$("input[name=favSP]").click(function () {
+
+    console.log("click");
+
+    if ($("input[name=favSP]:checked").hasClass("alreadyChecked")) {
+
+        clearClassInRadio();
+        $("input[name=favSP]:checked").prop("checked", false);
+    }
+    else {
+        console.log("first time");
+        clearClassInRadio();
+        $("input[name=favSP]:checked").addClass("alreadyChecked");
+    }
+
+});
+
+function clearClassInRadio() {
+    var radios = document.querySelectorAll("input[name=favSP]");
+    for (let i = 0; i < radios.length; i++) {
+        radios[i].classList.remove("alreadyChecked");
+    }
+}
+
+function getFavSP() {
+    var data = {};
+    var extrahour = 0;
+    var cabinet = document.getElementById("insideCabinetCheck");
+    var window = document.getElementById("interiorCheck");
+    var fridge = document.getElementById("insideFridgeCheck");
+    var oven = document.getElementById("insideOvenCheck");
+    var laundry = document.getElementById("laundryCheck");
+
+    if (cabinet.checked == true) {
+        extrahour += 0.5;
+        data.cabinet = true;
+    }
+    if (window.checked == true) {
+        extrahour += 0.5;
+        data.window = true;
+    }
+    if (fridge.checked == true) {
+        extrahour += 0.5;
+        data.fridge = true;
+    }
+    if (oven.checked == true) {
+        extrahour += 0.5;
+        data.oven = true;
+    }
+    if (laundry.checked == true) {
+        extrahour += 0.5;
+        data.laundry = true;
+    }
+
+    data.postalCode = document.getElementById("postalCode").value;
+    data.serviceStartDate = document.getElementById("admin-sr-fdate").value;
+    data.serviceTime = document.getElementById("startingtime").value;
+    data.subTotal = extrahour + document.getElementById("servicehours").value;
+
+    $.ajax({
+        type: 'GET',
+        url: "/CustomerPage/GetFavSPForService",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
+        success: function (result) {
+            if (result != "false") {
+                $("#favSPList").empty();
+                if (result.length == 0) {
+                    $("#favSPDiv").addClass("d-none");
+                }
+                else {
+                    $("#favSPDiv").removeClass("d-none");
+                }
+                for (let i = 0; i < result.length; i++) {
+                    var avatar = "cap.jpg";
+                    if (result[i].avatar != null) {
+                        avatar = result[i].avatar;
+                    }
+                    $("#favSPList").append(`<div id="favSP`+result[i].spId+`" class="favSP">
+                        <img src="/img/`+avatar+`" alt="">
+                        <p>`+result[i].spName+`</p>
+                        <input type="radio" name="favSP" value="`+ result[i].spId +`" id="favId`+result[i].spId+`">
+                        <label for="favId`+ result[i].spId +`">Select</label>
+                    </div>
+                    `);
+                }
+            }
+            else {
+                alert("something went wrong");
+            }
+        },
+        error: function (error) {
+
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            $("#loadingAnimation").addClass("d-none");
+
+        },
+    });
+
+
+}

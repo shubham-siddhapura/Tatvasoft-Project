@@ -44,7 +44,18 @@ function getSPServiceHistory() {
         },
         error: function () {
             alert("error");
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 
 }

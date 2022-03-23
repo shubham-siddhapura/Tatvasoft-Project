@@ -125,7 +125,18 @@ function getSPDetails() {
         },
         error: function () {
             alert("error");
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 
 
@@ -212,7 +223,18 @@ function updateSPDetails() {
             },
             error: function (error) {
 
-            }
+            },
+
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+            },
 
 
         });
@@ -247,7 +269,18 @@ function getCityFromPostalCode(zip) {
         },
         error: function (error) {
 
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 }
 
@@ -301,7 +334,18 @@ function changeSPPassword() {
             },
             error: function (error) {
                 $("#ms_changePasswordAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Something went wrong! Please try again.");
-            }
+            },
+
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+            },
         });
     }
 

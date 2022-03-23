@@ -21,7 +21,17 @@ const SRDatatable = $("#adminServiceReqTable").DataTable({
             filterObj.fromDate = $("#admin-sr-fdate").val();
             filterObj.toDate = $("#admin-sr-tdate").val();
             filterObj.status = $("#admin-sr-status").val();
-            
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
         },
     },
     "columnDefs": [{
@@ -184,7 +194,17 @@ function getServiceDetails(serviceId) {
         },
         error: function () {
             alert("error");
-        }
+        },
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 }
 
@@ -333,7 +353,17 @@ function updateServiceRequest() {
             },
             error: function () {
                 alert("error");
-            }
+            },
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+            },
         });
     }
 }
@@ -373,7 +403,17 @@ function cancelServiceRequest(serviceId) {
         },
         error: function () {
             alert("error");
-        }
+        },
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 }
 
@@ -414,7 +454,17 @@ function getAllServiceDetails() {
         },
         error: function () {
             alert("error");
-        }
+        },
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 }
     
@@ -554,7 +604,18 @@ function GetRefundInfo(serviceId) {
         },
         error: function () {
             alert("error");
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 }
 
@@ -632,7 +693,18 @@ function refundAmount(serviceId) {
             },
             error: function () {
                 alert("error");
-            }
+            },
+
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+            },
         });
     }
 }

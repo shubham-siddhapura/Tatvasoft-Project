@@ -3,7 +3,7 @@
 *@
 
 
-<div id="FavouriteProns" class="allPageMain tableContents d-none">
+<div id="FavouriteProns" class="allPageMain tableContents" style="display: none">
     <table id="blockCustomerTable">
         <thead class="d-none">
             <tr>
@@ -13,12 +13,23 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody id="customerFavProTbody">
             <tr>
                 <td><img src="~/img/ship.jpg"/></td>
-                <td>Kirpalsinh Sarvaiya</td>
+                <td>
+                    <span>Kirpalsinh Sarvaiya</span>
+                    
+                    <div class="d-flex justify-content-center">
+                        <div class="spStars" id="serviceHistoryRating">
+                            <span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span><span class="stars"></span>
+                        </div>
+                        <div><span class="ms-2 SP-stars">3</span></div>
+                    </div>
+                 
+                   <p>15 Cleanings</p>
+                </td>
                 <td><button >Favourite</button>
-                    <button >Block</button>
+                    <button style="background-color:#FF6B6B">Block</button>
                 </td>
             </tr>
 

@@ -1,4 +1,14 @@
-﻿
+﻿$(window).on("load", function () {
+
+    $("#loadingAnimation").removeClass("d-none");
+
+    setTimeout(function () {
+        $("#loadingAnimation").addClass("d-none");
+    }, 500);
+
+});
+
+
 var spDashbordTab = document.getElementById("spDashbordTab");
 var spNewServiceRequestTab = document.getElementById("spNewServiceRequestTab");
 var spUpcomingServiceTab = document.getElementById("spUpcomingServiceTab");

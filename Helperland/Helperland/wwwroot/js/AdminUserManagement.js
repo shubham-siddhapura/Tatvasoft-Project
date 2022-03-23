@@ -22,6 +22,16 @@
 
                 filterObj.toDate = $("#adminToDate").val();
             },
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+            },
         },
         "columnDefs": [{
             "targets": [0],
@@ -131,6 +141,16 @@ function changeUserStatus(userId) {
         },
         error: function () {
             alert("error");
-        }
+        },
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 }

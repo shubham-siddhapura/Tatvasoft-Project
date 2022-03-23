@@ -684,9 +684,162 @@ namespace Helperland.Controllers
             int? Id = HttpContext.Session.GetInt32("userId");
             if(Id != null)
             {
-                List<ServiceRequest> srList = _db.ServiceRequests.Where(x => x.UserId == Id).ToList();
+                List<int?> serviceProviders = _db.ServiceRequests.Where(x => x.UserId == Id && x.ServiceProviderId != null).Select(x=>x.ServiceProviderId).Distinct().ToList();
+
+                List<CustomerFavouritePros> result = new List<CustomerFavouritePros>();
+
+                foreach (int spId in serviceProviders)
+                {
+                    FavoriteAndBlocked isBlocked = _db.FavoriteAndBlockeds.FirstOrDefault(x => x.UserId == spId && x.TargetUserId == Id && x.IsBlocked == true);
+                    if (isBlocked == null)
+                    {
+                        CustomerFavouritePros add = new CustomerFavouritePros();
+
+                        add.UserId = (int)Id;
+                        add.SpId = spId;
+
+                        add.SpName = _db.Users.FirstOrDefault(x => x.UserId == spId).FirstName + " " + _db.Users.FirstOrDefault(x => x.UserId == spId).LastName;
+
+                        add.Avatar = _db.Users.FirstOrDefault(x => x.UserId == spId).UserProfilePicture;
+
+                        var ratings = _db.Ratings.Where(x => x.RatingTo == spId);
+
+                        if (ratings.Count() > 0)
+                        {
+                            add.SpRatings = ratings.Average(x => x.Ratings);
+                        }
+
+                        add.Cleanings = _db.ServiceRequests.Where(x => x.ServiceProviderId == spId).Count();
+
+                        FavoriteAndBlocked favOrBlock = _db.FavoriteAndBlockeds.FirstOrDefault(x => x.UserId == Id && x.TargetUserId == spId);
+
+                        if (favOrBlock != null)
+                        {
+                            add.isBlock = favOrBlock.IsBlocked;
+                            add.isFav = favOrBlock.IsFavorite;
+                        }
+
+                        result.Add(add);
+                    }
+                }
+
+                return new JsonResult(result);
             }
             return new JsonResult("false");
+        }
+
+        /*==== favourite pro =====*/
+        [HttpPost]
+        public IActionResult SetFavouritePro(CustomerFavouritePros data)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                FavoriteAndBlocked set = _db.FavoriteAndBlockeds.FirstOrDefault(x => x.UserId == Id && x.TargetUserId == data.SpId);
+
+                if(set == null)
+                {
+                    FavoriteAndBlocked add = new FavoriteAndBlocked();
+                    add.UserId = (int)Id;
+                    add.TargetUserId = data.SpId;
+                    add.IsFavorite = true;
+                    _db.FavoriteAndBlockeds.Add(add);
+                }
+                else
+                {
+                    if (set.IsFavorite == true)
+                    {
+                        set.IsFavorite = false;
+                    }
+                    else
+                    {
+                        set.IsFavorite = true;
+                        set.IsBlocked = false;
+                    }
+                    _db.FavoriteAndBlockeds.Update(set);
+                }
+
+                _db.SaveChanges();
+
+                return Ok(Json("true"));
+                
+            }
+            return Ok(Json("false"));
+        }
+
+        /*==== block pro =====*/
+        [HttpPost]
+        public IActionResult SetBlockPro(CustomerFavouritePros data)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null)
+            {
+                FavoriteAndBlocked set = _db.FavoriteAndBlockeds.FirstOrDefault(x => x.UserId == Id && x.TargetUserId == data.SpId);
+
+                if (set == null)
+                {
+                    FavoriteAndBlocked add = new FavoriteAndBlocked();
+                    add.UserId = (int)Id;
+                    add.TargetUserId = data.SpId;
+                    add.IsBlocked = true;
+                    _db.FavoriteAndBlockeds.Add(add);
+                }
+                else
+                {
+                    if (set.IsBlocked == true) {
+                        set.IsBlocked = false;                    
+                    }
+                    else
+                    {
+                        set.IsFavorite = false;
+                        set.IsBlocked = true;
+                    }
+                    _db.FavoriteAndBlockeds.Update(set);
+                }
+
+                _db.SaveChanges();
+
+                return Ok(Json("true"));
+
+            }
+            return Ok(Json("false"));
+        }
+
+        /*===== get fav sp for book service =====*/
+        [HttpGet]
+        public JsonResult GetFavSPForService(CompleteBooking data)
+        {
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if(Id != null)
+            {
+                List<int> spIdList = _db.FavoriteAndBlockeds.Where(x => x.UserId == Id && x.IsFavorite == true).Select(x => x.TargetUserId).ToList();
+                List<CustomerFavouritePros> result = new List<CustomerFavouritePros>();
+
+                DateTime date =DateTime.Parse(data.ServiceStartDate.ToString("dd/MM/yyyy") + " " + data.ServiceTime);
+
+                foreach (var spId in spIdList)
+                {
+                    var checkSPPostal = _db.Users.FirstOrDefault(x => x.UserId == spId && x.ZipCode == data.PostalCode);
+
+                    if (checkSPPostal != null)
+                    {
+
+                        var obj = _db.ServiceRequests.FirstOrDefault(x =>
+                     x.ServiceProviderId == spId && x.Status == 2 && ((x.ServiceStartDate <= date && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= date) || (x.ServiceStartDate <= date.AddHours((double)data.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= date.AddHours((double)data.SubTotal + 1)) ||
+             (x.ServiceStartDate >= date.AddHours((double)data.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) <= date.AddHours((double)data.SubTotal + 1))
+                     ));
+                        if (obj == null)
+                        {
+                            CustomerFavouritePros add = new CustomerFavouritePros();
+                            add.SpId = spId;
+                            add.SpName = _db.Users.FirstOrDefault(x => x.UserId == spId).FirstName + " " + _db.Users.FirstOrDefault(x => x.UserId == spId).LastName;
+                            result.Add(add);
+                        }
+                    }
+                }
+                return new JsonResult(result);
+            }
+            return new JsonResult("false");            
         }
 
         /*===== Service Schedule =======*/

@@ -1,7 +1,14 @@
 ﻿// const { data } = required("jquery");
 
 // datatable
-$(document).ready(function () {
+$(window).on("load", function () {
+
+    $("#loadingAnimation").removeClass("d-none");
+   
+    setTimeout(function () {
+        $("#loadingAnimation").addClass("d-none");
+    }, 500);
+    
 });
 
 function serviceHistoryDatatable() {
@@ -133,6 +140,9 @@ function mySetting() {
 }
 
 $("#favouriteProsTab").click(function () {
+
+    getFavouritePros();
+
     myDashbord.style.display = "none";
     myServiceHistory.style.display = "none";
     mysetting.style.display = "none";
@@ -313,7 +323,18 @@ function getDateforReschedule() {
         },
         error: function (error) {
 
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 }
 
@@ -342,7 +363,18 @@ document.getElementById("CancelRequestBtn").addEventListener("click", function (
         },
         error: function () {
             alert("error");
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 });
 
@@ -385,7 +417,18 @@ document.getElementById("updateServiceRequest").addEventListener("click", functi
             },
             error: function () {
                 alert("error");
-            }
+            },
+
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+            },
         });
     }
 });
@@ -412,7 +455,18 @@ function getAllServiceDetails(id) {
         },
         error: function () {
             alert("error");
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 }
 
@@ -525,7 +579,18 @@ function getUserData(){
         },
         error: function () {
             alert("error");
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 }
 
@@ -589,7 +654,18 @@ function updateUserData() {
             },
             error: function () {
                 alert("error");
-            }
+            },
+
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+            },
         });
     }
 }
@@ -622,7 +698,18 @@ function getAddress() {
         },
         error: function () {
             alert("error");
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 }
 
@@ -679,7 +766,18 @@ $("#MySettingDeleteAddress").click(function () {
         },
         error: function (error) {
 
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 
 });
@@ -753,7 +851,18 @@ function addNewAddress() {
             },
             error: function (error) {
                 alert(error);
-            }
+            },
+
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+            },
 
         });
     }
@@ -780,7 +889,18 @@ function getAddressDataToModal() {
         },
         error: function (error) {
             alert(error);
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     })
 }
 
@@ -847,7 +967,18 @@ function EditAddress() {
                 $("#mySettingAddressModalUpdateBtn").addClass("d-none");
                 $("#mySettingAddressModalSubmitBtn").removeClass("d-none");
                 alert(error);
-            }
+            },
+
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+            },
 
         });
     }
@@ -890,7 +1021,18 @@ function getCityFromPostalCode(zip) {
         },
         error: function (error) {
 
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 }
 
@@ -983,7 +1125,18 @@ function changeUserPassword() {
             },
             error: function (error) {
                 $("#ms_changePasswordAlert").removeClass("alert-success d-none").addClass("alert-danger").text("Something went wrong! Please try again.");
-            }
+            },
+
+            beforeSend: function () {
+                $("#loadingAnimation").removeClass("d-none");
+
+            },
+
+            complete: function () {
+                setTimeout(function () {
+                    $("#loadingAnimation").addClass("d-none");
+                }, 500);
+            },
         });
     }
     
@@ -1048,7 +1201,18 @@ function getServiceHistoryTable() {
         },
         error: function (error) {
             console.log(error);
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
     });
 
 }
@@ -1090,7 +1254,18 @@ function rateServiceProvider() {
         },
         error: function (error) {
             alert("error");
-        }
+        },
+
+        beforeSend: function () {
+            $("#loadingAnimation").removeClass("d-none");
+
+        },
+
+        complete: function () {
+            setTimeout(function () {
+                $("#loadingAnimation").addClass("d-none");
+            }, 500);
+        },
 
     });
 
