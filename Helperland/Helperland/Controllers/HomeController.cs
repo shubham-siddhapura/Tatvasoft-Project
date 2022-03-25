@@ -10,6 +10,7 @@ using Helperland.Data;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using System.Net.Mail;
 
 namespace Helperland.Controllers
 {
@@ -98,22 +99,61 @@ namespace Helperland.Controllers
 
             if (ModelState.IsValid)
             {
+                string serverFolder = "";
                 if (contactu.Attach != null)
                 {
                     string folder = "contactFiles/";
                     folder += Guid.NewGuid().ToString() + "_" + contactu.Attach.FileName;
-                    string serverFolder = Path.Combine(_webHostEnv.WebRootPath, folder);
-                    contactu.Attach.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                    serverFolder = Path.Combine(_webHostEnv.WebRootPath, folder);
+
+                    FileStream files = new FileStream(serverFolder, FileMode.Create);
+                    contactu.Attach.CopyToAsync(files);
                     contactu.FileName = folder;
+                    files.Close();
                 }
                 contactu.CreatedOn = DateTime.Now;
-                _db.ContactUs.Add(contactu);
+                var contactData = _db.ContactUs.Add(contactu);
                 _db.SaveChanges();
+
+                List<string> emails = _db.Users.Where(x => x.UserTypeId == 3).Select(x => x.Email).ToList();
+
+                string msg = "<p> user name :- " + contactu.FirstName + " " + contactu.LastName + " </p>" + 
+                    "<p>mobile number :- " + contactu.PhoneNumber + " </p>" +"<p>email :- " + contactu.Email + "</p>" + "<p>query type :- " + contactu.Subject + "</p>" + "<p> message :- " + contactu.Message + "</p>" + "createdBy :- " + contactu.CreatedBy + "</p><p> createOn :- " + contactu.CreatedOn + "</p>";
+
+                SendContactMail(msg, emails, serverFolder);
                 return RedirectToAction("Index", "Home", new { msgSent = "true" });
             }
             return PartialView();
 
         }
+        private static void SendContactMail(string msg, List<string> emails, string path)
+        {
+            SmtpClient client = new SmtpClient("smtp.gmail.com");
+            client.Port = 587;
+            client.UseDefaultCredentials = true;
+            client.EnableSsl = true;
+            client.Credentials = new System.Net.NetworkCredential("siddshubham123456789@gmail.com", "Shubham@123");
+
+            MailMessage message = new MailMessage();
+            
+                message.Subject = "New Message from Helperland";
+                message.Body = msg;
+            
+            if(path != "")
+            {
+                Attachment attach = new Attachment(path);
+                message.Attachments.Add(attach);
+            }
+
+            message.From = new MailAddress("siddshubham123456789@gmail.com");
+            message.IsBodyHtml = true;
+            foreach (string email in emails)
+            {
+                message.To.Add(email);
+            }
+            client.Send(message);
+        }
+
 
         public IActionResult Prices()
         {

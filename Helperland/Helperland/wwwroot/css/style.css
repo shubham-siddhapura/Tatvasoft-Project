@@ -2153,7 +2153,8 @@ table.dataTable thead .sorting_desc {
     }
 
     #mytable td,
-    #dashbordTable td {
+    #dashbordTable td, 
+    .allPageMain table td{
         display: block !important;
         border-bottom: 1px solid #e1e1e1;
         margin: 0 15px;
@@ -3721,7 +3722,8 @@ table.dataTable thead .sorting_desc {
         max-width: 320px;
     }
 
-    .popupsLogin input[type=text] {
+    .popupsLogin input[type=text],
+    .popupsLogin input[type=password] {
         width: 100%;
         padding: 8px;
         border-radius: 4px;
@@ -4089,7 +4091,7 @@ table.dataTable thead .sorting_desc {
     border-bottom: 0;
 }
 
-@media screen and (max-width : 845px) {
+@media screen and (max-width: 845px) {
     #serviceRequestDetailsModal.spModal .modal-body {
         flex-direction: column;
     }
@@ -4098,8 +4100,13 @@ table.dataTable thead .sorting_desc {
             width: 100%;
             min-width: 0;
         }
-}
 
+        #serviceRequestDetailsModal.spModal .modal-body .myMap {
+            min-width: 0;
+            width: 100%;
+            height: 375px;
+        }
+}
 @media screen and (max-width : 820px) {
     #serviceRequestDetailsModal .modal-body .main {
         min-width: initial;
@@ -4475,4 +4482,12 @@ table.dataTable thead .sorting_desc {
     display: flex;
     align-content: center;
     gap: 5px;
+}
+
+.fc-daygrid-body fc-daygrid-body-unbalanced{
+    width: 100%!important;
+}
+
+.presentation {
+    width: 100% !important;
 }

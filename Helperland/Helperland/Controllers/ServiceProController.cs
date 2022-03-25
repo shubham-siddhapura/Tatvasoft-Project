@@ -46,41 +46,46 @@ namespace Helperland.Controllers
 
                     foreach(ServiceRequest row in requests)
                     {
-                        NewServiceRequestTable tablerow = new NewServiceRequestTable();
 
-                        tablerow.ServiceRequestId = row.ServiceRequestId;
-                        tablerow.ServiceStartDate = row.ServiceStartDate.ToString("dd/MM/yyyy");
-                        tablerow.StartTime = row.ServiceStartDate.ToString("HH:mm");
-                        tablerow.EndTime = row.ServiceStartDate.AddHours((double)row.SubTotal).ToString("HH:mm tt");
-                        tablerow.TotalCost = row.TotalCost;
-                        tablerow.HasPet = row.HasPets;
+                        var isBlocked = _db.FavoriteAndBlockeds.FirstOrDefault(x=>(x.UserId == id && x.TargetUserId == row.UserId && x.IsBlocked == true) || (x.UserId == row.UserId && x.TargetUserId == id && x.IsBlocked == true));
 
-                        var obj = _db.ServiceRequests.FirstOrDefault(x => 
-                        x.ServiceProviderId == id && x.Status == 2 && ((x.ServiceStartDate <= row.ServiceStartDate && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= row.ServiceStartDate) ||  (x.ServiceStartDate <= row.ServiceStartDate.AddHours((double)row.SubTotal+1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= row.ServiceStartDate.AddHours((double)row.SubTotal + 1)) ||
-                ( x.ServiceStartDate >= row.ServiceStartDate.AddHours((double)row.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) <= row.ServiceStartDate.AddHours((double)row.SubTotal + 1))
-                        ));
-                        if(obj!= null)
+                        if (isBlocked == null)
                         {
-                            int conflict = obj.ServiceRequestId;
-                            
-                            tablerow.TimeConflict = conflict;
+                            NewServiceRequestTable tablerow = new NewServiceRequestTable();
+
+                            tablerow.ServiceRequestId = row.ServiceRequestId;
+                            tablerow.ServiceStartDate = row.ServiceStartDate.ToString("dd/MM/yyyy");
+                            tablerow.StartTime = row.ServiceStartDate.ToString("HH:mm");
+                            tablerow.EndTime = row.ServiceStartDate.AddHours((double)row.SubTotal).ToString("HH:mm tt");
+                            tablerow.TotalCost = row.TotalCost;
+                            tablerow.HasPet = row.HasPets;
+
+                            var obj = _db.ServiceRequests.FirstOrDefault(x =>
+                            x.ServiceProviderId == id && x.Status == 2 && ((x.ServiceStartDate <= row.ServiceStartDate && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= row.ServiceStartDate) || (x.ServiceStartDate <= row.ServiceStartDate.AddHours((double)row.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) >= row.ServiceStartDate.AddHours((double)row.SubTotal + 1)) ||
+                    (x.ServiceStartDate >= row.ServiceStartDate.AddHours((double)row.SubTotal + 1) && x.ServiceStartDate.AddHours((double)x.SubTotal + 1) <= row.ServiceStartDate.AddHours((double)row.SubTotal + 1))
+                            ));
+                            if (obj != null)
+                            {
+                                int conflict = obj.ServiceRequestId;
+
+                                tablerow.TimeConflict = conflict;
+                            }
+
+
+                            ServiceRequestAddress address = _db.ServiceRequestAddresses.FirstOrDefault(x => x.ServiceRequestId == row.ServiceRequestId);
+
+                            tablerow.AddressLine1 = address.AddressLine1;
+                            tablerow.AddressLine2 = address.AddressLine2;
+                            tablerow.City = address.City;
+                            tablerow.PostalCode = address.PostalCode;
+
+                            User customer = _db.Users.FirstOrDefault(x => x.UserId == row.UserId);
+
+                            tablerow.CustomerName = customer.FirstName + " " + customer.LastName;
+
+
+                            table.Add(tablerow);
                         }
-
-
-                        ServiceRequestAddress address = _db.ServiceRequestAddresses.FirstOrDefault(x => x.ServiceRequestId == row.ServiceRequestId);
-
-
-                        tablerow.AddressLine1 = address.AddressLine1;
-                        tablerow.AddressLine2 = address.AddressLine2;
-                        tablerow.City = address.City;
-                        tablerow.PostalCode = address.PostalCode;
-
-                        User customer = _db.Users.FirstOrDefault(x => x.UserId == row.UserId);
-
-                        tablerow.CustomerName = customer.FirstName + " " + customer.LastName;
-
-
-                        table.Add(tablerow);
                     }
 
                     return PartialView(table);

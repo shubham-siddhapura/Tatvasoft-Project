@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
 
-
+   
 
 </head>
 <body>
@@ -94,6 +94,10 @@
         <section id="contact-form">
             <h2>Get in touch with us</h2>
             <!-- form starts -->
+
+            <!--<div class="alert alert-danger d-none mt-3" id="contactusAlert" role="alert">
+            </div>
+            -->
             <form asp-action="Contact" method="post" enctype="multipart/form-data">
                 <div id="form-elements">
                     <div>
@@ -103,7 +107,7 @@
                     </div>
                     <div>
                         <span id="countrycode">+49</span><input type="number" asp-for="PhoneNumber" id="mobile" placeholder="Mobile number" required>
-                        <input type="text" asp-for="Email" id="email" placeholder="Email address" required>
+                        <input type="text" asp-for="Email" id="email" placeholder="Email address" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,}$" required>
                     </div>
                     <div>
                         <select asp-for="Subject" id="subject" required>

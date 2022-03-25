@@ -211,7 +211,7 @@ namespace Helperland.Controllers
             add.CreatedDate = DateTime.Now;
             add.ModifiedDate = DateTime.Now;
             add.HasIssue = false;
-
+            add.ServiceProviderId = complete.ServiceProviderId;
             /* status
              * 0 : Completed
              * 1 : Cancelled
@@ -280,30 +280,49 @@ namespace Helperland.Controllers
            
             if(result != null && srAddrResult != null)
             {
-
-                List<User> ServiceProviders = _db.Users.Where(x => x.UserTypeId == 2 && x.ZipCode == complete.PostalCode).ToList();
+                List<User> ServiceProviders = new List<User>();
+                string msg = "";
+                string subject = "";
 
                 string url = Url.ActionLink("SPUpcomingService", "ServicePro");
 
-                Task thread = Task.Run(() => SendMail(ServiceProviders, url));
+                if (complete.ServiceProviderId == null)
+                {
+                    ServiceProviders = (from x in _db.Users join y in _db.FavoriteAndBlockeds on x.UserId equals y.TargetUserId into sp from y in sp.DefaultIfEmpty() where (x.UserTypeId == 2 && x.ZipCode == complete.PostalCode && y.TargetUserId == x.UserId && y.IsBlocked == false) || (x.UserTypeId == 2 && y == null) select x).ToList();
 
+                    msg = "<p><b>Service Request Id: " + result.Entity.ServiceRequestId + "</b></p><p>New Service Request on the bord, go to New Service Request page by clicking below link</p>" + "<a href=" + url + ">Click Here</a>";
+
+                    subject = "New Service Request in your area";
+                }
+                else
+                {
+                    ServiceProviders.Add(_db.Users.FirstOrDefault(x => x.UserId == complete.ServiceProviderId));
+                    msg = "<p>There is Service Request in your area which is direct assigned to you by customer. Go and check it out.</p><p><b>Service Request Id: " + result.Entity.ServiceRequestId + "</b></p>" + "<a href=" + url + ">Click Here</a>";
+                    subject = "Service request is direct assigned to you";
+                }
+
+                
+                Task thread = Task.Run(() => SendMail(ServiceProviders, msg, subject));
+                
                 return Ok(Json(result.Entity.ServiceRequestId));
             }
 
             return Ok(Json("false"));
         }
 
-        private static void SendMail(List<User> SPList, string url)
+        private static void SendMail(List<User> SPList, string msg, string subject)
         {
             SmtpClient client = new SmtpClient("smtp.gmail.com");
             client.Port = 587;
             client.UseDefaultCredentials = true;
             client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential("Id", "Pwd");
+            client.Credentials = new System.Net.NetworkCredential("siddshubham123456789@gmail.com", "Shubham@123");
 
             MailMessage message = new MailMessage();
-            message.Subject = "New Service Request in your area";
-            message.Body = "<p>New Service Request on the bord, go to New Service Request page by clicking below link</p>" + "<a href=" + url + ">Click Here</a>";
+            
+                message.Subject = subject;
+                message.Body = msg;
+            
             message.From = new MailAddress("siddshubham123456789@gmail.com");
             message.IsBodyHtml = true;
 
@@ -334,6 +353,16 @@ namespace Helperland.Controllers
                 {
                     return Ok(Json("true"));
                 }
+
+                if(cancelService.ServiceProviderId != null)
+                {
+                    List<User> sp = _db.Users.Where(x => x.UserId == cancelService.ServiceProviderId).ToList();
+                    string subject = "Service Request is Cancelled";
+                    string msg = "Service Request " + cancelService.ServiceRequestId + " has been rescheduled by customer.";
+
+                    Task thread = Task.Run(() => SendMail(sp, msg, subject));
+                    
+                }
             }
             return Ok(Json("false"));
         }
@@ -341,21 +370,33 @@ namespace Helperland.Controllers
         [HttpPost]
         public IActionResult RescheduleServiceRequest(CustomerDashbord reschedule)
         {
-            ServiceRequest rescheduleService = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == reschedule.ServiceRequestId);
-
-            string date = reschedule.ServiceStartDate + " " + reschedule.StartTime;
-
-            rescheduleService.ServiceStartDate = DateTime.Parse(date);
-            rescheduleService.ServiceRequestId = reschedule.ServiceRequestId;
-
-            var result = _db.ServiceRequests.Update(rescheduleService);
-            _db.SaveChanges();
-
-            if (result != null)
+            int? Id = HttpContext.Session.GetInt32("userId");
+            if (Id != null)
             {
-                return Ok(Json("true"));
-            }
+                ServiceRequest rescheduleService = _db.ServiceRequests.FirstOrDefault(x => x.ServiceRequestId == reschedule.ServiceRequestId);
 
+                string date = reschedule.ServiceStartDate + " " + reschedule.StartTime;
+
+                rescheduleService.ServiceStartDate = DateTime.Parse(date);
+                rescheduleService.ServiceRequestId = reschedule.ServiceRequestId;
+
+                var result = _db.ServiceRequests.Update(rescheduleService);
+                _db.SaveChanges();
+
+
+                if (rescheduleService.ServiceProviderId != null)
+                {
+                    List<User> sp = _db.Users.Where(x => x.UserId == rescheduleService.ServiceProviderId).ToList();
+                    string subject = "Service Request is Reschduled";
+                    string msg = "Service Request " + rescheduleService.ServiceRequestId + " has been rescheduled by customer. New date and time are "+rescheduleService.ServiceStartDate.ToString("dd/MM/yyyy")+" "+rescheduleService.ServiceStartDate.ToString("hh:mm tt")+".";
+
+                    Task thread = Task.Run(() => SendMail(sp, msg, subject));
+
+                }
+
+                return Ok(Json("true"));
+                
+            }
             return Ok(Json("false"));
         }
 

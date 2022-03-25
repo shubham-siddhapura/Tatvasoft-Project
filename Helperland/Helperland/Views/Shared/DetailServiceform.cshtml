@@ -8,6 +8,10 @@
 
         <h4>Enter your contact details, so we can serve you in better way!</h4>
 
+        <div class="alert alert-danger d-none mt-3" id="SelectAddress" role="alert">
+        </div>
+
+
         <!-- addresses starts -->
         <div id="addresses">
             <div>
@@ -18,7 +22,7 @@
                 </label>
             </div>
             <div>
-                <input type="radio"  id="address2" value="2">
+                <input type="radio" id="address2" value="2">
                 <label for="address2">
                     <p><b>Address:</b> street 2 40, Troisdorf 53844</p>
                     <p><b>Phone number:</b> 8200035128</p>
@@ -56,11 +60,11 @@
                     <p>City</p>
                     <input type="text" id="addCity" disabled />
                     <!--<Select asp-for="newAddress.City" id="addCity">
-                <option value="#">Select City</option>
-                <option value="Bhavnagar">Bhavnagar</option>
-                <option value="Ahemdabad">Amdavad</option>
-                <option value="Surat">Surat</option>
-            </Select>-->
+                    <option value="#">Select City</option>
+                    <option value="Bhavnagar">Bhavnagar</option>
+                    <option value="Ahemdabad">Amdavad</option>
+                    <option value="Surat">Surat</option>
+                </Select>-->
                 </div>
             </div>
             <div>
@@ -138,7 +142,7 @@
             <!-- favourite service provider ends -->
 
         </div>
-        <button id="form3continue" type="button" onclick="form4();">continue</button>
+        <button id="form3continue" type="button" >continue</button>
         <!-- add address ends -->
     </div>
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Helperland.Controllers
@@ -495,6 +496,13 @@ namespace Helperland.Controllers
 
                     _db.SaveChanges();
 
+                    List<User> sp = _db.Users.Where(x => x.UserId == sr.ServiceProviderId || x.UserId == sr.UserId).ToList();
+                    string subject = "Service Request is Cancelled";
+                    string msg = "<p>Service Request " + sr.ServiceRequestId + " has been Cancelled by Admin.</p><p> New Date and time are "+ sr.ServiceStartDate.ToString("dd/MM/yyyy")+" "+sr.ServiceStartDate.ToString("hh:mm tt")+"</p>"+"<p>Reason: "+data.Comments+"</p>";
+
+                    Task thread = Task.Run(() => SendMail(sp, msg, subject));
+
+
                     return Ok(Json("true"));
 
                 }
@@ -519,6 +527,15 @@ namespace Helperland.Controllers
                     sr.Status = 1;
                     _db.ServiceRequests.Update(sr);
                     _db.SaveChanges();
+
+                    
+                        List<User> sp = _db.Users.Where(x => x.UserId == sr.ServiceProviderId || x.UserId == sr.UserId).ToList();
+                        string subject = "Service Request is Cancelled";
+                        string msg = "Service Request " + sr.ServiceRequestId + " has been Cancelled by Admin.";
+
+                        Task thread = Task.Run(() => SendMail(sp, msg, subject));
+
+                    
                     return Ok(Json("true"));
                 }
             }
@@ -582,6 +599,29 @@ namespace Helperland.Controllers
                 return new JsonResult(sr);
             }
             return new JsonResult("false");
+        }
+
+        private static void SendMail(List<User> SPList, string msg, string subject)
+        {
+            SmtpClient client = new SmtpClient("smtp.gmail.com");
+            client.Port = 587;
+            client.UseDefaultCredentials = true;
+            client.EnableSsl = true;
+            client.Credentials = new System.Net.NetworkCredential("siddshubham123456789@gmail.com", "Shubham@123");
+
+            MailMessage message = new MailMessage();
+
+            message.Subject = subject;
+            message.Body = msg;
+
+            message.From = new MailAddress("siddshubham123456789@gmail.com");
+            message.IsBodyHtml = true;
+
+            foreach (User user in SPList)
+            {
+                message.To.Add(user.Email);
+            }
+            client.Send(message);
         }
     }
 }

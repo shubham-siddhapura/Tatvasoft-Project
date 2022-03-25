@@ -1,17 +1,12 @@
 ﻿using Helperland.Data;
 using Helperland.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MailKit.Net.Smtp;
-using MimeKit;
-using Org.BouncyCastle.Crypto.Generators;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Caching.Memory;
+using System.Net.Mail;
 
 namespace Helperland.Controllers
 {
@@ -154,32 +149,27 @@ namespace Helperland.Controllers
             {
                 var user = _db.Users.FirstOrDefault(x => x.Email == email);
 
-                MimeMessage message = new MimeMessage();
+                SmtpClient client = new SmtpClient("smtp.gmail.com");
+                client.Port = 587;
+                client.UseDefaultCredentials = true;
+                client.EnableSsl = true;
+                client.Credentials = new System.Net.NetworkCredential("Id", "Pwd");
 
-                MailboxAddress from = new MailboxAddress("Helperland",
-                "siddshubham123456789@gmail.com");
-                message.From.Add(from);
-
-                MailboxAddress to = new MailboxAddress(user.FirstName, email);
-                message.To.Add(to);
-
-                message.Subject = "Reset Password";
-
-                BodyBuilder bodyBuilder = new BodyBuilder();
-                bodyBuilder.HtmlBody = "<h1>Reset your password by click below link</h1>" +
-                    "<a href='" + Url.Action("ResetPassword", "Signup", new { userId = user.UserId, token=user.Password }, "https") + "'>Reset Password</a>";
+                MailMessage message = new MailMessage();
                 
-                message.Body = bodyBuilder.ToMessageBody();
+                
+                    message.Subject = "Reset Password";
+                    message.Body = "<h1>Reset your password by click below link</h1>" +
+                    "<a href='" + Url.Action("ResetPassword", "Signup", new { userId = user.UserId, token = user.Password }, "https") + "'>Reset Password</a>";
+          
+                message.From = new MailAddress("siddshubham123456789@gmail.com");
+                message.IsBodyHtml = true;
 
-                SmtpClient client = new SmtpClient();
-                client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("id", "pwd");
+                message.To.Add(user.Email);
                 client.Send(message);
-                client.Disconnect(true);
-                client.Dispose();
-                TempData["mailSended"] = "true";
-                return RedirectToAction("Index", "Home", new { mailSended="true" });
 
+
+                
             }
             return RedirectToAction("Index", "Home");
         }
@@ -223,6 +213,7 @@ namespace Helperland.Controllers
             return RedirectToAction("Index", "Home", new { logoutModal = "true"});
         }
 
+        
     }
 
 

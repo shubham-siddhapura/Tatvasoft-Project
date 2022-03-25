@@ -159,6 +159,21 @@ step2.style.pointerEvents = "none";
 step3.style.pointerEvents = "none";
 step4.style.pointerEvents = "none";
 
+$("#form3continue").click(function () {
+
+    console.log("shubham");
+
+    if ($("input[name=bookAddress]:checked").val() == undefined || $("input[name=bookAddress]:checked").val() == null || $("input[name=bookAddress]:checked").val() == "") {
+
+        $("#SelectAddress").removeClass("d-none").text("Please Select address").fadeIn().fadeOut(7000);
+
+    }
+    else {
+        form4();
+    }
+
+});
+
 function form1() {
     form1div.style.display = "block";
     form2div.style.display = "none";
@@ -649,7 +664,7 @@ function completeBookService() {
     data.paymentDone = true;
 
     data.addressId = $('#addresses div input[type=radio]:checked').val();
-
+    data.serviceProviderId = $("input[name=favSP]:checked").val();
     console.log(data.addressId);
     $.ajax({
         type: 'POST',
@@ -685,21 +700,20 @@ function completeBookService() {
     });
 }
 
-$("input[name=favSP]").click(function () {
 
-    console.log("click");
+$("#favSPList").click(function (e) {
 
-    if ($("input[name=favSP]:checked").hasClass("alreadyChecked")) {
+    if (e.target.tagName == "INPUT") {
+        if ($("input[name=favSP]:checked").hasClass("alreadyChecked")) {
 
-        clearClassInRadio();
-        $("input[name=favSP]:checked").prop("checked", false);
+            clearClassInRadio();
+            $("input[name=favSP]:checked").prop("checked", false);
+        }
+        else {
+            clearClassInRadio();
+            $("input[name=favSP]:checked").addClass("alreadyChecked");
+        }
     }
-    else {
-        console.log("first time");
-        clearClassInRadio();
-        $("input[name=favSP]:checked").addClass("alreadyChecked");
-    }
-
 });
 
 function clearClassInRadio() {

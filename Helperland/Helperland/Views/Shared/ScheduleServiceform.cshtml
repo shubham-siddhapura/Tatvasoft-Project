@@ -14,10 +14,10 @@
             <!-- date and time starts -->
             <div id="book-datetime">
                 <h4>When do you need the cleaner?</h4>
-                <span id="fdate">
-                    <input type="date" id="admin-sr-fdatepicker" onchange="writefDate();">
+                <span id="fdate" style="margin: 0!important">
+                    <span><img src="~/img/admin-calendar-blue.png"></span>
                     <input type="text" asp-for="Date" id="admin-sr-fdate" placeholder="Enter Date" onblur="if(this.value){this.type='date';}else{this.type='text';}" onfocus="this.type='date'" onchange="paymentbill_making()">
-                    <span asp-validation-for="Date"></span>
+                    
                 </span>
 
                 <select asp-for="Time" id="startingtime" onchange="paymentbill_making()">
